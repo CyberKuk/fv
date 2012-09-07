@@ -1,0 +1,3 @@
+route:
+  class: collection
+  params:

@@ -1,0 +1,17 @@
+[
+    {
+        "class": "Url",
+        "params": {
+            "url": "/index",
+            "module": "backend"
+        }
+    },
+
+    {
+        "class": "Url",
+        "params": {
+            "url": "/somepage",
+            "module": "frontend"
+        }
+    }
+]
