@@ -1,0 +1,11 @@
+{
+    "back": {
+        "prefix": "/backend",
+        "application": "backend"
+    },
+
+    "default": {
+        "prefix": "/",
+        "application": "frontend"
+    }
+}

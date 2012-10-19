@@ -1,6 +1,14 @@
 <?php
+chdir('data');
 
-require_once 'SplClassLoader.php';
+require_once 'libs/classLoader/_init_.php';
 
-$fvLoader = new SplClassLoader( 'fv', 'libs/fv' );
-$fvLoader->register();
+/** Direct classes */
+ClassLoader\Register::createLoader( '/', 'classes' );
+
+/** Libraries */
+ClassLoader\Register::createLoader( 'fv', 'libs/fv' );
+
+/** Twig */
+require_once 'libs/Twig/Autoloader.php';
+Twig_Autoloader::register();

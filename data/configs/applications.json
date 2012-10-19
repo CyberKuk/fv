@@ -1,0 +1,6 @@
+{
+    "frontend": {
+        "namespace": "Application\\Frontend",
+        "path": "apps/frontend"
+    }
+}
