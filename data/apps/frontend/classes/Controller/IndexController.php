@@ -15,7 +15,14 @@ class IndexController extends AbstractController {
         return "Hello";
     }
 
-    function get( $name ){
+    function get( $name = "default world" ){
+
+        $connectionLoader = new \fv\Connection\ConnectionLoader();
+        /** @var $connection \fv\Connection\Database\PdoMysql */
+        $connection = $connectionLoader->getConnection();
+
+        var_dump( $connection->query('select "1"')->fetchAll(\PDO::FETCH_ASSOC) );
+
         return array(
             'name' => $name
         );

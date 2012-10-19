@@ -1,0 +1,9 @@
+{
+    "default": {
+        "class": "Database\\PdoMysql",
+        "user": "root",
+        "pass": "",
+        "dbname": "",
+        "host": "localhost"
+    }
+}

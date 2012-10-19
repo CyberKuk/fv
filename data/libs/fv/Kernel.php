@@ -8,7 +8,10 @@
 namespace fv;
 
 use fv\Routing\Router;
+
 use fv\Application\ApplicationLoader;
+use fv\Connection\ConnectionLoader;
+
 use fv\Http\Request;
 
 class Kernel {
@@ -19,16 +22,21 @@ class Kernel {
     /** @var \fv\Application\ApplicationLoader */
     protected $applicationLoader;
 
+    /** @var \fv\Connection\ConnectionLoader */
+    protected $connectionLoader;
+
     private $loaded = false;
 
     function __construct() {
         $this->router = new Router;
         $this->applicationLoader = new ApplicationLoader;
+        $this->connectionLoader = new ConnectionLoader;
     }
 
     public function load(){
         $this->router->loadFromConfigFile( 'configs/routes.json' );
         $this->applicationLoader->loadFromConfigFile( 'configs/applications.json' );
+        $this->connectionLoader->loadFromConfigFile( 'configs/connections.json' );
 
         $this->loaded = true;
     }
