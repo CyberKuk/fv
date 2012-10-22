@@ -11,6 +11,7 @@ use fv\Http\Params;
  *
  * @property Params $headers
  * @property Params $cookies
+ * @property Params $internal
  */
 class Response {
 

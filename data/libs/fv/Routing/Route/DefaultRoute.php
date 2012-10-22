@@ -9,31 +9,19 @@ namespace fv\Routing\Route;
 
 use fv\Http\Request;
 use fv\Http\Response;
-
 use fv\Application\AbstractApplication;
-use fv\Application\ApplicationLoader;
-use fv\Controller\ControllerLoader;
 
 use fv\Routing\Exception\RoutingException;
 
 class DefaultRoute extends AbstractRoute {
 
-    protected $application;
     protected $controller;
-    protected $prefix;
     protected $params = array();
-    protected $paramValues = array();
     protected $url;
 
     function __construct( $params = array() ) {
-        if( isset( $params['application'] ) )
-            $this->setApplication( $params['application'] );
-
         if( isset( $params['controller'] ) )
             $this->setController( $params['controller'] );
-
-        if( isset( $params['prefix'] ) )
-            $this->setPrefix( $params['prefix'] );
 
         if( isset( $params['params'] ) )
             $this->setParams( $params['params'] );
@@ -48,22 +36,43 @@ class DefaultRoute extends AbstractRoute {
      *
      * @throw \fv\Routing\Exception\RoutingException
      */
-    function canHandle( Request $request ) {
-        if( $this->getUrl() ){
-            return $this->canHandleUrl( $request );
+    function handle( Request $request ) {
+        $uri = rtrim($request->getUri(), "/");
+
+        $this->getPregParams();
+
+        if( preg_match( $this->getPregStatement(), $uri, $matches ) > 0 ){
+            array_shift( $matches );
+            $values = array_combine( $this->getPregParams(), $matches );
+
+            if( $this->getController() ){
+                $application = $request->internal->application;
+
+                if( ! $application instanceof AbstractApplication )
+                    throw new RoutingException( "No application to show controller. What I have to do with this route?" );
+
+                $controller = $application
+                    ->getControllerLoader()
+                    ->createController( $this->getController() )
+                    ->setRequest($request);
+
+                call_user_func_array( array( $controller, 'execute' ), $values );
+
+                $layout = $application->getLayoutLoader()->createLayout( $request );
+                $layout
+                    ->setResponse( $controller->getResponse() )
+                    ->execute();
+
+                return $layout->getResponse();
+            }
+
+            throw new RoutingException( "No controller param provide. What I have to do with this route?" );
         }
 
-        if( $this->getPrefix() ){
-            return $this->canHandlePrefix( $request );
-        }
-
-        throw new RoutingException( "You must provide url or prefix param" );
+        return false;
     }
 
-    private function canHandleUrl( Request $request ){
-        if( ! $this->getUrl() )
-            return false;
-
+    private function getPregStatement(){
         $delimiter = "|";
         $params = array();
 
@@ -72,7 +81,6 @@ class DefaultRoute extends AbstractRoute {
 
         $function = function( $matches ) use ( &$params ) {
             $paramName = $matches[1];
-            $params[] = $paramName;
             return "(" . ($this->getParam($paramName) ?: '[^/]+') . ")";
         };
         $statement = preg_replace_callback( '|\{\$([\w_]+)\}|', $function, $statement );
@@ -80,65 +88,12 @@ class DefaultRoute extends AbstractRoute {
         $statement = rtrim($statement, '/');
         $statement = $delimiter . "^" . $statement . "$" . $delimiter . "U";
 
-        $uri = rtrim($request->getUri(), "/");
-        if( preg_match( $statement, $uri, $matches ) > 0 ){
-            array_shift( $matches );
-            $this->setParamValues( array_combine( $params, $matches ) );
-            return true;
-        }
-
-        return false;
+        return $statement;
     }
 
-    private function canHandlePrefix( Request $request ){
-        $delimiter = "|";
-        $statement = $delimiter . "^" . preg_quote( $this->getPrefix(), $delimiter ) . $delimiter . "U";
-
-        if( preg_match( $statement, $request->getUri() ) > 0 ){
-            $newUri = preg_replace( $statement, '', $request->getUri() );
-            $newUri = '/' . ltrim($newUri, '/');
-            $request->setUri( $newUri );
-            $request->internal->prefix .= $this->getPrefix();
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param Request $request
-     * @return Response
-     *
-     * @throw \fv\Routing\Exception\RoutingException
-     */
-    public function handle( Request $request ) {
-        if( $this->getApplication() ){
-            $applicationLoader = new ApplicationLoader;
-            $application = $applicationLoader->getApplication( $this->getApplication() );
-            return $application->handle( $request );
-        }
-
-        if( $this->getController() ){
-            $controller = $this->getApplicationFromRequest( $request )
-                ->getControllerLoader()
-                ->createController( $this->getController(), $request );
-
-            call_user_func_array( array( $controller, 'execute' ), $this->getParamValues() );
-
-            return $controller->getResponse();
-        }
-
-        throw new RoutingException( "No application or controller param provide. What I have to do with this route?" );
-    }
-
-    final public function setApplication( $application ) {
-        $this->application = $application;
-        return $this;
-    }
-
-    final public function getApplication() {
-        return $this->application;
+    private function getPregParams(){
+        preg_match_all( '|\{\$([\w_]+)\}|', $this->getUrl(), $matches );
+        return $matches[1];
     }
 
     final public function setController( $controller ) {
@@ -169,32 +124,6 @@ class DefaultRoute extends AbstractRoute {
             return $this->params[$name];
 
         return null;
-    }
-
-    final public function setParamValue($name, $value){
-        $this->paramValues[$name] = $value;
-        return $this;
-    }
-
-    final public function setParamValues( array $array ){
-        foreach( $array as $name => $value ){
-            $this->setParamValue( $name, $value );
-        }
-
-        return $this;
-    }
-
-    final public function getParamValues(){
-        return $this->paramValues;
-    }
-
-    final public function setPrefix( $prefix ) {
-        $this->prefix = $prefix;
-        return $this;
-    }
-
-    final public function getPrefix() {
-        return $this->prefix;
     }
 
     final public function setUrl( $url ) {

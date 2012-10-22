@@ -21,7 +21,7 @@ class IndexController extends AbstractController {
         /** @var $connection \fv\Connection\Database\PdoMysql */
         $connection = $connectionLoader->getConnection();
 
-        var_dump( $connection->query('select "1"')->fetchAll(\PDO::FETCH_ASSOC) );
+        //var_dump( $connection->query('select "1"')->fetchAll(\PDO::FETCH_ASSOC) );
 
         return array(
             'name' => $name

@@ -27,11 +27,10 @@ abstract class AbstractController {
     /** @var AbstractApplication */
     private $application;
 
-    final function __construct( Request $request ){
+    final function __construct(){
         $response = new Response();
         $response->setBody( $this );
         $this->setResponse( $response );
-        $this->setRequest( $request );
     }
 
     /**
@@ -59,10 +58,10 @@ abstract class AbstractController {
     }
 
     function getTemplateName() {
-        $class = str_replace( $this->getApplication()->getControllerNamespace(), "",  get_class($this));
-        $class = preg_replace( "/Controller$/", "", $class );
-        $class = preg_replace_callback( "/(\\\|^)(\w)/", function( $match ){ return DIRECTORY_SEPARATOR . strtolower($match[2]); }, $class );
-        return $class;
+        $path = str_replace( $this->getApplication()->getControllerNamespace(), "",  get_class($this));
+        $path = preg_replace( "/Controller$/", "", $path );
+        $path = preg_replace_callback( "/(\\\|^)(\w)/", function( $match ){ return DIRECTORY_SEPARATOR . strtolower($match[2]); }, $path );
+        return $path;
     }
 
     /**
@@ -85,9 +84,6 @@ abstract class AbstractController {
      */
     public function setRequest( Request $request ) {
         $this->request = $request;
-        if( $request->internal->application ){
-            $this->setApplication( $request->internal->application );
-        }
         return $this;
     }
 

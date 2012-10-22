@@ -6,7 +6,7 @@
     },
 
     "default": {
-        "class": "ControllerRouting"
+        "class": "UriBasedController"
     }
 
 }

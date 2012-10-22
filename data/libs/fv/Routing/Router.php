@@ -51,10 +51,12 @@ class Router {
 
     public function handle( Request $request ){
         foreach( $this->getRoutes() as $key => $route ){
-            if( ! $route->canHandle( $request ) )
+            $response = $route->handle( $request );
+
+            if( $response === false || $response === null )
                 continue;
 
-            return $route->handle( $request );
+            return $response;
         }
 
         throw new Exception\RouteNotFoundException("No route to handle request");

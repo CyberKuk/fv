@@ -20,15 +20,9 @@ abstract class AbstractRoute {
 
 
     /**
-     * @param \fv\Http\Request $request
-     * @return bool
-     */
-    abstract function canHandle( Request $request );
-
-    /**
      * @abstract
      * @param \fv\Http\Request $request
-     * @return \fv\Http\Response
+     * @return \fv\Http\Response | bool(false) if route can't handle Request
      * @throws \fv\Routing\Exception\RouteNotFoundException
      */
     abstract public function handle( Request $request );
@@ -40,7 +34,8 @@ abstract class AbstractRoute {
      * @throws \fv\Routing\Exception\RoutingException
      */
     final static public function build( $config ){
-        $className = isset($config['class']) ? $config['class'] : "DefaultRoute";
+        $className = isset($config['class']) ? $config['class'] : "Default";
+        $className = $className . "Route";
 
         if( !strstr('\\', $className ))
             $className = __NAMESPACE__ . "\\" . $className;
@@ -54,21 +49,5 @@ abstract class AbstractRoute {
             throw new RoutingException( "{$className} not instance of fv\\Routing\\AbstractRoute: " );
 
         return $class;
-    }
-
-
-    /**
-     * @param \fv\Http\Request $request
-     *
-     * @return \fv\Application\AbstractApplication
-     * @throws \fv\Routing\Exception\RoutingException
-     */
-    final public function getApplicationFromRequest( Request $request ){
-        $application = $request->internal->application;
-
-        if( ! $application instanceof AbstractApplication )
-            throw new RoutingException( "No application to show controller. What I have to do with this route?" );
-
-        return $application;
     }
 }

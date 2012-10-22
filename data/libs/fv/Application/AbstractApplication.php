@@ -10,6 +10,7 @@ namespace fv\Application;
 use fv\Http\Request;
 use fv\Routing\Router;
 use fv\Controller\ControllerLoader;
+use fv\Layout\LayoutLoader;
 
 abstract class AbstractApplication {
 
@@ -56,6 +57,10 @@ abstract class AbstractApplication {
         return $this->getNamespace() . "Controller\\";
     }
 
+    public function getLayoutNamespace(){
+        return $this->getNamespace() . "Layout\\";
+    }
+
     /**
      * @param \fv\Routing\Router $router
      */
@@ -77,6 +82,13 @@ abstract class AbstractApplication {
      */
     public function getControllerLoader(){
         return new ControllerLoader( $this );
+    }
+
+    /**
+     * @return \fv\Layout\LayoutLoader
+     */
+    public function getLayoutLoader(){
+        return new LayoutLoader( $this );
     }
 
 }

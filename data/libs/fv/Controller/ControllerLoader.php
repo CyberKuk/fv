@@ -7,45 +7,50 @@
 
 namespace fv\Controller;
 
-use fv\Application\AbstractApplication;
-use fv\Http\Request;
+use fv\Application\AbstractApplication as Application;
 use fv\Controller\Exception\ControllerLoadException;
 
 class ControllerLoader {
 
-    /** @var AbstractApplication */
+    /** @var Application */
     private $application;
 
-    public function __construct( AbstractApplication $application ){
+    public function __construct( Application $application ){
         $this->setApplication( $application );
     }
 
     /**
-     * @param                  $name
-     * @param \fv\Http\Request $request
+     * @param string $name
      *
      * @return AbstractController
      * @throws Exception\ControllerLoadException
      */
-    public function createController( $name, Request $request ){
-        $className = $this->getControllerClassName( $name );
+    public function createController( $name ){
+        $class = $this->getControllerClassName( $name );
 
-        if( ! class_exists($className) ){
-            throw new ControllerLoadException("Controller {$className} not found");
+        if( ! class_exists($class) ){
+            throw new ControllerLoadException("Controller {$class} not found");
         }
 
-        return new $className( $request );
+        $controller = new $class;
+
+        if( ! $controller instanceof AbstractController )
+            throw new ControllerLoadException("Controller {$class} must be instance of \\fv\\Controller\\AbstractController");
+
+        $controller->setApplication($this->getApplication());
+
+        return $controller;
     }
 
     public function controllerExist( $name ){
-        $className = $this->getControllerClassName( $name );
-        return class_exists($className);
+        $class = $this->getControllerClassName( $name );
+        return class_exists($class);
     }
 
     private function getControllerClassName( $name ){
         $namespace = $this->getApplication()->getControllerNamespace();
-        $className = $namespace . ucfirst($name) . "Controller";
-        return $className;
+        $class = $namespace . ucfirst($name) . "Controller";
+        return $class;
     }
 
     /**

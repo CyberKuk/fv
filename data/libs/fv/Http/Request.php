@@ -88,4 +88,8 @@ final class Request {
         return $this->uri;
     }
 
+    public function isXmlHttp(){
+        return false;
+    }
+
 }
