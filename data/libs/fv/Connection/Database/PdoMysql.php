@@ -7,11 +7,20 @@
 
 namespace fv\Connection\Database;
 
+use fv\Connection\AbstractConnection;
+use fv\Connection\Driver\PdoMysql as Driver;
+use fv\Entity\Query\Database\MysqlQuery as Query;
+
 use fv\Connection\Exception\ConnectionException;
 
-class PdoMysql extends \PDO {
+class PdoMysql extends AbstractConnection {
 
-    static function build( $schema ){
+    /**
+     * @return mixed driver
+     */
+    protected function connect() {
+        $schema = $this->getSchema();
+
         foreach( array("host", "user" ) as $param ){
             if( empty($schema[$param] ) )
                 throw new ConnectionException("Connection {$schema['class']} must contain '{$param}' param!");
@@ -22,7 +31,10 @@ class PdoMysql extends \PDO {
         $user = $schema['user'];
         $password = $schema['pass'];
 
-        return new self( "mysql:host={$host};dbname={$dbname}", $user, $password );
+        return new Driver( "mysql:host={$host};dbname={$dbname}", $user, $password );
     }
 
+    public function createQuery() {
+        return new Query( $this );
+    }
 }

@@ -3,6 +3,7 @@
 namespace Application\Frontend\Controller;
 
 use fv\Controller\AbstractController;
+use Application\Frontend\Entity\Menu;
 
 /**
  * User: cah4a
@@ -16,6 +17,16 @@ class IndexController extends AbstractController {
     }
 
     function get( $name = "default world" ){
+
+        $time = microtime(true);
+
+        for( $i=0; $i<1000; $i++ ){
+            $n[] = new \SomeEntity();
+        }
+
+        var_dump( \SomeEntity::query()->basicRead(1) );
+
+        die( microtime(true) - $time );
 
         $connectionLoader = new \fv\Connection\ConnectionLoader();
         /** @var $connection \fv\Connection\Database\PdoMysql */

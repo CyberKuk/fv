@@ -274,7 +274,7 @@ class Twig_Node_Module extends Twig_Node
     protected function compileGetTemplateName(Twig_Compiler $compiler)
     {
         $compiler
-            ->write("public function getTemplateName()\n", "{\n")
+            ->write("public function getTemplate()\n", "{\n")
             ->indent()
             ->write('return ')
             ->repr($this->getAttribute('filename'))

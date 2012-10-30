@@ -24,9 +24,6 @@ abstract class AbstractController {
     /** @var Response */
     private $response;
 
-    /** @var AbstractApplication */
-    private $application;
-
     final function __construct(){
         $response = new Response();
         $response->setBody( $this );
@@ -53,30 +50,8 @@ abstract class AbstractController {
         }
     }
 
-    function getTemplateDir() {
-        return $this->getApplication()->getPath() . "views/controller";
-    }
-
-    function getTemplateName() {
-        $path = str_replace( $this->getApplication()->getControllerNamespace(), "",  get_class($this));
-        $path = preg_replace( "/Controller$/", "", $path );
-        $path = preg_replace_callback( "/(\\\|^)(\w)/", function( $match ){ return DIRECTORY_SEPARATOR . strtolower($match[2]); }, $path );
-        return $path;
-    }
-
-    /**
-     * @param \fv\Application\AbstractApplication $application
-     */
-    public function setApplication( AbstractApplication $application ) {
-        $this->application = $application;
-        return $this;
-    }
-
-    /**
-     * @return \fv\Application\AbstractApplication
-     */
-    public function getApplication() {
-        return $this->application;
+    protected function getTemplateClass() {
+        return preg_replace( "/Controller$/", "", get_class($this) );
     }
 
     /**

@@ -8,6 +8,7 @@
 namespace fv;
 
 use fv\View\Twig as ViewEngine;
+use \fv\Application\ApplicationLoader;
 
 trait Viewlet {
 
@@ -30,7 +31,7 @@ trait Viewlet {
 
         try{
             $this->content = $this->getView()
-                ->setTemplate( $this->getTemplateDir() . $this->getTemplateName() )
+                ->setTemplate( $this->getTemplatePath() )
                 ->assignParams( $this->params )
                 ->render();
         } catch( \Exception $e ){
@@ -60,7 +61,22 @@ trait Viewlet {
         return new ViewEngine;
     }
 
-    abstract function getTemplateName();
+    protected function getTemplatePath(){
+        $templateClass = $this->getTemplateClass();
 
-    abstract function getTemplateDir();
+        $loader = new ApplicationLoader;
+        $schema = $loader->getApplicationSchemaByNamespace( $templateClass );
+
+        $dir = rtrim( $schema['path'], "/" ) . "/" . "views";
+
+        $path = str_replace( $schema['namespace'], "",  $templateClass);
+        $path = preg_replace_callback( "/(\\\|^)(\w)/", function( $match ){ return DIRECTORY_SEPARATOR . strtolower($match[2]); }, $path );
+        $path = preg_replace_callback( "/([A-Z])/", function( $match ){ return "-" . strtolower($match[1]); }, $path );
+
+        return $dir . $path;
+    }
+
+    protected function getTemplateClass(){
+        return get_class($this);
+    }
 }

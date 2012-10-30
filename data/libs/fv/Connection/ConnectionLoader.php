@@ -15,8 +15,11 @@ class ConnectionLoader {
 
     static private $schema;
 
-    public function getConnection( $name = 'default' ){
+    public function getConnection( $name = null ){
         static $connections;
+
+        if( is_null($name) )
+            $name = 'default';
 
         if( isset( $applications[$name] ) )
             return $applications[$name];
@@ -33,7 +36,10 @@ class ConnectionLoader {
         if( !class_exists($connectionClass) )
             throw new ConnectionLoaderException("Unknown class {$connectionClass}");
 
-        $connection = $connectionClass::build( $schema );
+        $connection = new $connectionClass( $schema );
+
+        if( ! $connection instanceof AbstractConnection )
+            throw new ConnectionLoaderException("Connection class {$connectionClass} must be instance of \\fv\\Connection\\AbstractConnection");
 
         return $connections[$name] = $connection;
     }

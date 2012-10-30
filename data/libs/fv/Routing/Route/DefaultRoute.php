@@ -8,7 +8,6 @@
 namespace fv\Routing\Route;
 
 use fv\Http\Request;
-use fv\Http\Response;
 use fv\Application\AbstractApplication;
 
 use fv\Routing\Exception\RoutingException;
@@ -66,7 +65,7 @@ class DefaultRoute extends AbstractRoute {
                 return $layout->getResponse();
             }
 
-            throw new RoutingException( "No controller param provide. What I have to do with this route?" );
+            throw new RoutingException( "No controller parameter provide. What I have to do with this route?" );
         }
 
         return false;

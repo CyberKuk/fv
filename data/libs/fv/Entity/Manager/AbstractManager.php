@@ -7,8 +7,11 @@ namespace fv\Entity\Manager;
  * Date: 05.10.12
  * Time: 18:44
  */
-class AbstractManager {
+abstract class AbstractManager {
 
 
+    static function getManagerForEntity( $entity ){
+
+    }
 
 }

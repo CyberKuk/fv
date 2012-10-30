@@ -19,23 +19,9 @@ abstract class AbstractLayout {
     /** @var \fv\Http\Response */
     private $response;
 
-    /** @var \fv\Application\AbstractApplication */
-    private $application;
-
     private $body;
 
     abstract function execute();
-
-    function getTemplateDir() {
-        return $this->getApplication()->getPath() . "views/layout";
-    }
-
-    function getTemplateName() {
-        $path = str_replace( $this->getApplication()->getLayoutNamespace(), "",  get_class($this));
-        $path = preg_replace( "/Layout$/", "", $path );
-        $path = preg_replace_callback( "/(\\\|^)(\w)/", function( $match ){ return DIRECTORY_SEPARATOR . strtolower($match[2]); }, $path );
-        return $path;
-    }
 
     public function setBody( $body ) {
         $this->body = $body;
@@ -66,19 +52,7 @@ abstract class AbstractLayout {
         return $this->response;
     }
 
-    /**
-     * @param \fv\Application\AbstractApplication $application
-     */
-    public function setApplication( $application ) {
-        $this->application = $application;
-        return $this;
+    protected function getTemplateClass() {
+        return preg_replace( "/Layout$/", "", get_class($this) );
     }
-
-    /**
-     * @return \fv\Application\AbstractApplication
-     */
-    public function getApplication() {
-        return $this->application;
-    }
-
 }

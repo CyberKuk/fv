@@ -45,6 +45,16 @@ final class ApplicationLoader {
         return $applications[$name] = $application;
     }
 
+    public function getApplicationSchemaByNamespace( $namespace ){
+        foreach( self::$schema as $appSchema ){
+            $statement = "|^" . preg_quote($appSchema['namespace'], "|") . "|";
+            if( preg_match( $statement, $namespace ) > 0 )
+                return $appSchema;
+        }
+
+        return null;
+    }
+
     public function loadFromConfigFile( $file ){
         self::$schema = ConfigLoader::load( $file );
         return $this;

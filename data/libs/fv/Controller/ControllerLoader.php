@@ -37,8 +37,6 @@ class ControllerLoader {
         if( ! $controller instanceof AbstractController )
             throw new ControllerLoadException("Controller {$class} must be instance of \\fv\\Controller\\AbstractController");
 
-        $controller->setApplication($this->getApplication());
-
         return $controller;
     }
 

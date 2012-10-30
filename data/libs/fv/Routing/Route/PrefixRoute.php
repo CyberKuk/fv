@@ -48,7 +48,7 @@ class PrefixRoute extends AbstractRoute {
                 return $application->handle( $request );
             }
 
-            throw new RoutingException( "No application param provide. What I have to do with this route?" );
+            throw new RoutingException( "No application parameter provide. What I have to do with this route?" );
         }
 
         return false;

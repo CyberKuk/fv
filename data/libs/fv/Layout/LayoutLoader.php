@@ -48,8 +48,6 @@ class LayoutLoader {
             throw new LayoutLoaderException("Layout " . get_class($layout) . " must be instance of \\fv\\Layout\\AbstractLayout");
         }
 
-        $layout->setApplication($this->getApplication());
-
         return $layout;
     }
 

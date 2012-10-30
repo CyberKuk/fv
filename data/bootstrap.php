@@ -4,7 +4,7 @@ chdir('data');
 require_once 'libs/classLoader/_init_.php';
 
 /** Direct classes */
-ClassLoader\Register::createLoader( '/', 'classes' );
+ClassLoader\Register::createLoader( null, 'classes' );
 
 /** Libraries */
 ClassLoader\Register::createLoader( 'fv', 'libs/fv' );
