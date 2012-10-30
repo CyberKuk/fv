@@ -2,16 +2,16 @@
 
 namespace fv\Http;
 
-use fv\Http\Params;
+use fv\Collection;
 
 /**
  * User: apple
  * Date: 07.09.12
  * Time: 17:37
  *
- * @property Params $headers
- * @property Params $cookies
- * @property Params $internal
+ * @property \fv\Collection $headers
+ * @property \fv\Collection $cookies
+ * @property \fv\Collection $internal
  */
 class Response {
 
@@ -45,7 +45,7 @@ class Response {
 
     function getParams( $name ){
         if( !isset( $this->params[$name] ) ){
-            $this->params[$name] = new Params;
+            $this->params[$name] = new Collection();
         }
 
         return $this->params[$name];

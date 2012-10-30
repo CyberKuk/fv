@@ -1,25 +1,41 @@
 <?php
-/**
- * User: cah4a
- * Date: 11.10.12
- * Time: 11:45
- */
 
-namespace fv\Http;
+namespace fv;
 
-class Params implements \ArrayAccess, \Iterator, \Countable {
+class Collection implements \ArrayAccess, \Iterator, \Countable {
 
-    private $values = array();
+    private $params = array();
 
+    function __construct( array $value = null ){
+        if( !is_null( $value ) ){
+            foreach( $value as $key => $var )
+                $this->$key = $var;
+        }
+    }
+
+    /**
+     * @param $name
+     *
+     * @return Collection|mixed
+     */
     function __get( $name ) {
-        if( isset($this->values[$name]) )
-            return $this->values[$name];
+        if( !isset($this->params[$name]) )
+            return null;
 
-        return null;
+        return $this->params[$name];
     }
 
     function __set( $name, $value ) {
-        $this->values[$name] = $value;
+        if( is_array($value) )
+            $this->params[$name] = new Collection( $value );
+        else
+            $this->params[$name] = $value;
+    }
+
+    function getValues(){
+        return array_filter( $this->params, function( $param ){
+            return ! $param instanceof Collection;
+        });
     }
 
     /**
@@ -30,7 +46,7 @@ class Params implements \ArrayAccess, \Iterator, \Countable {
      * @return mixed Can return any type.
      */
     public function current() {
-        return current( $this->values );
+        return current( $this->params );
     }
 
     /**
@@ -41,7 +57,7 @@ class Params implements \ArrayAccess, \Iterator, \Countable {
      * @return void Any returned value is ignored.
      */
     public function next() {
-        next( $this->values );
+        next( $this->params );
     }
 
     /**
@@ -52,7 +68,7 @@ class Params implements \ArrayAccess, \Iterator, \Countable {
      * @return mixed scalar on success, or null on failure.
      */
     public function key() {
-        return key( $this->values );
+        return key( $this->params );
     }
 
     /**
@@ -64,7 +80,7 @@ class Params implements \ArrayAccess, \Iterator, \Countable {
      *       Returns true on success or false on failure.
      */
     public function valid() {
-        return isset( $this->values[$this->key()] );
+        return isset( $this->params[$this->key()] );
     }
 
     /**
@@ -75,7 +91,7 @@ class Params implements \ArrayAccess, \Iterator, \Countable {
      * @return void Any returned value is ignored.
      */
     public function rewind() {
-        reset( $this->values );
+        reset( $this->params );
     }
 
     /**
@@ -94,7 +110,7 @@ class Params implements \ArrayAccess, \Iterator, \Countable {
      *       The return value will be casted to boolean if non-boolean was returned.
      */
     public function offsetExists( $offset ) {
-        return isset( $this->values[$offset] );
+        return isset( $this->params[$offset] );
     }
 
     /**
@@ -110,7 +126,7 @@ class Params implements \ArrayAccess, \Iterator, \Countable {
      * @return mixed Can return all value types.
      */
     public function offsetGet( $offset ) {
-        return $this->values[$offset];
+        return $this->params[$offset];
     }
 
     /**
@@ -129,7 +145,7 @@ class Params implements \ArrayAccess, \Iterator, \Countable {
      * @return void
      */
     public function offsetSet( $offset, $value ) {
-        $this->values[$offset] = $value;
+        $this->params[$offset] = $value;
     }
 
     /**
@@ -145,7 +161,7 @@ class Params implements \ArrayAccess, \Iterator, \Countable {
      * @return void
      */
     public function offsetUnset( $offset ) {
-        unset( $this->values[$offset] );
+        unset( $this->params[$offset] );
     }
 
     /**
@@ -159,6 +175,6 @@ class Params implements \ArrayAccess, \Iterator, \Countable {
      *       The return value is cast to an integer.
      */
     public function count() {
-        return count($this->values);
+        return count($this->params);
     }
 }

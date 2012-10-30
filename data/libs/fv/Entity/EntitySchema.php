@@ -8,7 +8,7 @@ class EntitySchema {
 
     private $class;
 
-    /** @var \fv\Reflection\Schema */
+    /** @var \fv\Collection */
     private $schema;
 
     /**
@@ -34,7 +34,7 @@ class EntitySchema {
 
     /**
      * @param $name
-     * @return \fv\Reflection\Schema
+     * @return \fv\Collection
      */
     function __get( $name ) {
         return $this->schema->$name;

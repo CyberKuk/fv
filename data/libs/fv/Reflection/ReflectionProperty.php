@@ -2,11 +2,8 @@
 
 namespace fv\Reflection;
 
-/**
- * User: cah4a
- * Date: 26.10.12
- * Time: 11:48
- */
+use fv\Collection;
+
 class ReflectionProperty extends \ReflectionProperty {
 
     public function getSchema(){
@@ -17,7 +14,7 @@ class ReflectionProperty extends \ReflectionProperty {
 
         $docs = explode("*", trim($docs));
 
-        $propertySchema = new Schema;
+        $propertySchema = new Collection;
         foreach( $docs as $doc ){
             $doc = trim($doc);
 

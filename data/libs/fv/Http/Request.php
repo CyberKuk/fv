@@ -7,15 +7,16 @@
 
 namespace fv\Http;
 
+use fv\Collection;
 
 /**
  * @final
  *
- * @property \fv\Http\Params $get
- * @property \fv\Http\Params $post
- * @property \fv\Http\Params $cookie
- * @property \fv\Http\Params $internal
- * @property \fv\Http\Params $header
+ * @property \fv\Collection $get
+ * @property \fv\Collection $post
+ * @property \fv\Collection $cookie
+ * @property \fv\Collection $internal
+ * @property \fv\Collection $header
  */
 final class Request {
 
@@ -60,7 +61,7 @@ final class Request {
 
     function getParams( $name ){
         if( !isset( $this->params[$name] ) ){
-            $this->params[$name] = new Params;
+            $this->params[$name] = new Collection;
         }
 
         return $this->params[$name];

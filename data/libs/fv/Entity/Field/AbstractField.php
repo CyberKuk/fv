@@ -2,6 +2,8 @@
 
 namespace fv\Entity\Field;
 
+use \fv\Collection;
+
 abstract class AbstractField {
 
     private $value;
@@ -9,7 +11,7 @@ abstract class AbstractField {
 
     public static function build( $schema ){
         if( is_array($schema) )
-            $schema = new \fv\Reflection\Schema( $schema );
+            $schema = new Collection( $schema );
 
         if( $schema->class ){
             $class = $schema->class;

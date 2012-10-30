@@ -2,7 +2,7 @@
 
 namespace fv\Reflection;
 
-class stdClass extends \StdClass{}
+use fv\Collection;
 
 class ReflectionClass extends \ReflectionClass {
 
@@ -32,7 +32,7 @@ class ReflectionClass extends \ReflectionClass {
 
         $docs = explode("*", trim($docs));
 
-        $schema = new Schema();
+        $schema = new Collection();
         foreach( $docs as $doc ){
             $doc = trim($doc);
 

@@ -6,7 +6,4 @@ trait Aggregate {
 
     private $aggregate = array();
 
-    private $whereParams = array();
-
-
 }
