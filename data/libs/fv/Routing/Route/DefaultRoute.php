@@ -31,6 +31,8 @@ class DefaultRoute extends AbstractRoute {
 
     /**
      * @param Request $request
+     *
+     * @throws \fv\Routing\Exception\RoutingException
      * @return bool
      *
      * @throw \fv\Routing\Exception\RoutingException

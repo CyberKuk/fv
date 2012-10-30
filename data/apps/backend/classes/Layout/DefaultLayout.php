@@ -5,7 +5,7 @@
  * Time: 13:37
  */
 
-namespace Application\Frontend\Layout;
+namespace Application\Backend\Layout;
 
 use fv\Layout\AbstractLayout;
 

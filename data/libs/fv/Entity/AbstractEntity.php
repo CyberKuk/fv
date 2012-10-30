@@ -37,8 +37,7 @@ class AbstractEntity {
     }
 
     /**
-     * @param array $update
-     *
+     * @param null $selectString
      * @return Query\Database\DatabaseQuery
      */
     public static function select( $selectString = null ){
@@ -111,8 +110,8 @@ class AbstractEntity {
     /**
      * @param $name
      *
+     * @throws Exception\FieldNotFoundException
      * @return Field\AbstractField
-     * @throws Exception\EntityException
      */
     public function getField( $name ){
         if( isset( $this->fields[$name] ) )

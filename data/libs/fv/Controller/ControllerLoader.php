@@ -53,6 +53,7 @@ class ControllerLoader {
 
     /**
      * @param \fv\Application\AbstractApplication $application
+     * @return \fv\Controller\ControllerLoader
      */
     private function setApplication( $application ) {
         $this->application = $application;

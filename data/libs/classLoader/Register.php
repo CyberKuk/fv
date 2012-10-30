@@ -45,8 +45,9 @@ class Register {
 
     /**
      * @param Loader $loader
+     *
+     * @throws Exception
      * @return Register
-     * @throws \Exception
      */
     function addLoader( Loader $loader ){
         if( isset($this->loaders[$loader->getNamespace()]) )
@@ -59,8 +60,8 @@ class Register {
 
     /**
      * @param $namespace
+     * @throws Exception
      * @return \ClassLoader\Loader
-     * @throws \Exception
      */
     function getLoader( $namespace ){
         if( ! isset($this->loaders[$namespace]) )

@@ -26,6 +26,7 @@ class FieldSchema {
 
     /**
      * @param \fv\Reflection\ReflectionProperty $property
+     * @return \fv\Entity\FieldSchema
      */
     public function setProperty( $property ) {
         $this->property = $property;
@@ -41,6 +42,7 @@ class FieldSchema {
 
     /**
      * @param \fv\Entity\Field\AbstractField $prototype
+     * @return \fv\Entity\FieldSchema
      */
     public function setPrototype( $prototype ) {
         $this->prototype = $prototype;

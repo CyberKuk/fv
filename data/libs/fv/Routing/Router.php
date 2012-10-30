@@ -50,7 +50,7 @@ class Router {
     }
 
     public function handle( Request $request ){
-        foreach( $this->getRoutes() as $key => $route ){
+        foreach( $this->getRoutes() as $route ){
             $response = $route->handle( $request );
 
             if( $response === false || $response === null )

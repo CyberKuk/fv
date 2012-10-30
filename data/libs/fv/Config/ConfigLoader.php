@@ -16,6 +16,7 @@ class ConfigLoader {
                 $data = file_get_contents($file);
                 return json_decode( $data, true );
             case 'php':
+                /** @noinspection PhpIncludeInspection */
                 return include $file;
             default:
                 throw new Exception\LoadConfigException("");

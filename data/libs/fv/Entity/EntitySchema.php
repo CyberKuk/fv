@@ -60,6 +60,7 @@ class EntitySchema {
     public function mixInto( AbstractEntity $class ){
         $fields = array();
         foreach( $this->schema->fields as $key => $fieldSchema ){
+            /** @var $fieldSchema FieldSchema */
             $fields[$key] = $fieldSchema->mixInto( $class );
         }
         return $fields;

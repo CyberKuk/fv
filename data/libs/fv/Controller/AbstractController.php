@@ -56,6 +56,7 @@ abstract class AbstractController {
 
     /**
      * @param Request $request
+     * @return \fv\Controller\AbstractController
      */
     public function setRequest( Request $request ) {
         $this->request = $request;
@@ -71,6 +72,7 @@ abstract class AbstractController {
 
     /**
      * @param Response $response
+     * @return \fv\Controller\AbstractController
      */
     public function setResponse( Response $response ) {
         $this->response = $response;

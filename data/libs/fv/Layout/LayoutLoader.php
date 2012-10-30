@@ -53,6 +53,7 @@ class LayoutLoader {
 
     /**
      * @param \fv\Application\AbstractApplication $application
+     * @return \fv\Layout\LayoutLoader
      */
     private function setApplication( $application ) {
         $this->application = $application;

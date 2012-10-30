@@ -3,7 +3,6 @@
 namespace Application\Frontend\Controller;
 
 use fv\Controller\AbstractController;
-use Application\Frontend\Entity\Menu;
 
 /**
  * User: cah4a

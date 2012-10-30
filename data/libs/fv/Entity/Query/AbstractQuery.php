@@ -43,6 +43,7 @@ abstract class AbstractQuery {
 
     /**
      * @param \fv\Connection\AbstractConnection $connection
+     * @return \fv\Entity\Query\AbstractQuery
      */
     private function setConnection( AbstractConnection $connection ) {
         $this->connection = $connection;

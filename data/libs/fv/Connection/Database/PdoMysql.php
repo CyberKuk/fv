@@ -16,6 +16,7 @@ use fv\Connection\Exception\ConnectionException;
 class PdoMysql extends AbstractConnection {
 
     /**
+     * @throws \fv\Connection\Exception\ConnectionException
      * @return mixed driver
      */
     protected function connect() {

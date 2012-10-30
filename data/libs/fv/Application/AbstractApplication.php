@@ -63,6 +63,7 @@ abstract class AbstractApplication {
 
     /**
      * @param \fv\Routing\Router $router
+     * @return \fv\Application\AbstractApplication
      */
     public function setRouter( Router $router ) {
         $this->router = $router;
