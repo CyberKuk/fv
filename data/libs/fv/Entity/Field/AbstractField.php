@@ -23,7 +23,7 @@ abstract class AbstractField {
 
         $field = new $class;
 
-        foreach( $schema->getValues() as $key => $value ){
+        foreach( $schema as $key => $value ){
             if( in_array( $key, array("field", "class", "var")) )
                 continue;
 

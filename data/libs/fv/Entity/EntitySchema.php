@@ -4,6 +4,8 @@ namespace fv\Entity;
 
 use \fv\Reflection\ReflectionClass;
 
+use \fv\Collection;
+
 class EntitySchema {
 
     private $class;
@@ -57,7 +59,7 @@ class EntitySchema {
 
     public function mixInto( AbstractEntity $class ){
         $fields = array();
-        foreach( $this->schema->fields->getValues() as $key => $fieldSchema ){
+        foreach( $this->schema->fields as $key => $fieldSchema ){
             $fields[$key] = $fieldSchema->mixInto( $class );
         }
         return $fields;
@@ -73,17 +75,17 @@ class EntitySchema {
     }
 
     public function getFields( $type = null ){
-        $fields = array_map( function( FieldSchema $fieldSchema ){
+        $fields = $this->schema->fields->map( function( FieldSchema $fieldSchema ){
             return $fieldSchema->getPrototype();
-        }, $this->fields->getValues() );
+        });
 
         if( ! is_null($type) ){
-            $fields = array_filter( $fields, function( $field ) use ( $type ){
+            $fields = $this->schema->fields->filter( function( $field ) use ( $type ){
                 return $field instanceof $type;
             } );
         }
 
-        return array_keys($fields);
+        return $fields->keys();
     }
 
 }

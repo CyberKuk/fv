@@ -32,10 +32,25 @@ class Collection implements \ArrayAccess, \Iterator, \Countable {
             $this->params[$name] = $value;
     }
 
-    function getValues(){
-        return array_filter( $this->params, function( $param ){
-            return ! $param instanceof Collection;
-        });
+    function filter( callable $callback ){
+        $collection = new Collection;
+        foreach( $this as $key => $value ){
+            if( $callback($value) )
+                $collection->$key = $value;
+        }
+        return $collection;
+    }
+
+    function map( callable $callback ){
+        $collection = new Collection;
+        foreach( $this as $key => $value ){
+            $collection->$key = $callback($value);
+        }
+        return $collection;
+    }
+
+    function keys(){
+        return array_keys( $this->params );
     }
 
     /**

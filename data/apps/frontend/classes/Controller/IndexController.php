@@ -24,7 +24,7 @@ class IndexController extends AbstractController {
             $n[] = new \SomeEntity();
         }
 
-        var_dump( \SomeEntity::query()->basicRead(1) );
+        var_dump( \SomeEntity::query()->fetch(1) );
 
         die( microtime(true) - $time );
 
