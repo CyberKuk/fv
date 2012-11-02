@@ -7,6 +7,10 @@ namespace fv\Entity\Field\Datetime;
  * Date: 23.10.12
  * Time: 13:08
  */
-class Created extends DateTime {
+class Created extends Modified {
+
+    function isChanged(){
+        return is_null( $this->get() );
+    }
 
 }

@@ -22,6 +22,9 @@ abstract class DatabaseQuery extends AbstractQuery {
     final public function fetch( $key ) {
         $primaryFields = $this->getSchema()->getFields( '\\fv\\Entity\\Field\\Primary' );
 
+        if( count($primaryFields) == 0 )
+            throw new \fv\Entity\Exception\QueryException("Can't fetch {$this->getEntity()} without any primary fields");
+
         $where = array();
 
         if( is_array( $key ) ){
@@ -47,7 +50,7 @@ abstract class DatabaseQuery extends AbstractQuery {
             if( count($primaryFields) > 1 )
                 throw new \fv\Entity\Exception\QueryException("Key must be array, {$this->getEntity()} uses composite key");
 
-            $where[key($primaryFields)] = $key;
+            $where[current($primaryFields)] = $key;
         }
 
         return $this->where( $where )->fetchOne();
@@ -70,9 +73,8 @@ abstract class DatabaseQuery extends AbstractQuery {
             throw new QueryException( "Can't persist Entity {$this->getEntity()}. Not implemented!" );
         }
 
-        $pkKey = reset($primaryFields);
-
-        $pkField = $entity->getField( $pkKey );
+        $pkKey = key($primaryFields);
+        $pkField = reset($primaryFields);
         $pk = $pkField->asMysql();
 
         if( empty( $pk ) ){
@@ -121,7 +123,8 @@ abstract class DatabaseQuery extends AbstractQuery {
      * @return Entity|null
      */
     public function fetchOne(){
-        $result = $this->limit(1)->extract();
+        $this->limit(1);
+        $result = $this->extract();
 
         if( count( $result ) > 0 )
             return $this->createEntity( reset($result) );
@@ -148,13 +151,29 @@ abstract class DatabaseQuery extends AbstractQuery {
     }
 
     /**
-     * @param $row
+     * @param $map
      * @return Entity
      */
-    private function createEntity( $row ){
+    private function createEntity( $map ){
         $entityName = $this->getEntity();
+        /** @var $entity \fv\Entity\AbstractEntity */
         $entity = new $entityName;
 
+        foreach( $entity->getFields() as $key => $field ){
+            if( isset( $map[$key] ) ){
+                $field->fromMysql($map[$key]);
+                unset( $map[$key] );
+            }
+        }
+
+        foreach( $map as $key => $value ){
+
+        }
+
         return $entity;
+    }
+
+    public function getTableName(){
+        return $this->getSchema()->table;
     }
 }

@@ -82,6 +82,12 @@ class AbstractEntity {
         return self::query( $connectionName )->remove( $this );
     }
 
+    /**
+     * @param      $key
+     * @param null $connectionName
+     *
+     * @return $this
+     */
     public static function fetch( $key, $connectionName = null ){
         return self::query( $connectionName )->fetch( $key );
     }
@@ -93,6 +99,9 @@ class AbstractEntity {
     public function getFields( $class = null ){
         if( is_null($class) )
             return $this->fields;
+
+        if( empty($this->fields) )
+            return array();
 
         if( ! is_object( $class ) ){
             $class = (string)$class;

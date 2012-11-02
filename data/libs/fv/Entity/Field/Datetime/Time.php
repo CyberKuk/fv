@@ -9,4 +9,15 @@ namespace fv\Entity\Field\Datetime;
  */
 class Time extends DateTime {
 
+    private $format = "H:i:s";
+
+    public function setFormat( $format ) {
+        $this->format = $format;
+        return $this;
+    }
+
+    public function getFormat() {
+        return $this->format;
+    }
+
 }

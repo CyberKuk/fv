@@ -6,4 +6,7 @@ trait Aggregate {
 
     private $aggregate = array();
 
+    public function aggregateBy( $fieldKey ){
+
+    }
 }

@@ -38,4 +38,7 @@ class SomeEntity extends \fv\Entity\AbstractEntity {
         return $this->counter->get();
     }
 
+    public function getId() {
+        return $this->id->get();
+    }
 }

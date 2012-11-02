@@ -81,7 +81,7 @@ class EntitySchema {
         });
 
         if( ! is_null($type) ){
-            $fields = $this->schema->fields->filter( function( $field ) use ( $type ){
+            $fields = $fields->filter( function( $field ) use ( $type ){
                 return $field instanceof $type;
             } );
         }

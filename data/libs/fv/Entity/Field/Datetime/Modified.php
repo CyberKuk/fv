@@ -9,4 +9,12 @@ namespace fv\Entity\Field\Datetime;
  */
 class Modified extends DateTime {
 
+    function isChanged(){
+        return true;
+    }
+
+    function asMysql(){
+        return $this->set(time())->get();
+    }
+
 }

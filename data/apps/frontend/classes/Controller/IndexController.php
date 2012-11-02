@@ -19,11 +19,16 @@ class IndexController extends AbstractController {
 
         $time = microtime(true);
 
-        for( $i=0; $i<1000; $i++ ){
+        for( $i=0; $i<1; $i++ ){
             $n[] = new \SomeEntity();
         }
 
-        var_dump( \SomeEntity::query()->fetch(1) );
+        $someEntity = new \SomeEntity(); //\SomeEntity::fetch(1);
+
+        $someEntity->setCounter(rand(0,100));
+
+        var_dump( $someEntity->persist() );
+        var_dump( $someEntity->getId() );
 
         die( microtime(true) - $time );
 
