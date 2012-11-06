@@ -4,7 +4,7 @@ namespace fv\Entity;
 
 use fv\Entity\Query\AbstractQuery;
 use fv\Entity\Field\AbstractField;
-use fv\Connection\ConnectionLoader;
+use fv\Connection\ConnectionFactory;
 
 use fv\Entity\Exception\EntityException;
 use fv\Entity\Exception\FieldNotFoundException;
@@ -54,8 +54,8 @@ class AbstractEntity {
             $connectionName = self::getDefaultConnectionName();
         }
 
-        $connectionLoader = new ConnectionLoader;
-        return $connectionLoader->getConnection( $connectionName )->createQuery()
+        $connectionFactory = new ConnectionFactory;
+        return $connectionFactory->getConnection( $connectionName )->createQuery()
             ->setEntity( get_called_class() );
     }
 
@@ -63,8 +63,8 @@ class AbstractEntity {
      * @return \fv\Connection\AbstractConnection
      */
     static public function getDefaultConnection(){
-        $connectionLoader = new ConnectionLoader;
-        return $connectionLoader->getConnection( self::getDefaultConnectionName() );
+        $connectionFactory = new ConnectionFactory;
+        return $connectionFactory->getConnection( self::getDefaultConnectionName() );
     }
 
     /**

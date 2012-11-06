@@ -9,7 +9,7 @@ namespace fv\Routing\Route;
 
 use fv\Http\Request;
 use fv\Http\Response;
-use fv\Application\ApplicationLoader;
+use fv\Application\ApplicationFactory;
 
 use fv\Routing\Exception\RoutingException;
 
@@ -43,8 +43,8 @@ class PrefixRoute extends AbstractRoute {
             $request->internal->prefix .= $this->getPrefix();
 
             if( $this->getApplication() ){
-                $applicationLoader = new ApplicationLoader;
-                $application = $applicationLoader->getApplication( $this->getApplication() );
+                $applicationFactory = new ApplicationFactory;
+                $application = $applicationFactory->getApplication( $this->getApplication() );
                 return $application->handle( $request );
             }
 

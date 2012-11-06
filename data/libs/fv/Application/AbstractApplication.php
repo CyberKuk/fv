@@ -9,8 +9,8 @@ namespace fv\Application;
 
 use fv\Http\Request;
 use fv\Routing\Router;
-use fv\Controller\ControllerLoader;
-use fv\Layout\LayoutLoader;
+use fv\Controller\ControllerFactory;
+use fv\Layout\LayoutFactory;
 
 abstract class AbstractApplication {
 
@@ -79,17 +79,17 @@ abstract class AbstractApplication {
 
 
     /**
-     * @return \fv\Controller\ControllerLoader
+     * @return \fv\Controller\ControllerFactory
      */
-    public function getControllerLoader(){
-        return new ControllerLoader( $this );
+    public function getControllerFactory(){
+        return new ControllerFactory( $this );
     }
 
     /**
-     * @return \fv\Layout\LayoutLoader
+     * @return \fv\Layout\LayoutFactory
      */
-    public function getLayoutLoader(){
-        return new LayoutLoader( $this );
+    public function getLayoutFactory(){
+        return new LayoutFactory( $this );
     }
 
 }

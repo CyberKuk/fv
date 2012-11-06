@@ -53,13 +53,13 @@ class DefaultRoute extends AbstractRoute {
                     throw new RoutingException( "No application to show controller. What I have to do with this route?" );
 
                 $controller = $application
-                    ->getControllerLoader()
+                    ->getControllerFactory()
                     ->createController( $this->getController() )
                     ->setRequest($request);
 
                 call_user_func_array( array( $controller, 'execute' ), $values );
 
-                $layout = $application->getLayoutLoader()->createLayout( $request );
+                $layout = $application->getLayoutFactory()->createLayout( $request );
                 $layout
                     ->setResponse( $controller->getResponse() )
                     ->execute();

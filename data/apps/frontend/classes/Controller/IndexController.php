@@ -32,9 +32,9 @@ class IndexController extends AbstractController {
 
         die( microtime(true) - $time );
 
-        $connectionLoader = new \fv\Connection\ConnectionLoader();
+        $connectionFactory = new \fv\Connection\ConnectionFactory();
         /** @var $connection \fv\Connection\Database\PdoMysql */
-        $connection = $connectionLoader->getConnection();
+        $connection = $connectionFactory->getConnection();
 
         //var_dump( $connection->query('select "1"')->fetchAll(\PDO::FETCH_ASSOC) );
 

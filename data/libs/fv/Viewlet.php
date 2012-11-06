@@ -8,7 +8,7 @@
 namespace fv;
 
 use fv\View\Twig as ViewEngine;
-use \fv\Application\ApplicationLoader;
+use \fv\Application\ApplicationFactory;
 
 trait Viewlet {
 
@@ -64,7 +64,7 @@ trait Viewlet {
     protected function getTemplatePath(){
         $templateClass = $this->getTemplateClass();
 
-        $loader = new ApplicationLoader;
+        $loader = new ApplicationFactory;
         $schema = $loader->getApplicationSchemaByNamespace( $templateClass );
 
         $dir = rtrim( $schema['path'], "/" ) . "/" . "views";
