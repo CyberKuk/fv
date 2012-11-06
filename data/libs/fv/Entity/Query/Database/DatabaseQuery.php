@@ -5,19 +5,20 @@ namespace fv\Entity\Query\Database;
 use fv\Entity\Query\AbstractQuery;
 use fv\Entity\AbstractEntity as Entity;
 use fv\Entity\Field\AbstractField as Field;
+use fv\Entity\Query\Mixin;
 
 use fv\Entity\Exception\QueryException;
 
 abstract class DatabaseQuery extends AbstractQuery {
 
     use
-        \fv\Entity\Query\Expand\Select,
-        \fv\Entity\Query\Expand\Where,
-        \fv\Entity\Query\Expand\Group,
-        \fv\Entity\Query\Expand\Having,
-        \fv\Entity\Query\Expand\Aggregate,
-        \fv\Entity\Query\Expand\Set,
-        \fv\Entity\Query\Expand\Limit;
+        Mixin\Select,
+        Mixin\Where,
+        Mixin\Group,
+        Mixin\Having,
+        Mixin\Aggregate,
+        Mixin\Set,
+        Mixin\Limit;
 
     final public function fetch( $key ) {
         $primaryFields = $this->getSchema()->getFields( '\\fv\\Entity\\Field\\Primary' );

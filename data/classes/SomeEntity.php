@@ -1,5 +1,7 @@
 <?php
 
+use fv\Entity\Mixin;
+
 /**
  * User: cah4a
  * Date: 23.10.12
@@ -10,7 +12,7 @@
  */
 class SomeEntity extends \fv\Entity\AbstractEntity {
 
-    use fv\Entity\Expand\Record;
+    use Mixin\Record;
 
     /**
      * @field

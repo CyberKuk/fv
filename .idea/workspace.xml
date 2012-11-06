@@ -20,91 +20,82 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="LayoutFactory.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/libs/fv/Layout/LayoutFactory.php">
+      <file leaf-file-name="Aggregate.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/libs/fv/Entity/Query/Mixin/Aggregate.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="42" selection-start="206" selection-end="206" vertical-scroll-proportion="-5.0">
+            <state line="2" column="31" selection-start="33" selection-end="38" vertical-scroll-proportion="-1.25">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LayoutFactoryException.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/libs/fv/Layout/Exception/LayoutFactoryException.php">
+      <file leaf-file-name="Group.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/libs/fv/Entity/Query/Mixin/Group.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="0" selection-start="151" selection-end="151" vertical-scroll-proportion="-3.125">
+            <state line="2" column="31" selection-start="38" selection-end="38" vertical-scroll-proportion="-1.25">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IndexController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/apps/frontend/classes/Controller/IndexController.php">
+      <file leaf-file-name="Having.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/libs/fv/Entity/Query/Mixin/Having.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="39" selection-start="656" selection-end="656" vertical-scroll-proportion="-3.5416667">
+            <state line="2" column="31" selection-start="38" selection-end="38" vertical-scroll-proportion="-1.25">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ApplicationFactory.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/data/libs/fv/Application/ApplicationFactory.php">
+      <file leaf-file-name="Limit.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/libs/fv/Entity/Query/Mixin/Limit.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="5" selection-start="1422" selection-end="1422" vertical-scroll-proportion="0.4741036">
+            <state line="2" column="31" selection-start="38" selection-end="38" vertical-scroll-proportion="-1.25">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConnectionFactory.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/libs/fv/Connection/ConnectionFactory.php">
+      <file leaf-file-name="Select.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/libs/fv/Entity/Query/Mixin/Select.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="19" selection-start="108" selection-end="108" vertical-scroll-proportion="-3.125">
+            <state line="2" column="31" selection-start="38" selection-end="38" vertical-scroll-proportion="-1.25">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConfigLoader.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/libs/fv/Config/ConfigLoader.php">
+      <file leaf-file-name="Set.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/libs/fv/Entity/Query/Mixin/Set.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="14" selection-start="99" selection-end="99" vertical-scroll-proportion="-3.125">
+            <state line="2" column="31" selection-start="38" selection-end="38" vertical-scroll-proportion="-1.25">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AbstractEntity.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/libs/fv/Entity/AbstractEntity.php">
+      <file leaf-file-name="Where.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/libs/fv/Entity/Query/Mixin/Where.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="68" column="0" selection-start="1742" selection-end="1742" vertical-scroll-proportion="-6.3333335">
+            <state line="7" column="0" selection-start="86" selection-end="86" vertical-scroll-proportion="-4.375">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Kernel.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/libs/fv/Kernel.php">
+      <file leaf-file-name="AbstractQuery.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/libs/fv/Entity/Query/AbstractQuery.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="25" selection-start="627" selection-end="627" vertical-scroll-proportion="-4.4583335">
+            <state line="5" column="29" selection-start="102" selection-end="102" vertical-scroll-proportion="2.5">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PrefixRoute.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/libs/fv/Routing/Route/PrefixRoute.php">
+      <file leaf-file-name="DatabaseQuery.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/data/libs/fv/Entity/Query/Database/DatabaseQuery.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="56" selection-start="1451" selection-end="1451" vertical-scroll-proportion="-6.0416665">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UriBasedControllerRoute.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/libs/fv/Routing/Route/UriBasedControllerRoute.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="56" selection-start="1540" selection-end="1540" vertical-scroll-proportion="-9.166667">
+            <state line="15" column="20" selection-start="336" selection-end="336" vertical-scroll-proportion="0.35856575">
               <folding />
             </state>
           </provider>
@@ -123,19 +114,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/data/libs/fv/Controller/Factory.php" />
-        <option value="$PROJECT_DIR$/data/libs/fv/Controller/ControllerFactory.php" />
-        <option value="$PROJECT_DIR$/data/libs/fv/Connection/ConnectionFactory.php" />
-        <option value="$PROJECT_DIR$/data/libs/fv/Connection/Exception/ConnectionFactoryException.php" />
-        <option value="$PROJECT_DIR$/data/libs/fv/Controller/Exception/ControllerFactoryException.php" />
-        <option value="$PROJECT_DIR$/data/libs/fv/Application/AbstractApplication.php" />
-        <option value="$PROJECT_DIR$/data/libs/fv/Layout/Exception/LayoutFactoryException.php" />
-        <option value="$PROJECT_DIR$/data/apps/frontend/classes/Controller/IndexController.php" />
-        <option value="$PROJECT_DIR$/data/libs/fv/Application/ApplicationFactory.php" />
-        <option value="$PROJECT_DIR$/data/libs/fv/Routing/Route/PrefixRoute.php" />
         <option value="$PROJECT_DIR$/data/libs/fv/Routing/Route/UriBasedControllerRoute.php" />
         <option value="$PROJECT_DIR$/data/libs/fv/Entity/AbstractEntity.php" />
         <option value="$PROJECT_DIR$/data/libs/fv/Kernel.php" />
+        <option value="$PROJECT_DIR$/data/libs/fv/Entity/Expand/Record.php" />
+        <option value="$PROJECT_DIR$/data/libs/fv/Entity/Expand/User.php" />
+        <option value="$PROJECT_DIR$/data/libs/fv/Entity/Mixin/User.php" />
+        <option value="$PROJECT_DIR$/data/classes/SomeEntity.php" />
+        <option value="$PROJECT_DIR$/data/libs/fv/Entity/Mixin/Record.php" />
+        <option value="$PROJECT_DIR$/data/libs/fv/Entity/Query/Mixin/Aggregate.php" />
+        <option value="$PROJECT_DIR$/data/libs/fv/Entity/Query/Mixin/Group.php" />
+        <option value="$PROJECT_DIR$/data/libs/fv/Entity/Query/Mixin/Having.php" />
+        <option value="$PROJECT_DIR$/data/libs/fv/Entity/Query/Mixin/Limit.php" />
+        <option value="$PROJECT_DIR$/data/libs/fv/Entity/Query/Mixin/Select.php" />
+        <option value="$PROJECT_DIR$/data/libs/fv/Entity/Query/Mixin/Set.php" />
+        <option value="$PROJECT_DIR$/data/libs/fv/Entity/Query/Mixin/Where.php" />
+        <option value="$PROJECT_DIR$/data/libs/fv/Entity/Query/Database/DatabaseQuery.php" />
       </list>
     </option>
   </component>
@@ -265,7 +259,191 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="View" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="Entity" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Entity" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Query" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Entity" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Query" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Mixin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Entity" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Query" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Database" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Entity" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Mixin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Entity" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Field" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -469,7 +647,7 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23333333" sideWeight="0.6712329" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32876712" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -533,100 +711,114 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/data/libs/fv/Controller/ControllerFactory.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="282" selection-end="282" vertical-scroll-proportion="-7.5">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/libs/fv/Connection/Exception/ConnectionFactoryException.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="20" selection-start="119" selection-end="119" vertical-scroll-proportion="-3.125">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/libs/fv/Controller/Exception/ControllerFactoryException.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="14" selection-start="61" selection-end="61" vertical-scroll-proportion="-3.125">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/libs/fv/Application/AbstractApplication.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="26" selection-start="2046" selection-end="2046" vertical-scroll-proportion="-8.041667">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/libs/fv/Layout/LayoutFactory.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="42" selection-start="206" selection-end="206" vertical-scroll-proportion="-5.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/libs/fv/Layout/Exception/LayoutFactoryException.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="151" selection-end="151" vertical-scroll-proportion="-3.125">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/apps/frontend/classes/Controller/IndexController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="39" selection-start="656" selection-end="656" vertical-scroll-proportion="-3.5416667">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/libs/fv/Connection/ConnectionFactory.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="19" selection-start="108" selection-end="108" vertical-scroll-proportion="-3.125">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/libs/fv/Config/ConfigLoader.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="14" selection-start="99" selection-end="99" vertical-scroll-proportion="-3.125">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/libs/fv/Routing/Route/PrefixRoute.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="56" selection-start="1451" selection-end="1451" vertical-scroll-proportion="-6.0416665">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/libs/fv/Routing/Route/UriBasedControllerRoute.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="56" selection-start="1540" selection-end="1540" vertical-scroll-proportion="-9.166667">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/libs/fv/Entity/AbstractEntity.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="68" column="0" selection-start="1742" selection-end="1742" vertical-scroll-proportion="-6.3333335">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/libs/fv/Kernel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="25" selection-start="627" selection-end="627" vertical-scroll-proportion="-4.4583335">
+        <state line="32" column="25" selection-start="627" selection-end="627" vertical-scroll-proportion="0.2">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/data/libs/fv/Application/ApplicationFactory.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="5" selection-start="1422" selection-end="1422" vertical-scroll-proportion="0.4741036">
+        <state line="47" column="46" selection-start="1470" selection-end="1470" vertical-scroll-proportion="0.53386456">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/libs/fv/View/AbstractView.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="29" selection-start="112" selection-end="112" vertical-scroll-proportion="2.7083333">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/libs/fv/Viewlet.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="43" selection-start="368" selection-end="368" vertical-scroll-proportion="-11.25">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/classes/SomeEntity.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="14" selection-start="47" selection-end="47" vertical-scroll-proportion="0.2186589">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/libs/fv/Entity/Mixin/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="12" selection-start="47" selection-end="47" vertical-scroll-proportion="0.17492712">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/libs/fv/Entity/Mixin/Record.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="13" selection-start="72" selection-end="72" vertical-scroll-proportion="0.30612245">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/libs/fv/Entity/Query/Mixin/Aggregate.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="31" selection-start="33" selection-end="38" vertical-scroll-proportion="-1.25">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/libs/fv/Entity/Query/Mixin/Group.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="31" selection-start="38" selection-end="38" vertical-scroll-proportion="-1.25">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/libs/fv/Entity/Query/Mixin/Having.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="31" selection-start="38" selection-end="38" vertical-scroll-proportion="-1.25">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/libs/fv/Entity/Query/Mixin/Limit.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="31" selection-start="38" selection-end="38" vertical-scroll-proportion="-1.25">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/libs/fv/Entity/Query/Mixin/Select.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="31" selection-start="38" selection-end="38" vertical-scroll-proportion="-1.25">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/libs/fv/Entity/Query/Mixin/Set.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="31" selection-start="38" selection-end="38" vertical-scroll-proportion="-1.25">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/libs/fv/Entity/Query/Mixin/Where.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="0" selection-start="86" selection-end="86" vertical-scroll-proportion="-4.375">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/libs/fv/Entity/Query/AbstractQuery.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="29" selection-start="102" selection-end="102" vertical-scroll-proportion="2.5">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/libs/fv/Entity/Query/Database/DatabaseQuery.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="20" selection-start="336" selection-end="336" vertical-scroll-proportion="0.35856575">
           <folding />
         </state>
       </provider>
