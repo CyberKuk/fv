@@ -15,7 +15,7 @@ class Twig extends AbstractView {
 
 
         if( ! isset( $twig ) ){
-            $config = \fv\Config\ConfigLoader::load("./configs/twig.json");
+            $config = \fv\Config\ConfigLoader::loadArray("./configs/twig.json", true);
 
             if( !isset( $config['cache'] ) ){
                 if( is_dir('./cache') )

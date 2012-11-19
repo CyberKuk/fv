@@ -63,7 +63,7 @@ class Router {
     }
 
     function loadFromConfigFile( $file ){
-        $routes = ConfigLoader::load( $file );
+        $routes = ConfigLoader::loadArray( $file );
 
         foreach( $routes as $key => $route ){
             $class = AbstractRoute::build( $route );

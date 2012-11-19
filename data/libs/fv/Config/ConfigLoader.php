@@ -6,10 +6,11 @@
  */
 
 namespace fv\Config;
+use fv\Collection;
 
 class ConfigLoader {
 
-    static function load( $file ){
+    static function loadArray( $file ){
         $path_info = pathinfo($file);
         switch( $path_info['extension'] ){
             case 'json':
@@ -21,6 +22,10 @@ class ConfigLoader {
             default:
                 throw new Exception\LoadConfigException("");
         }
+    }
+
+    static function loadCollection( $file ){
+        return new Collection( self::loadArray($file) );
     }
 
 }

@@ -45,7 +45,7 @@ class ConnectionFactory {
     }
 
     public function loadFromConfigFile( $file ){
-        self::$schema = ConfigLoader::load( $file );
+        self::$schema = ConfigLoader::loadArray( $file );
         return $this;
     }
 }
