@@ -4,11 +4,12 @@ namespace fv\Entity\Query;
 
 use fv\Connection\AbstractConnection;
 use fv\Entity\AbstractEntity;
+use fv\Entity\EntitySchema;
 
 abstract class AbstractQuery {
 
     /** @var string Entity Class Name */
-    private $entity;
+    private $entityClassName;
 
     /** @var AbstractConnection */
     private $connection;
@@ -25,20 +26,20 @@ abstract class AbstractQuery {
     }
 
     /**
-     * @param string $entity Entity Class Name
+     * @param string $entityClassName
      *
      * @return AbstractQuery
      */
-    public function setEntity( $entity ) {
-        $this->entity = (string)$entity;
+    public function setEntityClassName( $entityClassName ) {
+        $this->entityClassName = (string)$entityClassName;
         return $this;
     }
 
     /**
      * @return string Entity Class Name
      */
-    public function getEntity() {
-        return $this->entity;
+    public function getEntityClassName() {
+        return $this->entityClassName;
     }
 
     /**
@@ -57,8 +58,11 @@ abstract class AbstractQuery {
         return $this->connection;
     }
 
+    /**
+     * @return \fv\Entity\EntitySchema
+     */
     public function getSchema(){
-        return \fv\Entity\EntitySchema::getSchema( $this->getEntity() );
+        return EntitySchema::getSchema( $this->getEntityClassName() );
     }
 
 }

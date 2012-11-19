@@ -2,7 +2,6 @@
 
 namespace fv\Entity;
 
-use fv\Entity\Query\AbstractQuery;
 use fv\Entity\Field\AbstractField;
 use fv\Connection\ConnectionFactory;
 
@@ -10,44 +9,54 @@ use fv\Entity\Exception\EntityException;
 use fv\Entity\Exception\FieldNotFoundException;
 
 /**
- * User: cah4a
- * Date: 05.10.12
- * Time: 18:19
+ * Abstract Entity is base class to use to describe the domain model.
  */
-class AbstractEntity {
+abstract class AbstractEntity {
 
     /** @var \fv\Entity\AbstractField[] */
     private $fields;
 
+    /**
+     * Mix entity schema to new Instance
+     */
     final public function __construct(){
         $this->fields = self::getSchema()->mixInto( $this );
     }
 
+    /**
+     * Use build method to get Schema for static class
+     *
+     * @return EntitySchema
+     */
     final public static function getSchema(){
         return EntitySchema::getSchema( get_called_class() );
     }
 
     /**
-     * @param array $update
+     * Proxy method to create update query
      *
-     * @return Query\Database\DatabaseQuery
+     * @param array $update
+     * @return Query\AbstractQuery|Query\Database\DatabaseQuery
      */
     public static function update( array $update = array() ){
         return self::query()->update( $update );
     }
 
     /**
+     * Proxy method to create select query
+     *
      * @param null $selectString
-     * @return Query\Database\DatabaseQuery
+     * @return Query\Database\DatabaseQuery|Query\AbstractQuery
      */
     public static function select( $selectString = null ){
         return self::query()->select( $selectString );
     }
 
     /**
-     * @param null $connectionName
+     * Proxy method to create query
      *
-     * @return Query\AbstractQuery
+     * @param null $connectionName
+     * @return Query\Database\DatabaseQuery|Query\AbstractQuery
      */
     public static function query( $connectionName = null ){
         if( is_null( $connectionName ) ){
@@ -56,7 +65,7 @@ class AbstractEntity {
 
         $connectionFactory = new ConnectionFactory;
         return $connectionFactory->getConnection( $connectionName )->createQuery()
-            ->setEntity( get_called_class() );
+            ->setEntityClassName( get_called_class() );
     }
 
     /**

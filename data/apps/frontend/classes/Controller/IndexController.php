@@ -16,12 +16,23 @@ class IndexController extends AbstractController {
     }
 
     function get( $name = "default world" ){
-
         $time = microtime(true);
 
-        for( $i=0; $i<1; $i++ ){
-            $n[] = new \SomeEntity();
-        }
+        /** @var $query \fv\Entity\Query\Database\MysqlQuery */
+        $query = \SomeEntity::query();
+
+        $res = $query
+            ->where("counter > :counter", array("counter" => "20"))
+            ->aggregateBy('counter')
+            ->andWhere("id > 1")
+            ->fetchAll();
+
+        var_dump( $res );
+
+        /*
+        //for( $i=0; $i<1; $i++ ){
+        //    $n[] = new \SomeEntity();
+        //}
 
         $someEntity = new \SomeEntity(); //\SomeEntity::fetch(1);
 
@@ -29,6 +40,8 @@ class IndexController extends AbstractController {
 
         var_dump( $someEntity->persist() );
         var_dump( $someEntity->getId() );
+
+        $someEntity->text;*/
 
         die( microtime(true) - $time );
 

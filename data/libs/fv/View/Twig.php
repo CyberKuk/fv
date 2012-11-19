@@ -23,8 +23,7 @@ class Twig extends AbstractView {
             }
 
             $loader = new \Twig_Loader_Filesystem('.');
-            $twig = new \Twig_Environment($loader, $config);
-            //$twig = new \Twig_Environment( $loader );
+            $twig = new \Twig_Environment( $loader, $config );
         }
 
         return $twig;

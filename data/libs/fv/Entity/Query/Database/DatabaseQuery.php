@@ -5,35 +5,34 @@ namespace fv\Entity\Query\Database;
 use fv\Entity\Query\AbstractQuery;
 use fv\Entity\AbstractEntity as Entity;
 use fv\Entity\Field\AbstractField as Field;
-use fv\Entity\Query\Mixin;
 
 use fv\Entity\Exception\QueryException;
 
 abstract class DatabaseQuery extends AbstractQuery {
 
     use
-        Mixin\Select,
-        Mixin\Where,
-        Mixin\Group,
-        Mixin\Having,
-        Mixin\Aggregate,
-        Mixin\Set,
-        Mixin\Limit;
+        \fv\Entity\Query\Mixin\Select,
+        \fv\Entity\Query\Mixin\Where,
+        \fv\Entity\Query\Mixin\Group,
+        \fv\Entity\Query\Mixin\Having,
+        \fv\Entity\Query\Mixin\Aggregate,
+        \fv\Entity\Query\Mixin\Set,
+        \fv\Entity\Query\Mixin\Limit;
 
     final public function fetch( $key ) {
         $primaryFields = $this->getSchema()->getFields( '\\fv\\Entity\\Field\\Primary' );
 
         if( count($primaryFields) == 0 )
-            throw new \fv\Entity\Exception\QueryException("Can't fetch {$this->getEntity()} without any primary fields");
+            throw new \fv\Entity\Exception\QueryException("Can't fetch {$this->getEntityClassName()} without any primary fields");
 
         $where = array();
 
         if( is_array( $key ) ){
             if( count($primaryFields) == 1 && count($key) != 1 )
-                throw new \fv\Entity\Exception\QueryException("Key must be value or array with one value, {$this->getEntity()} not use composite key");
+                throw new \fv\Entity\Exception\QueryException("Key must be value or array with one value, {$this->getEntityClassName()} not use composite key");
 
             if( count($primaryFields) != count($key) )
-                throw new \fv\Entity\Exception\QueryException("Key must must include exact " . count($primaryFields) . " elements for {$this->getEntity()} composite key" );
+                throw new \fv\Entity\Exception\QueryException("Key must must include exact " . count($primaryFields) . " elements for {$this->getEntityClassName()} composite key" );
 
             foreach( $primaryFields as $fieldKey => $field ){
                 if( isset( $key[$fieldKey] ) ){
@@ -49,7 +48,7 @@ abstract class DatabaseQuery extends AbstractQuery {
 
         } else {
             if( count($primaryFields) > 1 )
-                throw new \fv\Entity\Exception\QueryException("Key must be array, {$this->getEntity()} uses composite key");
+                throw new \fv\Entity\Exception\QueryException("Key must be array, {$this->getEntityClassName()} uses composite key");
 
             $where[current($primaryFields)] = $key;
         }
@@ -61,17 +60,17 @@ abstract class DatabaseQuery extends AbstractQuery {
         $primaryFields = $entity->getPrimaryFields();
 
         if( count($primaryFields) == 0 ){
-            throw new QueryException( "Can't persist Entity {$this->getEntity()} without any primary key used" );
+            throw new QueryException( "Can't persist Entity {$this->getEntityClassName()} without any primary key used" );
         }
 
         if( count($primaryFields) > 1 ){
             foreach( $primaryFields as $key => $field ){
                 if( ! $field->asMysql() )
-                    throw new QueryException( "Can't persist Entity {$this->getEntity()} with empty primary key {$key} while composite key used" );
+                    throw new QueryException( "Can't persist Entity {$this->getEntityClassName()} with empty primary key {$key} while composite key used" );
             }
 
             // @todo: Adding functionality for support persisting composite keys
-            throw new QueryException( "Can't persist Entity {$this->getEntity()}. Not implemented!" );
+            throw new QueryException( "Can't persist Entity {$this->getEntityClassName()}. Not implemented!" );
         }
 
         $pkKey = key($primaryFields);
@@ -124,31 +123,45 @@ abstract class DatabaseQuery extends AbstractQuery {
      * @return Entity|null
      */
     public function fetchOne(){
-        $this->limit(1);
-        $result = $this->extract();
+        $result = $this->fetchOneAssoc();
 
-        if( count( $result ) > 0 )
-            return $this->createEntity( reset($result) );
-        else
-            return null;
+        if( $result )
+            $result = $this->createEntity( reset($result) );
+
+        return $result;
     }
 
     /**
      * @return Entity[]
      */
     public function fetchAll(){
+        $results = $this->fetchAssoc();
 
+        if( count( $results ) > 0 ){
+            $entities = [];
+            foreach( $results as $result ){
+                $entities[] = $this->createEntity( $result );
+            }
+            return $this->reaggregate( $entities );
+        } else
+            return array();
     }
 
     /**
      * @return array()
      */
     public function fetchAssoc(){
-
+        return $this->extract();
     }
 
     public function fetchOneAssoc(){
+        $this->limit(1);
+        $result = $this->extract();
 
+        if( count( $result ) > 0 )
+            return reset($result);
+        else
+            return null;
     }
 
     /**
@@ -156,7 +169,7 @@ abstract class DatabaseQuery extends AbstractQuery {
      * @return Entity
      */
     private function createEntity( $map ){
-        $entityName = $this->getEntity();
+        $entityName = $this->getEntityClassName();
         /** @var $entity \fv\Entity\AbstractEntity */
         $entity = new $entityName;
 
@@ -168,7 +181,7 @@ abstract class DatabaseQuery extends AbstractQuery {
         }
 
         foreach( $map as $key => $value ){
-
+            // @todo: save heap fields to entity
         }
 
         return $entity;

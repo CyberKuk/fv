@@ -1,6 +1,6 @@
 <?php
 
-use fv\Entity\Mixin;
+use fv\Entity\Mixin\Record;
 
 /**
  * User: cah4a
@@ -9,10 +9,12 @@ use fv\Entity\Mixin;
  * @table someEntity
  * @connection default
  * @method getSomething()
+ *
+ * @property $text
  */
 class SomeEntity extends \fv\Entity\AbstractEntity {
 
-    use Mixin\Record;
+    use Record;
 
     /**
      * @field
@@ -43,4 +45,6 @@ class SomeEntity extends \fv\Entity\AbstractEntity {
     public function getId() {
         return $this->id->get();
     }
+
+
 }

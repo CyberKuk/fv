@@ -49,8 +49,10 @@ class MysqlQuery extends DatabaseQuery {
             $where[] = "({$statement})";
         }
 
-        if( !empty($where) )
-            $where = "WHERE " . implode(" AND ", $where);
+        if( empty($where) )
+            return "";
+
+        $where = "WHERE " . implode(" AND ", $where);
 
         return $where;
     }
