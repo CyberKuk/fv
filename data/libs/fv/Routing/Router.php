@@ -5,6 +5,7 @@ namespace fv\Routing;
 use fv\Http\Request;
 use fv\Config\ConfigLoader;
 use fv\Routing\Route\AbstractRoute;
+use fv\Routing\Exception\RouterException;
 
 /**
  * User: cah4a
@@ -22,6 +23,9 @@ class Router {
      * @return $this
      */
     final public function addRoute( $key, AbstractRoute $route ){
+        if( isset($this->routes[$key]) )
+            throw new RouterException("Route with key {$key} duplicated.");
+
         $this->routes[$key] = $route;
         return $this;
     }
@@ -42,7 +46,6 @@ class Router {
         unset( $this->routes[$key] );
 
         return $this;
-
     }
 
     final public function getRoutes() {

@@ -188,6 +188,6 @@ abstract class DatabaseQuery extends AbstractQuery {
     }
 
     public function getTableName(){
-        return $this->getSchema()->table;
+        return (string)$this->getSchema()->table;
     }
 }

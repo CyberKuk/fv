@@ -37,13 +37,13 @@ class LocalizationEntity extends Entity {
                 $baseClassName = get_class($this) . "Localization";
 
             if( !class_exists( $baseClassName ) ){
-                throw new Exception\LocalizationClassException("Localization class '{$baseClassName}' not found");
+                throw new Exception\LocalizationException("Localization class '{$baseClassName}' not found");
             }
 
             $class = new $baseClassName;
 
             if( ! $class instanceof LocalizationEntity ){
-                throw new Exception\LocalizationClassException("Localization class '{$baseClassName}' must be instance of \\Bundle\\fv\\AbstractEntity");
+                throw new Exception\LocalizationException("Localization class '{$baseClassName}' must be instance of \\Bundle\\fv\\AbstractEntity");
             }
 
             self::$baseClassName = $baseClassName;

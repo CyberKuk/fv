@@ -2,7 +2,6 @@
 
 namespace Bundle\fv\Localization\Exception;
 
-class LocalizationClassException extends \Exception
-{
+class LocalizationException extends \Exception {
 
 }

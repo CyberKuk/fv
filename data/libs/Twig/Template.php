@@ -43,7 +43,7 @@ abstract class Twig_Template implements Twig_TemplateInterface
      *
      * @return string The template name
      */
-    abstract public function getTemplateName();
+    abstract public function getTemplate();
 
     /**
      * {@inheritdoc}
@@ -71,7 +71,7 @@ abstract class Twig_Template implements Twig_TemplateInterface
         if (false === $parent) {
             return false;
         } elseif ($parent instanceof Twig_Template) {
-            $name = $parent->getTemplateName();
+            $name = $parent->getTemplate();
             $this->parents[$name] = $parent;
             $parent = $name;
         } elseif (!isset($this->parents[$parent])) {
@@ -110,7 +110,7 @@ abstract class Twig_Template implements Twig_TemplateInterface
         } elseif (false !== $parent = $this->getParent($context)) {
             $parent->displayBlock($name, $context, $blocks);
         } else {
-            throw new Twig_Error_Runtime(sprintf('The template has no parent and no traits defining the "%s" block', $name), -1, $this->getTemplateName());
+            throw new Twig_Error_Runtime(sprintf('The template has no parent and no traits defining the "%s" block', $name), -1, $this->getTemplate());
         }
     }
 

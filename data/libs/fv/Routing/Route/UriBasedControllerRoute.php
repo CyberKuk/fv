@@ -17,7 +17,7 @@ use fv\Viewlet;
 
 class UriBasedControllerRoute extends AbstractRoute {
 
-    function __construct( $params = array() ) {
+    function __construct( array $params = array() ) {
 
     }
 

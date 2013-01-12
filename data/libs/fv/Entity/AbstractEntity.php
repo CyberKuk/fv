@@ -13,7 +13,7 @@ use fv\Entity\Exception\FieldNotFoundException;
  */
 abstract class AbstractEntity {
 
-    /** @var \fv\Entity\AbstractField[] */
+    /** @var \fv\Entity\Field\AbstractField[] */
     private $fields;
 
     /**

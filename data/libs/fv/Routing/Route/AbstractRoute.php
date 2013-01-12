@@ -16,7 +16,7 @@ use fv\Application\AbstractApplication;
  */
 abstract class AbstractRoute {
 
-    abstract function __construct( $params = array() );
+    abstract function __construct( array $params = array() );
 
 
     /**
@@ -46,7 +46,7 @@ abstract class AbstractRoute {
         $class = new $className( $config );
 
         if( ! $class instanceof AbstractRoute )
-            throw new RoutingException( "{$className} not instance of fv\\Routing\\AbstractRoute: " );
+            throw new RoutingException( "{$className} not instance of fv\\Routing\\AbstractRoute" );
 
         return $class;
     }

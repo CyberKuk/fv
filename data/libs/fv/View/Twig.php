@@ -13,7 +13,6 @@ class Twig extends AbstractView {
     private function getTwig(){
         static $twig;
 
-
         if( ! isset( $twig ) ){
             $config = \fv\Config\ConfigLoader::loadArray("./configs/twig.json", true);
 

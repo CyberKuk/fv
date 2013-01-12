@@ -1,10 +1,10 @@
 <?php
 
-namespace Bundle\fv\Localization;
+namespace Bundle\fv\Localization\Entity;
 
 use fv\Entity\AbstractEntity;
 
-class LanguageEntity extends AbstractEntity
+class Language extends AbstractEntity
 {
 
     /**

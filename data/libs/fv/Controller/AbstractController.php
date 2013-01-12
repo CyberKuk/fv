@@ -37,7 +37,7 @@ abstract class AbstractController {
      * If this method does not exist
      * @throws \fv\Routing\Exception\RoutingException
      */
-    function execute(){
+    final public function execute(){
         $method = strtolower( $this->getRequest()->getMethod() );
 
         if( !method_exists( $this, $method ) )
@@ -85,4 +85,6 @@ abstract class AbstractController {
     public function getResponse() {
         return $this->response;
     }
+
+    public function getTemplateName(){}
 }

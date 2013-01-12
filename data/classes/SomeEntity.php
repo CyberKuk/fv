@@ -6,19 +6,15 @@ use fv\Entity\Mixin\Record;
  * User: cah4a
  * Date: 23.10.12
  * Time: 12:06
- * @table someEntity
- * @connection default
- * @method getSomething()
- *
- * @property $text
  */
 class SomeEntity extends \fv\Entity\AbstractEntity {
 
-    use Record;
+    use Record, Bundle\fv\Localization\Entity\Mixin\Localization;
 
     /**
      * @field
-     * @var \fv\Entity\Field\Primary
+     * @primary true
+     * @var \fv\Entity\Field\Int
      */
     protected $id;
 
@@ -29,6 +25,18 @@ class SomeEntity extends \fv\Entity\AbstractEntity {
      * @var \fv\Entity\Field\Int
      */
     protected $counter;
+
+    /**
+     * @index
+     * @var \fv\Connection\Database\Index\Primary
+     */
+    protected $primaryIndex;
+
+    /**
+     * @index
+     * @var \fv\Connection\Database\Index\Key
+     */
+    protected $counterIndex;
 
     public function setCounter( $counter ) {
         $this->counter->set( $counter );

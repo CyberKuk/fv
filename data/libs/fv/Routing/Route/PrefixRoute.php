@@ -15,12 +15,12 @@ use fv\Routing\Exception\RoutingException;
 
 class PrefixRoute extends AbstractRoute {
 
-    protected $application;
+    protected $applicationName;
     protected $prefix;
 
-    function __construct( $params = array() ) {
+    function __construct( array $params = array() ) {
         if( isset( $params['application'] ) )
-            $this->setApplication( $params['application'] );
+            $this->setApplicationName( $params['application'] );
 
         if( isset( $params['prefix'] ) )
             $this->setPrefix( $params['prefix'] );
@@ -42,9 +42,9 @@ class PrefixRoute extends AbstractRoute {
             $request->setUri( $newUri );
             $request->internal->prefix .= $this->getPrefix();
 
-            if( $this->getApplication() ){
+            if( $this->getApplicationName() ){
                 $applicationFactory = new ApplicationFactory;
-                $application = $applicationFactory->getApplication( $this->getApplication() );
+                $application = $applicationFactory->getApplication( $this->getApplicationName() );
                 return $application->handle( $request );
             }
 
@@ -63,13 +63,13 @@ class PrefixRoute extends AbstractRoute {
         return $this->prefix;
     }
 
-    final public function setApplication( $application ) {
-        $this->application = $application;
+    final public function setApplicationName( $applicationName ) {
+        $this->applicationName = $applicationName;
         return $this;
     }
 
-    final public function getApplication() {
-        return $this->application;
+    final public function getApplicationName() {
+        return $this->applicationName;
     }
 
 }

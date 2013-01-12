@@ -8,7 +8,7 @@
 namespace fv;
 
 use fv\View\Twig as ViewEngine;
-use \fv\Application\ApplicationFactory;
+use fv\Application\ApplicationFactory;
 
 trait Viewlet {
 
@@ -75,6 +75,8 @@ trait Viewlet {
 
         return $dir . $path;
     }
+
+
 
     protected function getTemplateClass(){
         return get_class($this);

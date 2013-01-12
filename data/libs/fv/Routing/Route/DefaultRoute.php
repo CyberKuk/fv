@@ -18,7 +18,7 @@ class DefaultRoute extends AbstractRoute {
     protected $params = array();
     protected $url;
 
-    function __construct( $params = array() ) {
+    function __construct( array $params = array() ) {
         if( isset( $params['controller'] ) )
             $this->setController( $params['controller'] );
 
@@ -54,8 +54,9 @@ class DefaultRoute extends AbstractRoute {
 
                 $controller = $application
                     ->getControllerFactory()
-                    ->createController( $this->getController() )
-                    ->setRequest($request);
+                    ->createController( $this->getController() );
+
+                $controller->setRequest($request);
 
                 call_user_func_array( array( $controller, 'execute' ), $values );
 

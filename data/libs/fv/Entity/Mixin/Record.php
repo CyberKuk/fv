@@ -16,4 +16,8 @@ trait Record {
      */
     public $mtime;
 
+    protected function record(){
+
+    }
+
 }
