@@ -44,53 +44,53 @@
 
             $this->implements[] = $name;
 
-            $schema = fvSite::$fvConfig->get( "entities.{$name}" );
+            $schema = Schema::get( "entities.{$name}" );
 
             if( !$schema )
-                $schema = fvSite::$fvConfig->get( "abstract.{$name}" );
+                $schema = Schema::get( "abstract.{$name}" );
 
             if( !$schema )
                 throw new Exception( "Can't find implementation '{$name}' of '" . $className . "' Entity" );
 
-            if( is_array( $schema['implements'] ) )
-                foreach( $schema['implements'] as $implementSchemaName ){
+            if( $schema->implements )
+                foreach( $schema->implements as $implementSchemaName ){
                     $this->implement( $implementSchemaName );
                 }
 
-            if( is_array( $schema['foreigns'] ) )
-                foreach( $schema['foreigns'] as $key => $foreign ){
+            if( $schema->foreigns )
+                foreach( $schema->foreigns as $key => $foreign ){
                     $foreign['type'] = "foreign" . ( $foreign['type'] ? '_' . ucfirst( $foreign['type'] ) : '' );
                     $this->updateFields( array( $foreign['key'] => $foreign ) );
                     $this->_foreign[$key] = $foreign['key'];
                 }
 
-            if( is_array( $schema['constraints'] ) ){
-                foreach( $schema['constraints'] as $key => $constraint ){
+            if( $schema->constraints ){
+                foreach( $schema->constraints as $key => $constraint ){
                     $constraint['type'] = "constraint" . ( $constraint['type'] ? '_' . ucfirst( $constraint['type'] )
                         : '' );
                     $constraint['currentEntity'] = $className;
                     $this->updateFields( array( $key => $constraint ) );
                 }
             }
-            if( is_array( $schema['references'] ) ){
-                foreach( $schema['references'] as $key => $reference ){
+            if( $schema->references ){
+                foreach( $schema->references as $key => $reference ){
                     $reference['type'] = "references" . ( $reference['type'] ? '_' . ucfirst( $reference['type'] )
                         : '' );
                     $reference['currentEntity'] = $className;
                     $this->updateFields( array( $key => $reference ) );
                 }
             }
-            if( is_array( $schema['fields'] ) )
-                $this->updateFields( $schema['fields'] );
+            if( $schema->fields )
+                $this->updateFields( $schema->fields );
 
-            if( $schema['table_name'] )
-                $this->tableName = $schema['table_name'];
+            if( $schema->table_name )
+                $this->tableName = $schema->table_name;
 
-            if( $schema['primary_key'] )
-                $this->keyName = $schema['primary_key'];
+            if( $schema->primary_key )
+                $this->keyName = $schema->primary_key;
 
-            if( $schema['subclass_key'] )
-                $this->subclassKeyName = $schema['subclass_key'];
+            if( $schema->subclass_key )
+                $this->subclassKeyName = $schema->subclass_key;
         }
 
         public function __get( $name ){
@@ -144,7 +144,9 @@
          * @static
          * @return string Entity Name
          */
-        abstract static function getEntity();
+        static function getEntity(){
+            throw new \Exception("No entity name");
+        }
 
         /**
          * Это красотень ребятульки! Здесь мы получаем язык, указываем всем полям,
@@ -179,7 +181,7 @@
                     languageId = {$lang->getPk()}
                     limit 1";
 
-                $result = fvSite::$pdo->query( $sql )->fetchAll( PDO::FETCH_ASSOC );
+                $result = Query::getDriver()->query( $sql )->fetchAll( PDO::FETCH_ASSOC );
                 ;
                 if( count( $result ) == 1 ){
                     $result = current( $result );
@@ -197,7 +199,7 @@
                 else{
                     $insertList = array( "id" => $this->getPk(),
                                          "languageId" => $lang->getPk(), );
-                    fvSite::$pdo->insert( $this->getLanguageTableName(), $insertList );
+                    Query::getDriver()->insert( $this->getLanguageTableName(), $insertList );
 
                     foreach( $this->_fields as $fieldName => $field ){
                         if( $field->isLanguaged() ){
@@ -282,10 +284,10 @@
                 $saveType = self::UPDATE;
             }
 
-            $isTransactionOpen = fvSite::$pdo->isTransactionOpen();
+            $isTransactionOpen = Query::getDriver()->isTransactionOpen();
             try{
                 if( !$isTransactionOpen )
-                    fvSite::$pdo->beginTransaction();
+                    Query::getDriver()->beginTransaction();
 
                 $insertList = array();
                 foreach( $this->getFields() as $key => $field ){
@@ -321,7 +323,7 @@
                 }
 
                 if( $saveType == self::INSERT )
-                    $this->setPk( fvSite::$pdo->lastInsertId() );
+                    $this->setPk( Query::getDriver()->lastInsertId() );
 
 
                 /** Привет, ребята я – охуенный костыль. Давайте дружить, сучечьки
@@ -346,13 +348,13 @@
                                 $tInsertList = $insertList;
                                 $tInsertList['id'] = $this->getPk();
                                 $tInsertList['languageId'] = $lang->getPk();
-                                fvSite::$pdo->insert( $this->getLanguageTableName(), $tInsertList );
+                                Query::getDriver()->insert( $this->getLanguageTableName(), $tInsertList );
                             }
                             if( $saveType == self::UPDATE ){
                                 $whereParams = array( $this->getPkName() => $this->getPk(),
                                                       "languageId"       => $lang->getPk() );
                                 $where = array( "{$this->getPkName()} = :{$this->getPkName()} AND languageId = :languageId" );
-                                fvSite::$pdo->update( $this->getLanguageTableName(),
+                                Query::getDriver()->update( $this->getLanguageTableName(),
                                                       $insertList,
                                                       $where,
                                                       $whereParams );
@@ -370,7 +372,7 @@
                 $this->setChanged( false );
 
                 if( !$isTransactionOpen )
-                    fvSite::$pdo->commit();
+                    Query::getDriver()->commit();
 
                 /*
                 if( fvMemCache::getInstance()->checkMemCache() ){
@@ -382,7 +384,7 @@
             }
             catch( Exception $e ){
                 if( !$isTransactionOpen )
-                    fvSite::$pdo->rollBack();
+                    Query::getDriver()->rollBack();
 
                 if( $logging && $this instanceof iLogger ){
                     $this->putToLog( Log::OPERATION_ERROR );
@@ -403,7 +405,7 @@
 
             $where = array( "{$this->getPkName()} = :{$this->getPkName()}" );
             $whereParams = array( $this->getPkName() => $this->getPk() );
-            fvSite::$pdo->delete( $this->getTableName(), $where, $whereParams );
+            Query::getDriver()->delete( $this->getTableName(), $where, $whereParams );
 
             if( $this instanceof iLogger ){
                 $this->putToLog( Log::OPERATION_DELETE );

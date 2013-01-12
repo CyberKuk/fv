@@ -4,6 +4,8 @@
 
     use Bundle\fv\Orm\Field\AbstractField as Field;
     use Bundle\fv\Orm\Exception\FieldException as Exception;
+    use Bundle\fv\Orm\Field\Heap as FieldHeap;
+    use Bundle\fv\Orm\Root\Language;
 
     abstract class FieldCollection {
 
@@ -13,9 +15,7 @@
          */
         protected $_fields = Array( );
 
-        protected function updateFields( array $schema ) {
-            $function = create_function( '$matches', 'return "_" . strtoupper($matches[1]);' );
-
+        protected function updateFields( $schema ) {
             $new_fields = array( );
 
             foreach ( $schema as $name => $fieldSchema ) {
@@ -23,9 +23,7 @@
                     $this->_fields[ $name ]->updateSchema( $fieldSchema );
                 }
                 else {
-                    $type = preg_replace_callback( "/_(\w)/", $function, ucfirst( $fieldSchema[ 'type' ] ) );
-                    $className = 'Field_' . $type;
-                    //$this->_fields[$name] = new $className($fieldSchema, $name);
+                    $className = __NAMESPACE__ . "\\Field\\" . ucfirst($fieldSchema[ 'type' ]);
                     $new_fields[ $name ] = new $className( $fieldSchema, $name );
                 }
             }
@@ -45,11 +43,11 @@
 
         public function __set( $name, $value ) {
             if ( !isset( $this->_fields[ $name ] ) ) {
-                $this->_fields[ $name ] = new Field_Heap(array(), $name);
+                $this->_fields[ $name ] = new FieldHeap(array(), $name);
                 //throw new EFieldError( "Trying to set field '{$name}' wich does not implement in schema." );
             }
 
-            return $this->_fields[ $name ]->set( $value );
+            $this->_fields[ $name ]->set( $value );
         }
 
         function getFieldList() {
@@ -102,14 +100,14 @@
          * Fill fields by array (fieldName => fieldValue)
          * @param string $map
          */
-        function hydrate( array $map ) {
+        function hydrate( $map, $languaged = false ){
             $field = key($map);
             try {
                 if ( !is_array( $map ) )
                     throw new Exception( "Can't create object from non array" );
                 foreach ( $map as $field => $value ) {
                     if ( !isset( $this->_fields[ $field ] ) ) {
-                        $this->_fields[ $field ] = new Field_Heap(array(), $field);
+                        $this->_fields[ $field ] = new FieldHeap(array(), $field);
                     }
 
                     $this->_fields[ $field ]->set( $value );

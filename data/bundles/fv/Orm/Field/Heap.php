@@ -1,10 +1,10 @@
 <?php
-/**
- * User: apple
- * Date: 23.04.12
- * Time: 11:15
- */
-class AbstractField_Heap extends Field {
+
+namespace Bundle\fv\Orm\Field;
+
+use Bundle\fv\Orm\Exception\FieldException as Exception;
+
+class Heap extends AbstractField {
 
     function getEditMethod()
     {

@@ -2,6 +2,8 @@
 
     namespace Bundle\fv\Orm;
 
+    use Bundle\fv\Orm\Exception\ManagerException as Exception;
+
     class RootManager{
 
         /** @var Root */
@@ -34,6 +36,7 @@
                 die;
             }
             $this->rootObj = new $entity;
+            /*
             if( fvSite::$fvConfig->get( "qModifier" ) ){
                 foreach( fvSite::$fvConfig->get( "qModifier" ) as $iEntity => $modificators ){
                     if( $this->rootObj->isImplements( $iEntity ) )
@@ -41,7 +44,7 @@
                             $this->modifier[$type][] = $modifier;
                         }
                 }
-            }
+            }*/
         }
 
         /**
@@ -104,7 +107,7 @@
 
         public function getAllByQuery( Query $query, $keyName = null ){
             $result = array();
-            $query->setFetchMode( pdo::FETCH_ASSOC );
+            $query->setFetchMode( \PDO::FETCH_ASSOC );
             $rows = $query->fetchAll();
             //		echo '<pre>'; var_dump($rows); echo '</pre>'; die();
             foreach( $rows as $row ){
@@ -273,12 +276,12 @@
             if( $instance instanceof Root ){
                 return $instance;
             }
-            throw new EInstanceError( "Instance '{$this->rootObj->getEntity()}' is not exists" );
+            throw new Exception( "Instance '{$this->rootObj->getEntity()}' is not exists" );
         }
 
         /**
-         * @param array $ids of Projects or Primary Key values
-         * @return array|Project
+         * @param array $ids
+         * @return array
          */
         function getByIds( array $ids ){
             if( count( $ids ) == 0 )
@@ -364,16 +367,16 @@
         public function __call( $name, $arguments ){
             if( strpos( $name, 'getBy' ) === 0 ){
                 if( ( $fieldName = $this->checkName( substr( $name, 5 ) ) ) === false ){
-                    throw new EManagerError( "Unrecognized field '" . substr( $name, 5 ) . "'" );
+                    throw new Exception( "Unrecognized field '" . substr( $name, 5 ) . "'" );
                 }
             }
             elseif( strpos( $name, 'getOneBy' ) === 0 ){
                 if( ( $fieldName = $this->checkName( substr( $name, 8 ) ) ) === false ){
-                    throw new EManagerError( "Unrecognized field '" . substr( $name, 8 ) . "'" );
+                    throw new Exception( "Unrecognized field '" . substr( $name, 8 ) . "'" );
                 }
             }
             else{
-                throw new EManagerError( "Call to undefined function" );
+                throw new Exception( "Call to undefined function {$name}" );
             }
 
             $value = $arguments[0];
@@ -473,7 +476,7 @@
         }
 
         /**
-         * @return \Root|null
+         * @return Root|null
          */
         public function getRootObj(){
             return $this->rootObj;

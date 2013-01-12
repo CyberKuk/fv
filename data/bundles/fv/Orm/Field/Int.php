@@ -31,12 +31,11 @@ class Int extends AbstractField {
             parent::set( (int)$value );
     }
 
-    function updateSchema( array $fieldSchema ) {
+    function updateSchema( $fieldSchema ) {
         if ( isset( $fieldSchema[ 'unsigned' ] ) )
             $this->unsigned = $fieldSchema[ 'unsigned' ];
 
         parent::updateSchema($fieldSchema);
-
     }
 
     function getSQlPart() {

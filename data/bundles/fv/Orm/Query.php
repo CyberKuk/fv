@@ -2,6 +2,9 @@
 
     namespace Bundle\fv\Orm;
 
+    use Bundle\fv\Orm\Exception\QueryException as Exception;
+    use \PDO as PDO;
+
     /**
      * @property fvRelationLoader $_relationLoader
      */
@@ -60,7 +63,7 @@
                 $rootManager = $from->getManager();
             }
             elseif( is_string( $from ) ){
-                $rootManager = fvManagersPool::get( $from );
+                $rootManager = ManagersPool::get( $from );
             }
             elseif( is_object( $from ) ){
                 throw new Exception( "Can't create fvQuery from class " . get_class( $from ) );
@@ -94,6 +97,21 @@
             }
 
             $this->groupBy( $rootAlias . "." . $rootManager->getRootObj()->getPkName() );
+        }
+
+        /**
+         * @return \fv\Connection\Driver\PdoMysql
+         */
+        public static function getDriver(){
+            static $driver;
+
+            if( empty($driver) ){
+                $connectionFactory = new \fv\Connection\ConnectionFactory();
+                $connection = $connectionFactory->getConnection();
+                $driver = $connection->getDriver();
+            }
+
+            return $driver;
         }
 
         public function getClone(){
@@ -440,17 +458,18 @@
                     return $this->updateAll();
                     break;
                 case self::STATEMENT_UPDATE:
-                    fvSite::$pdo->update( $this->_rootManager->getTableName(),
+                    self::getDriver()->update( $this->_rootManager->getTableName(),
                                           $this->getSet(),
                                           $this->getWhere(),
                                           $this->_params );
                     break;
                 case self::STATEMENT_INSERT:
-                    fvSite::$pdo->insert( $this->_rootManager->getTableName(), $this->getSet() );
+                    self::getDriver()->insert( $this->_rootManager->getTableName(), $this->getSet() );
                     break;
                 default :
                     throw new Exception( 'Unknown operation type' );
             }
+            return true;
         }
 
         public function updateAll(){
@@ -464,7 +483,7 @@
             if( !empty( $this->_limit ) ){
                 $sql .= " LIMIT {$this->_limit}";
             }
-            return fvSite::$pdo->prepare( $sql )->execute( $this->getSetParams() );
+            return self::getDriver()->prepare( $sql )->execute( $this->getSetParams() );
         }
 
         private function getSetSection(){
@@ -477,22 +496,23 @@
         }
 
         private function getSetParams(){
-            return fvSite::$pdo->prepareSetParams( $this->getSet() );
+            return self::getDriver()->prepareSetParams( $this->getSet() );
         }
 
         public function getStatement(){
             $microtime = microtime( true );
 
-            $sth = fvSite::$pdo->prepare( $sql = $this->getSql() );
+            $sth = self::getDriver()->prepare( $sql = $this->getSql() );
 
             $sth->execute( $this->_params );
 
             if( $this->_params )
                 $sql .= "<br/>Params:" . print_r( $this->_params, true );
 
+            /*
             if( FV_PROFILE && defined( 'FV_PROFILE' ) )
                 Profile::addQuery( $sql, microtime( true ) - $microtime, "pQ" );
-
+            */
 
             return $sth;
         }
@@ -509,13 +529,15 @@
             $this->_limit = $limit;
             $this->_select = $select;
 
-            $sth = fvSite::$pdo->prepare( $sql );
+            $sth = self::getDriver()->prepare( $sql );
             $sth->execute( $this->_params );
 
             $result = $sth->fetchColumn();
 
+            /*
             if( FV_PROFILE && defined( 'FV_PROFILE' ) )
                 Profile::addQuery( $sql, microtime( true ) - $microtime, "pQ" );
+            */
 
             return $result;
         }
@@ -639,7 +661,10 @@
          * И чё?
          */
         private function _getModifiers(){
+            return array();
+
             $resultModifiers = $this->_qModifiers;
+
 
             if( !( $modifiers = fvSite::$fvConfig->get( "qModifier" ) ) )
                 return $resultModifiers;

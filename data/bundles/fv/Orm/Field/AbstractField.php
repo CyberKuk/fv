@@ -112,14 +112,14 @@
         const EDIT_METHOD_SLIDE = "slider";
         const EDIT_METHOD_ENTITIES_LIST_READONLY = "entitylistreadonly";
 
-        function __construct( array $fieldSchema, $name ) {
+        function __construct( $fieldSchema, $name ) {
             //var_dump($name);
             $this->key = $name;
             $this->updateSchema( $fieldSchema );
             $this->setDefaultValue();
         }
 
-        function updateSchema( array $fieldSchema ) {
+        function updateSchema( $fieldSchema ) {
             if ( isset( $fieldSchema[ 'default' ] ) )
                 $this->defaultValue = $fieldSchema[ 'default' ];
 

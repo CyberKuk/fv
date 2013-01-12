@@ -32,6 +32,34 @@ class Collection implements \ArrayAccess, \Iterator, \Countable {
             $this->params[$name] = $value;
     }
 
+    public function get( $path ) {
+        $current = &$this;
+
+        foreach( explode(".", $path) as $key ){
+            $current = $current->$key;
+
+            if( is_null($current) )
+                return null;
+        }
+
+        return $current;
+    }
+
+    public function merge( Collection $collection ){
+        foreach( $collection as $key => $value ){
+            if( isset( $this->params[$key] ) ){
+                $old = $this->params[$key];
+
+                if( $old instanceof Collection && $value instanceof Collection ){
+                    $old->merge($value);
+                    continue;
+                }
+            }
+
+            $this->params[$key] = $value;
+        }
+    }
+
     function filter( callable $callback ){
         $collection = new Collection;
         foreach( $this as $key => $value ){

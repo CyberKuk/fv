@@ -23,7 +23,7 @@ class ManagersPool {
         $managerName = $className . 'Manager';
         
         if( !isset(self::$managers[$managerName]) ) {
-            $managerClass = class_exists($managerName) ? $managerName : 'fvRootManager';    
+            $managerClass = class_exists($managerName) ? $managerName : __NAMESPACE__ . "\\RootManager";
             self::$managers[$managerName] = new $managerClass( $className );
         }
         

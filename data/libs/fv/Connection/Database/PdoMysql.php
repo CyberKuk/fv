@@ -17,7 +17,7 @@ class PdoMysql extends AbstractConnection {
 
     /**
      * @throws \fv\Connection\Exception\ConnectionException
-     * @return mixed driver
+     * @return Driver
      */
     protected function connect() {
         $schema = $this->getSchema();
