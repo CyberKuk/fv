@@ -16,7 +16,7 @@ class Collection implements \ArrayAccess, \Iterator, \Countable {
     /**
      * @param $name
      *
-     * @return Collection|mixed
+     * @return Collection|string|integer|mixed
      */
     function __get( $name ) {
         if( !isset($this->params[$name]) )

@@ -97,9 +97,4 @@ class YamlParser {
         return $value;
     }
 
-    public function get( $string ){
-
-    }
-
-
 }

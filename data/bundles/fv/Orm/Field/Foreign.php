@@ -5,7 +5,7 @@ namespace Bundle\fv\Orm\Field;
 use \Bundle\fv\Orm\ManagersPool;
 use \Bundle\fv\Orm\Root;
 
-class Field_Foreign extends Int {
+class Foreign extends Int {
 
     protected $entityName;
     protected $where;
@@ -36,6 +36,7 @@ class Field_Foreign extends Int {
     }
 
     function getList( Root $entity ) {
+        /** @var $foreigns Root[] */
         $foreigns = ManagersPool::get( $this->entityName )->getAll( $this->where );
 
         $result = array( );

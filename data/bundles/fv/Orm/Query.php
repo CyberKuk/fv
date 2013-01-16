@@ -3,10 +3,14 @@
     namespace Bundle\fv\Orm;
 
     use Bundle\fv\Orm\Exception\QueryException as Exception;
+    use Bundle\fv\Orm\Root\Language;
+    use Bundle\fv\Orm\Field\Foreign as FieldForeign;
+    use Bundle\fv\Orm\Field\Constraint as FieldConstraint;
+    use Bundle\fv\Orm\Field\References as FieldReferences;
     use \PDO as PDO;
 
     /**
-     * @property fvRelationLoader $_relationLoader
+     * @property RelationLoader $_relationLoader
      */
     class Query{
 
@@ -85,12 +89,9 @@
             $this->setFetchMode( $fetchMode );
 
             if( $rootManager->getRootObj()->isLanguaged() ){
-                $lang = Language::getManager()->getOneByCode( fvSite::$fvConfig->getCurrentLang(), true );
+                $lang = Language::getManager()->getCurrentLanguage();
                 if( !$lang instanceof Language ){
-                    if( FV_DEBUG_MODE )
-                        throw new Exception( "Language absent" );
-                    else
-                        fvAction::redirect404();
+                    throw new Exception( "Language absent" );
                 }
                 $this->_join = " LEFT JOIN {$rootManager->getLanguageTableName()} as {$rootAlias}_lang ON {$rootAlias}_lang.id = {$rootAlias}.id and languageId = " . $lang->getPk() . " ";
                 $this->_select = "{$rootAlias}_lang.*, " . $this->_select;
@@ -162,23 +163,23 @@
             if( !( $field = $fromEntity->getRootObj()->getForeign( $fieldName ) ) )
                 $field = $fromEntity->getRootObj()->$fieldName;
 
-            if( $field instanceof Field_Foreign ){
-                /** @var $field Field_Foreign */
-                $toEntity = fvManagersPool::get( $field->getForeignEntityName() );
+            if( $field instanceof FieldForeign ){
+                /** @var $field FieldForeign */
+                $toEntity = ManagersPool::get( $field->getForeignEntityName() );
 
                 $table = $toEntity->getTableName();
                 $constraint = "{$fromAlias}.{$field->getKey()} = {$toAlias}.{$toEntity->getRootObj()->getPkName()}";
             }
-            elseif( $field instanceof Field_Constraint ){
-                /** @var $field Field_Constraint */
-                $toEntity = fvManagersPool::get( $field->getForeignEntityName() );
+            elseif( $field instanceof FieldConstraint ){
+                /** @var $field FieldConstraint */
+                $toEntity = ManagersPool::get( $field->getForeignEntityName() );
                 $table = $toEntity->getTableName();
 
                 $constraint = "{$toAlias}.{$field->getForeignEntityKey()} = {$fromAlias}.{$fromEntity->getRootObj()->getPkName()}";
             }
-            elseif( $field instanceof Field_References ){
-                /** @var $field Field_References */
-                $toEntity = fvManagersPool::get( $field->getForeignEntityName() );
+            elseif( $field instanceof FieldReferences ){
+                /** @var $field FieldReferences */
+                $toEntity = ManagersPool::get( $field->getForeignEntityName() );
                 $table = $toEntity->getTableName();
                 $referenceTable = $field->getReferenceTableName();
                 $referenceAlias = $toAlias . "2" . $fromAlias;
@@ -223,6 +224,11 @@
             return $this;
         }
 
+        /**
+         * @param $where
+         * @param null $params
+         * @return Query
+         */
         public function where( $where, $params = null ){
             return $this->resetWhere()->andWhere( $where, $params );
         }
@@ -429,7 +435,7 @@
             if( $this->_relationLoader )
                 $this->relationLoader()->load( $result );
 
-            //Field_Foreign::preloadCache( $this->getRootManager()->getRootObj()->getEntity(), $result );
+            //FieldForeign::preloadCache( $this->getRootManager()->getRootObj()->getEntity(), $result );
 
             return $result;
         }
@@ -542,6 +548,7 @@
             return $result;
         }
 
+        /*
         public function useFilters( $array ){
             foreach( $array as $filter ){
                 $this->useFilter( $filter );
@@ -550,11 +557,11 @@
             return $this;
         }
 
-        /** @return $this */
+        /** @return $this
         public function useFilter( Component_Filter $filter ){
             $filter->where( $this );
             return $this;
-        }
+        }*/
 
         /*public function updateAll() {
             $this->_type = self::STATEMENT_SELECT;
@@ -637,11 +644,11 @@
 
 
         /**
-         * @return fvRelationLoader
+         * @return RelationLoader
          */
         public function relationLoader(){
             if( !isset( $this->_relationLoader ) )
-                $this->_relationLoader = new fvRelationLoader;
+                $this->_relationLoader = new RelationLoader;
 
             return $this->_relationLoader;
         }
@@ -662,6 +669,7 @@
          */
         private function _getModifiers(){
             return array();
+            /*
 
             $resultModifiers = $this->_qModifiers;
 
@@ -670,7 +678,7 @@
                 return $resultModifiers;
 
             foreach( $this->_managers as $alias => $manger ){
-                /** @var $manger RootManager */
+                /** @var $manger RootManager * /
                 foreach( $modifiers as $iEntity => $modificators ){
                     if( !$manger->getRootObj()->isImplements( $iEntity ) )
                         continue;
@@ -681,7 +689,7 @@
                 }
             }
 
-            return $resultModifiers;
+            return $resultModifiers;*/
         }
 
         public function addQModifier( $type, $modifier ){

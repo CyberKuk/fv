@@ -1,0 +1,12 @@
+{
+    "memcache": {},
+    "memory": {
+        "class": "SharedMemory",
+        "fallback": "memcache"
+    },
+    "cache": {
+        "class": "Memcache",
+        "fallback": "blackhole"
+    },
+    "blackhole": {}
+}

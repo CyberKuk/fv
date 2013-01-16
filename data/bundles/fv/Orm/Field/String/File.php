@@ -1,6 +1,10 @@
 <?php
 
-class Field_String_File extends AbstractField_String{
+namespace Bundle\fv\Orm\Field\String;
+
+use \Bundle\fv\Orm\Field\String;
+
+class File extends String {
     const NO_SOURCE = -1;
 
     public $acceptedTypes = "*.*;";

@@ -3,6 +3,8 @@
     namespace Bundle\fv\Orm;
 
     use Bundle\fv\Orm\Exception\OrmException as Exception;
+    use Bundle\fv\Orm\Field\String\File as FileField;
+    use Bundle\fv\Orm\Root\Language;
 
     /**
      * Base model class
@@ -151,7 +153,7 @@
         /**
          * Это красотень ребятульки! Здесь мы получаем язык, указываем всем полям,
          * какой язык использовать, и записываем значения этих языков
-         * @param type $lang
+         * @param mixed $lang
          */
         function setLanguage( $lang ){
             if( !$this->isLanguaged() )
@@ -181,7 +183,7 @@
                     languageId = {$lang->getPk()}
                     limit 1";
 
-                $result = Query::getDriver()->query( $sql )->fetchAll( PDO::FETCH_ASSOC );
+                $result = Query::getDriver()->query( $sql )->fetchAll( \PDO::FETCH_ASSOC );
                 ;
                 if( count( $result ) == 1 ){
                     $result = current( $result );
@@ -229,7 +231,7 @@
         }
 
         function getLanguageTableName(){
-            return $this->getTableName() . fvSite::$fvConfig->get( "languages.databasePostfix" );
+            return $this->getTableName() . "Lang";
         }
 
         /**
@@ -291,7 +293,7 @@
 
                 $insertList = array();
                 foreach( $this->getFields() as $key => $field ){
-                    if( $field instanceof Field_String_File )
+                    if( $field instanceof FileField )
                         $field->upload();
 
                     if( !$field->isLanguaged() && $field->isChanged() )
@@ -329,7 +331,7 @@
                 /** Привет, ребята я – охуенный костыль. Давайте дружить, сучечьки
                  *  Хотя, нет. Я — не костыль. Идите нахуй.
                  */
-                foreach( $this->getFields() as $key => $field ){
+                foreach( $this->getFields() as $field ){
                     if( method_exists( $field, "save" ) ){
                         $field->save();
                     }
@@ -399,7 +401,7 @@
                 return false;
 
             foreach( $this->getFields() as $key => $field ){
-                if( $field instanceof Field_String_File )
+                if( $field instanceof FileField )
                     $field->delete();
             }
 
@@ -457,8 +459,7 @@
             }
 
             foreach( $this->getFields() as $field ){
-                if( method_exists( $field, "setRootPk" ) )
-                    $field->setRootPk( $key );
+                $field->setRootPk( $key );
             }
 
             return true;

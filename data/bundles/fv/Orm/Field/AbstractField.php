@@ -306,4 +306,9 @@
         public function isNullable(){
             return $this->nullable;
         }
+
+        public function setRootPk($key) {
+            $this->key = $key;
+            return $this;
+        }
     }
