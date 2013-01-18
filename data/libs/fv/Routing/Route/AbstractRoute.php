@@ -16,7 +16,7 @@ use fv\Application\AbstractApplication;
  */
 abstract class AbstractRoute {
 
-    abstract function __construct( array $params = array() );
+    abstract function __construct( \fv\Collection $params = null );
 
 
     /**
@@ -34,19 +34,7 @@ abstract class AbstractRoute {
      * @throws \fv\Routing\Exception\RoutingException
      */
     final static public function build( $config ){
-        $className = isset($config['class']) ? $config['class'] : "Default";
-        $className = $className . "Route";
-
-        if( !strstr('\\', $className ))
-            $className = __NAMESPACE__ . "\\" . $className;
-
-        if( ! class_exists( $className ) )
-            throw new RoutingException( "Route class {$className} not found" );
-
-        $class = new $className( $config );
-
-        if( ! $class instanceof AbstractRoute )
-            throw new RoutingException( "{$className} not instance of fv\\Routing\\AbstractRoute" );
+        $class = new static( $config );
 
         return $class;
     }

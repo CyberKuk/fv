@@ -18,12 +18,10 @@ class PrefixRoute extends AbstractRoute {
     protected $applicationName;
     protected $prefix;
 
-    function __construct( array $params = array() ) {
-        if( isset( $params['application'] ) )
-            $this->setApplicationName( $params['application'] );
-
-        if( isset( $params['prefix'] ) )
-            $this->setPrefix( $params['prefix'] );
+    function __construct( \fv\Collection $params = null ) {
+        $this
+            ->setApplicationName( $params->application )
+            ->setPrefix( $params->prefix );
     }
 
     /**

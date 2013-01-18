@@ -66,12 +66,15 @@ class Router {
     }
 
     function loadFromConfigFile( $file ){
-        $routes = ConfigLoader::loadArray( $file );
+        $builder = \fv\Config\ConfigurableBuilder::createFromFile( $file );
 
-        foreach( $routes as $key => $route ){
-            $class = AbstractRoute::build( $route );
-            $this->addRoute( $key, $class );
-        }
+        $builder
+            ->setDefaultNamespace(__NAMESPACE__ . "\\Route")
+            ->setDefaultClass( "DefaultRoute" )
+            ->setInstanceOf( "fv\\Routing\\Route\\AbstractRoute" )
+            ->setPostfix("Route");
+
+        $this->addRoutes( $builder->buildAll() );
     }
 
 }

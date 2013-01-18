@@ -18,15 +18,11 @@ class DefaultRoute extends AbstractRoute {
     protected $params = array();
     protected $url;
 
-    function __construct( array $params = array() ) {
-        if( isset( $params['controller'] ) )
-            $this->setController( $params['controller'] );
-
-        if( isset( $params['params'] ) )
-            $this->setParams( $params['params'] );
-
-        if( isset( $params['url'] ) )
-            $this->setUrl( $params['url'] );
+    function __construct( \fv\Collection $params = null ) {
+        $this
+            ->setController( $params->controller )
+            ->setParams( $params->get("prefix") )
+            ->setUrl( $params->url );
     }
 
     /**

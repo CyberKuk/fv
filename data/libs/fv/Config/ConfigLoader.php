@@ -10,12 +10,12 @@ class ConfigLoader {
     private static $extensionPriority = array("yml", "json", "php");
 
     static function loadArray( $file ){
-        $path_info = pathinfo($file);
+        $pathInfo = pathinfo($file);
 
-        if( empty( $path_info['extension'] ) || ! file_exists( $file ) ){
+        if( empty( $pathInfo['extension'] ) || ! file_exists( $file ) ){
             foreach( self::$extensionPriority as $extension ){
                 if( file_exists( $file . "." . $extension ) ){
-                    $path_info['extension'] = $extension;
+                    $pathInfo['extension'] = $extension;
                     $file .= "." . $extension;
                     break;
                 }
@@ -26,7 +26,7 @@ class ConfigLoader {
             throw new Exception\LoadConfigException("File '{$file}' not found");
         }
 
-        switch( $path_info['extension'] ){
+        switch( $pathInfo['extension'] ){
             case 'json':
                 $data = file_get_contents($file);
                 return json_decode( $data, true );
@@ -37,7 +37,7 @@ class ConfigLoader {
                 /** @noinspection PhpIncludeInspection */
                 return include $file;
             default:
-                throw new Exception\LoadConfigException("Unknown file type {$path_info['extension']}");
+                throw new Exception\LoadConfigException("Unknown file type {$pathInfo['extension']}");
         }
     }
 
