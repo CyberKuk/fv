@@ -17,11 +17,6 @@ abstract class AbstractConnection {
      */
     abstract protected function connect();
 
-    /**
-     * @return \fv\Entity\Query\AbstractQuery;
-     */
-    abstract public function createQuery();
-
     private function setDriver( $driver ) {
         $this->driver = $driver;
         return $this;

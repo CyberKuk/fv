@@ -9,8 +9,6 @@ namespace fv\Connection\Database;
 
 use fv\Connection\AbstractConnection;
 use fv\Connection\Driver\PdoMysql as Driver;
-use fv\Entity\Query\Database\MysqlQuery as Query;
-
 use fv\Connection\Exception\ConnectionException;
 
 class PdoMysql extends AbstractConnection {
@@ -35,7 +33,4 @@ class PdoMysql extends AbstractConnection {
         return new Driver( "mysql:host={$host};dbname={$dbname}", $user, $password );
     }
 
-    public function createQuery() {
-        return new Query( $this );
-    }
 }

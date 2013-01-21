@@ -7,16 +7,16 @@
 
 namespace fv\Http;
 
-use fv\Collection;
+use fv\Collection\Collection;
 
 /**
  * @final
  *
- * @property \fv\Collection $get
- * @property \fv\Collection $post
- * @property \fv\Collection $cookie
- * @property \fv\Collection $internal
- * @property \fv\Collection $header
+ * @property \fv\Collection\Collection $get
+ * @property \fv\Collection\Collection $post
+ * @property \fv\Collection\Collection $cookie
+ * @property \fv\Collection\Collection $internal
+ * @property \fv\Collection\Collection $header
  */
 final class Request {
 

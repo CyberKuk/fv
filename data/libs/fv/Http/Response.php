@@ -2,16 +2,16 @@
 
 namespace fv\Http;
 
-use fv\Collection;
+use fv\Collection\Collection;
 
 /**
  * User: apple
  * Date: 07.09.12
  * Time: 17:37
  *
- * @property \fv\Collection $headers
- * @property \fv\Collection $cookies
- * @property \fv\Collection $internal
+ * @property \fv\Collection\Collection $headers
+ * @property \fv\Collection\Collection $cookies
+ * @property \fv\Collection\Collection $internal
  */
 class Response {
 
@@ -36,7 +36,7 @@ class Response {
 
     private $body;
 
-    /** @var Params[] */
+    /** @var Collection[] */
     private $params = array();
 
     function __get( $name ){

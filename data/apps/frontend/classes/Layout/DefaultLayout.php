@@ -7,7 +7,7 @@
 
 namespace Application\Frontend\Layout;
 
-use fv\Layout\AbstractLayout;
+use RoutingBundle\Layout\AbstractLayout;
 
 class DefaultLayout extends AbstractLayout {
 

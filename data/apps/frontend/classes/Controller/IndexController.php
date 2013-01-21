@@ -2,7 +2,7 @@
 
 namespace Application\Frontend\Controller;
 
-use fv\Controller\AbstractController;
+use RoutingBundle\Controller\AbstractController;
 
 /**
  * User: cah4a
@@ -16,8 +16,8 @@ class IndexController extends AbstractController {
     }
 
     function get( $name = "default world" ){
-        $factory = new \Bundle\fv\Storage\StorageFactory;
-        $storage = $factory->get("memcache");
+        //$factory = new \Bundle\fv\Storage\StorageFactory;
+        //$storage = $factory->get("memcache");
 
         //for( $i = 0;  $i < 2; $i++ ){
         //    $obj = new \Bundle\fv\Orm\Root\Language;

@@ -2,14 +2,14 @@
 
 namespace fv\Config;
 
-use fv\Collection;
-use fv\Yaml\YamlParser;
+use fv\Collection\Collection;
+use fv\Parser\YamlParser;
 
 class ConfigLoader {
 
     private static $extensionPriority = array("yml", "json", "php");
 
-    static function loadArray( $file ){
+    public static function loadArray( $file ){
         $pathInfo = pathinfo($file);
 
         if( empty( $pathInfo['extension'] ) || ! file_exists( $file ) ){
@@ -31,8 +31,8 @@ class ConfigLoader {
                 $data = file_get_contents($file);
                 return json_decode( $data, true );
             case 'yml':
-                $data = file_get_contents($file);
-                return YamlParser::parse( $data );
+                $parser = new YamlParser( $file );
+                return $parser->parse();
             case 'php':
                 /** @noinspection PhpIncludeInspection */
                 return include $file;
@@ -41,7 +41,7 @@ class ConfigLoader {
         }
     }
 
-    static function loadCollection( $file ){
+    static function load( $file ){
         return new Collection( self::loadArray($file) );
     }
 

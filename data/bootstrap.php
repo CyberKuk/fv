@@ -10,7 +10,8 @@ ClassLoader\Register::createLoader( null, 'classes' );
 ClassLoader\Register::createLoader( 'fv', 'libs/fv' );
 
 /** Bundles */
-ClassLoader\Register::createLoader( 'Bundle', 'bundles/' );
+fv\Bundle\BundleRegister::register("OrmBundle", "bundles/fv/ormBundle");
+fv\Bundle\BundleRegister::register("RoutingBundle");
 
 /** Twig */
 require_once 'libs/Twig/Autoloader.php';

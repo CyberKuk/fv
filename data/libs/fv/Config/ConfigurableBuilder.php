@@ -3,7 +3,7 @@
 namespace fv\Config;
 
 use fv\Config\Exception\ConfigurableBuildException as Exception;
-use fv\Collection;
+use fv\Collection\Collection;
 
 class ConfigurableBuilder {
 
@@ -18,7 +18,7 @@ class ConfigurableBuilder {
 
     public static function createFromFile( $file ){
         $builder = new static;
-        $builder->setConfig( ConfigLoader::loadCollection($file) );
+        $builder->setConfig( ConfigLoader::load($file) );
         return $builder;
     }
 
@@ -34,8 +34,8 @@ class ConfigurableBuilder {
         if( empty($config) )
             throw new Exception();
 
-        if( (string)$config->class ){
-            $className = (string)$config->class;
+        if( $config->class ){
+            $className = $config->class->get();
             $className = $className . $this->getPostfix();
         } else
             $className = $this->getDefaultClass();
