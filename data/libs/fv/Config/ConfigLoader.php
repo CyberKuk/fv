@@ -45,9 +45,12 @@ class ConfigLoader {
         return false;
     }
 
-    public static function load( $name, $context = "/", $extends = true ){
+    public static function load( $name, $context = null, $extends = true ){
         if( is_object($context) )
             $context = get_class($context);
+
+        if( is_null($context) )
+            $context = "/";
 
         $collection = new Collection();
         $notFound = true;
