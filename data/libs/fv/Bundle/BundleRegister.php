@@ -12,7 +12,7 @@ class BundleRegister {
         static $bundles = array();
 
         if( isset( $bundles[$namespace] ) )
-            throw new BundleRegisterException("Bundle {$namespace} already registred");
+            throw new BundleRegisterException("Bundle {$namespace} already registered");
 
         if( is_null($path) )
             $path = "bundles/fv/" . lcfirst($namespace);
@@ -27,10 +27,10 @@ class BundleRegister {
         if( ! is_subclass_of($bundleClassName, "fv\\Bundle\\AbstractBundle") )
             throw new BundleRegisterException("Bundle Class {$bundleClassName} must be instance of fv\\Bundle\\AbstractBundle");
 
-        /** @var $bundleClass AbstractBundle */
-        $bundleClass = new $bundleClassName();
+        /** @var $bundle AbstractBundle */
+        $bundle = new $bundleClassName();
 
-        foreach( $bundleClass->getDependencies() as $dependentNamespace ){
+        foreach( $bundle->getDependencies() as $dependentNamespace ){
             if( !isset($bundles[$dependentNamespace]) )
                 throw new BundleRegisterException("Bundle {$namespace} depend on {$dependentNamespace}, which not include");
         }
@@ -40,6 +40,8 @@ class BundleRegister {
 
         if( is_dir($path . DIRECTORY_SEPARATOR . "configs") )
             TemplateRegister::registerNamespace( $namespace, $path . DIRECTORY_SEPARATOR . "configs" );
+
+        $bundles[$namespace] = $bundle;
     }
 
 }
