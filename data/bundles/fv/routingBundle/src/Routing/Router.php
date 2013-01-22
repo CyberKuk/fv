@@ -65,6 +65,18 @@ class Router {
         throw new Exception\RouteNotFoundException("No route to handle request");
     }
 
+    function loadFromCollection( $config ){
+        $builder = \fv\Config\ConfigurableBuilder::createFromCollection( $config );
+
+        $builder
+            ->setDefaultNamespace(__NAMESPACE__ . "\\Route")
+            ->setDefaultClass( "DefaultRoute" )
+            ->setInstanceOf( __NAMESPACE__ . "\\Route\\AbstractRoute" )
+            ->setPostfix("Route");
+
+        $this->addRoutes( $builder->buildAll() );
+    }
+
     function loadFromConfigFile( $file ){
         $builder = \fv\Config\ConfigurableBuilder::createFromFile( $file );
 

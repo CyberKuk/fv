@@ -9,23 +9,14 @@ class ConfigLoader {
 
     private static $extensionPriority = array("yml", "json", "php");
 
-    public static function loadArray( $file ){
-        $pathInfo = pathinfo($file);
+    public static function loadFile( $file ){
+        $file = self::findFile($file);
 
-        if( empty( $pathInfo['extension'] ) || ! file_exists( $file ) ){
-            foreach( self::$extensionPriority as $extension ){
-                if( file_exists( $file . "." . $extension ) ){
-                    $pathInfo['extension'] = $extension;
-                    $file .= "." . $extension;
-                    break;
-                }
-            }
-        }
-
-        if( !file_exists( $file ) ) {
+        if( $file === false ) {
             throw new Exception\LoadConfigException("File '{$file}' not found");
         }
 
+        $pathInfo = pathinfo($file);
         switch( $pathInfo['extension'] ){
             case 'json':
                 $data = file_get_contents($file);
@@ -41,8 +32,51 @@ class ConfigLoader {
         }
     }
 
-    static function load( $file ){
-        return new Collection( self::loadArray($file) );
+    private static function findFile( $file ){
+        if( file_exists( $file ) )
+            return $file;
+
+        foreach( self::$extensionPriority as $extension ){
+            if( file_exists( $file . "." . $extension ) ){
+                return $file . "." . $extension;
+            }
+        }
+
+        return false;
+    }
+
+    public static function load( $name, $context = "/", $extends = true ){
+        if( is_object($context) )
+            $context = get_class($context);
+
+        $collection = new Collection();
+        $notFound = true;
+
+        $currentContext = $context;
+
+        while( $currentContext ){
+            $path = ConfigRegister::getPath( $context );
+
+            if( $path ){
+                $file = self::findFile( $path . $name );
+
+                if( $file !== false ){
+                    $notFound = false;
+                    $newCollection = new Collection( self::loadFile( $file ) );
+                    $collection->merge($newCollection);
+                }
+            }
+
+            if( ! $extends )
+                break;
+
+            $currentContext = get_parent_class($currentContext);
+        }
+
+        if( $notFound )
+            throw new Exception\LoadConfigException("Config '{$name}' not found");
+
+        return $collection;
     }
 
 }

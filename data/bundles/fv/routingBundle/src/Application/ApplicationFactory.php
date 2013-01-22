@@ -5,6 +5,9 @@ namespace RoutingBundle\Application;
 use RoutingBundle\Application\Exception\ApplicationLoadException;
 use fv\Config\ConfigLoader;
 use fv\Collection\Collection;
+use fv\View\TemplateRegister;
+use fv\Config\ConfigRegister;
+use classLoader\Register as ClassLoaderRegister;
 
 /**
  * User: cah4a
@@ -34,16 +37,21 @@ final class ApplicationFactory {
         $schema = self::$schema->$name;
         $namespace = $schema->namespace->get();
         $path = rtrim( $schema->path->get(), DIRECTORY_SEPARATOR ) . DIRECTORY_SEPARATOR;
+
         $classesPath = $path . "classes";
         $viewsPath = $path . "views";
+        $configsPath = $path . "configs";
 
         if( !is_dir($classesPath) )
             throw new ApplicationLoadException("Path '{$classesPath}' not found to load application {$name}");
 
-        \classLoader\Register::getInstance()->createLoader( $namespace, $classesPath );
+        ClassLoaderRegister::getInstance()->createLoader( $namespace, $classesPath );
 
         if( is_dir($classesPath) )
-            \fv\View\TemplateRegister::registerNamespace( $namespace, $viewsPath );
+            TemplateRegister::registerNamespace( $namespace, $viewsPath );
+
+        if( is_dir($configsPath) )
+            ConfigRegister::registerNamespace( $namespace, $configsPath );
 
         $applicationClass = $namespace . "\\" . "Application";
         $application = new $applicationClass( $schema );

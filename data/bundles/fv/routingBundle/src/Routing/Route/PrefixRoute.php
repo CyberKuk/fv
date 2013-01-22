@@ -39,7 +39,10 @@ class PrefixRoute extends AbstractRoute {
             $newUri = preg_replace( $statement, '', $request->getUri() );
             $newUri = '/' . ltrim($newUri, '/');
             $request->setUri( $newUri );
-            $request->internal->prefix .= $this->getPrefix();
+            if( $request->internal->prefix )
+                $request->internal->prefix = $request->internal->prefix->get() . $this->getPrefix();
+            else
+                $request->internal->prefix = $this->getPrefix();
 
             if( $this->getApplicationName() ){
                 $applicationFactory = new ApplicationFactory;

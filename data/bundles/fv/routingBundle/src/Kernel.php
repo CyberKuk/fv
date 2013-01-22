@@ -34,9 +34,9 @@ class Kernel {
     }
 
     public function load(){
-        $this->router->loadFromConfigFile( 'configs/routes.json' );
-        $this->applicationFactory->loadFromConfigFile( 'configs/applications.json' );
-        $this->connectionFactory->loadFromConfigFile( 'configs/connections.json' );
+        $this->router->loadFromConfigFile( 'routes' );
+        $this->applicationFactory->loadFromConfigFile( 'applications' );
+        $this->connectionFactory->loadFromConfigFile( 'connections' );
 
         $this->loaded = true;
     }

@@ -2,7 +2,7 @@
 
 namespace fv\Bundle;
 
-use ClassLoader\Register;
+use ClassLoader\Register as ClassLoaderRegister;
 use fv\View\TemplateRegister;
 use fv\Bundle\Exception\BundleRegisterException;
 
@@ -17,7 +17,7 @@ class BundleRegister {
         if( is_null($path) )
             $path = "bundles/fv/" . lcfirst($namespace);
 
-        Register::createLoader( $namespace, $path . "/src" );
+        ClassLoaderRegister::createLoader( $namespace, $path . DIRECTORY_SEPARATOR . "src" );
 
         $bundleClassName = "{$namespace}\\Bundle";
 
@@ -35,7 +35,11 @@ class BundleRegister {
                 throw new BundleRegisterException("Bundle {$namespace} depend on {$dependentNamespace}, which not include");
         }
 
-        TemplateRegister::registerNamespace( $namespace, $path );
+        if( is_dir($path . DIRECTORY_SEPARATOR . "views") )
+            TemplateRegister::registerNamespace( $namespace, $path . DIRECTORY_SEPARATOR . "views" );
+
+        if( is_dir($path . DIRECTORY_SEPARATOR . "configs") )
+            TemplateRegister::registerNamespace( $namespace, $path . DIRECTORY_SEPARATOR . "configs" );
     }
 
 }

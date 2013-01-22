@@ -8,6 +8,7 @@
 namespace RoutingBundle\Application;
 
 use fv\Http\Request;
+use fv\Config\ConfigLoader;
 use fv\Collection\Collection;
 use RoutingBundle\Routing\Router;
 use RoutingBundle\Controller\ControllerFactory;
@@ -33,7 +34,7 @@ abstract class AbstractApplication {
     }
 
     public function load(){
-        $this->router->loadFromConfigFile( $this->getPath() . 'configs/routes.json' );
+        $this->router->loadFromCollection( ConfigLoader::load( 'routes', $this, false ) );
         $this->loaded = true;
     }
 
