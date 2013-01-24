@@ -2,7 +2,7 @@
 
 namespace Application\Frontend;
 
-use RoutingBundle\Application\AbstractApplication;
+use Bundle\fv\RoutingBundle\Application\AbstractApplication;
 
 global $app;
 $app = 3;

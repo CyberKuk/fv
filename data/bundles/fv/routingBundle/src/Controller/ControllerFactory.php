@@ -5,10 +5,10 @@
  * Time: 16:22
  */
 
-namespace RoutingBundle\Controller;
+namespace Bundle\fv\RoutingBundle\Controller;
 
-use RoutingBundle\Application\AbstractApplication as Application;
-use RoutingBundle\Controller\Exception\ControllerFactoryException;
+use Bundle\fv\RoutingBundle\Application\AbstractApplication as Application;
+use Bundle\fv\RoutingBundle\Controller\Exception\ControllerFactoryException;
 
 class ControllerFactory {
 
@@ -52,8 +52,8 @@ class ControllerFactory {
     }
 
     /**
-     * @param \RoutingBundle\Application\AbstractApplication $application
-     * @return \RoutingBundle\Controller\ControllerFactory
+     * @param \Bundle\fv\RoutingBundle\Application\AbstractApplication $application
+     * @return \Bundle\fv\RoutingBundle\Controller\ControllerFactory
      */
     private function setApplication( $application ) {
         $this->application = $application;
@@ -61,7 +61,7 @@ class ControllerFactory {
     }
 
     /**
-     * @return \RoutingBundle\Application\AbstractApplication
+     * @return \Bundle\fv\RoutingBundle\Application\AbstractApplication
      */
     private function getApplication() {
         return $this->application;

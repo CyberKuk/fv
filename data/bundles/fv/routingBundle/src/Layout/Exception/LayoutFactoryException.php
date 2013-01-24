@@ -4,6 +4,6 @@
  * Date: 22.10.12
  * Time: 12:13
  */
-namespace RoutingBundle\Layout\Exception;
+namespace Bundle\fv\RoutingBundle\Layout\Exception;
 
 class LayoutFactoryException extends LayoutException { }

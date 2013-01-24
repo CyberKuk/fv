@@ -5,13 +5,13 @@
  * Time: 13:08
  */
 
-namespace RoutingBundle\Routing\Route;
+namespace Bundle\fv\RoutingBundle\Routing\Route;
 
 use fv\Http\Request;
-use RoutingBundle\Application\AbstractApplication;
-use RoutingBundle\Controller\AbstractController;
-use RoutingBundle\Controller\ControllerFactory;
-use RoutingBundle\Routing\Exception\RoutingException;
+use Bundle\fv\RoutingBundle\Application\AbstractApplication;
+use Bundle\fv\RoutingBundle\Controller\AbstractController;
+use Bundle\fv\RoutingBundle\Controller\ControllerFactory;
+use Bundle\fv\RoutingBundle\Routing\Exception\RoutingException;
 
 use fv\Viewlet;
 use fv\Collection\Collection;

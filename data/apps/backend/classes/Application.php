@@ -2,7 +2,7 @@
 
 namespace Application\Backend;
 
-use \fv\Application\AbstractApplication;
+use Bundle\fv\RoutingBundle\Application\AbstractApplication;
 
 /**
  * User: cah4a

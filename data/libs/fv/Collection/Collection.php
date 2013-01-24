@@ -242,4 +242,19 @@ class Collection implements \ArrayAccess, \Iterator, \Countable {
     public function count() {
         return count($this->_params);
     }
+
+    public function leafs() {
+        $result = array();
+        /** @var $collection Collection */
+        foreach( $this as $key => $collection ){
+            if( $collection->isLeaf() )
+                $result[$key] = $collection->get();
+        }
+
+        return $result;
+    }
+
+    public function isLeaf(){
+        return $this->_value !== null;
+    }
 }

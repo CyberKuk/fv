@@ -5,12 +5,12 @@
  * Time: 18:27
  */
 
-namespace RoutingBundle\Controller;
+namespace Bundle\fv\RoutingBundle\Controller;
 
 use fv\Http\Request;
 use fv\Http\Response;
 
-use \RoutingBundle\Routing\Exception\RoutingException;
+use \Bundle\fv\RoutingBundle\Routing\Exception\RoutingException;
 
 abstract class AbstractController extends \fv\ViewModel\ViewModel {
 
@@ -31,7 +31,7 @@ abstract class AbstractController extends \fv\ViewModel\ViewModel {
      * Proxies all the passed parameters to this method
      *
      * If this method does not exist
-     * @throws \RoutingBundle\Routing\Exception\RoutingException
+     * @throws \Bundle\fv\RoutingBundle\Routing\Exception\RoutingException
      */
     final public function execute(){
         $method = strtolower( $this->getRequest()->getMethod() );
@@ -52,7 +52,7 @@ abstract class AbstractController extends \fv\ViewModel\ViewModel {
 
     /**
      * @param Request $request
-     * @return \RoutingBundle\Controller\AbstractController
+     * @return \Bundle\fv\RoutingBundle\Controller\AbstractController
      */
     public function setRequest( Request $request ) {
         $this->request = $request;
@@ -68,7 +68,7 @@ abstract class AbstractController extends \fv\ViewModel\ViewModel {
 
     /**
      * @param Response $response
-     * @return \RoutingBundle\Controller\AbstractController
+     * @return \Bundle\fv\RoutingBundle\Controller\AbstractController
      */
     public function setResponse( Response $response ) {
         $this->response = $response;

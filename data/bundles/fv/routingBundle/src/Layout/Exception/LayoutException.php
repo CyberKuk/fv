@@ -5,7 +5,7 @@
  * Time: 12:13
  */
 
-namespace RoutingBundle\Layout\Exception;
+namespace Bundle\fv\RoutingBundle\Layout\Exception;
 
 class LayoutException extends \Exception {
 

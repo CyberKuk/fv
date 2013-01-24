@@ -5,6 +5,6 @@
  * Time: 19:58
  */
 
-namespace RoutingBundle\Routing\Exception;
+namespace Bundle\fv\RoutingBundle\Routing\Exception;
 
 class PageNotFoundException extends RoutingException {}

@@ -7,7 +7,7 @@
 
 namespace Application\Frontend\Controller;
 
-use fv\Application\AbstractApplication;
+use Bundle\fv\fv\Application\AbstractApplication;
 
 class HelloController extends AbstractApplication {
 

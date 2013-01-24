@@ -1,14 +1,14 @@
 <?php
 
-namespace RoutingBundle\Routing\Route;
+namespace Bundle\fv\RoutingBundle\Routing\Route;
 
 use fv\Http\Request;
 use fv\Collection\Collection;
 use fv\Http\Response;
 
-use RoutingBundle\Routing\Exception\RoutingException;
+use Bundle\fv\RoutingBundle\Routing\Exception\RoutingException;
 
-use RoutingBundle\Application\AbstractApplication;
+use Bundle\fv\RoutingBundle\Application\AbstractApplication;
 
 /**
  * User: cah4a
@@ -24,7 +24,7 @@ abstract class AbstractRoute {
      * @abstract
      * @param \fv\Http\Request $request
      * @return \fv\Http\Response | bool(false) if route can't handle Request
-     * @throws \RoutingBundle\Routing\Exception\RouteNotFoundException
+     * @throws \Bundle\fv\RoutingBundle\Routing\Exception\RouteNotFoundException
      */
     abstract public function handle( Request $request );
 
@@ -32,7 +32,7 @@ abstract class AbstractRoute {
      * @param $config
      *
      * @return AbstractRoute
-     * @throws \RoutingBundle\Routing\Exception\RoutingException
+     * @throws \Bundle\fv\RoutingBundle\Routing\Exception\RoutingException
      */
     final static public function build( $config ){
         $class = new static( $config );

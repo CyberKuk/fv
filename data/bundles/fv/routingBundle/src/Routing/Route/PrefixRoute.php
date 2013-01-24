@@ -5,14 +5,14 @@
  * Time: 12:36
  */
 
-namespace RoutingBundle\Routing\Route;
+namespace Bundle\fv\RoutingBundle\Routing\Route;
 
 use fv\Http\Request;
 use fv\Collection\Collection;
 use fv\Http\Response;
-use RoutingBundle\Application\ApplicationFactory;
+use Bundle\fv\RoutingBundle\Application\ApplicationFactory;
 
-use RoutingBundle\Routing\Exception\RoutingException;
+use Bundle\fv\RoutingBundle\Routing\Exception\RoutingException;
 
 class PrefixRoute extends AbstractRoute {
 
@@ -29,7 +29,7 @@ class PrefixRoute extends AbstractRoute {
      * @param \fv\Http\Request $request
      *
      * @return bool|\fv\Http\Response
-     * @throws \RoutingBundle\Routing\Exception\RoutingException
+     * @throws \Bundle\fv\RoutingBundle\Routing\Exception\RoutingException
      */
     public function handle( Request $request ){
         $delimiter = "|";

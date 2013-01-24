@@ -1,6 +1,6 @@
 <?php
 
-namespace RoutingBundle\Controller\Exception;
+namespace Bundle\fv\RoutingBundle\Controller\Exception;
 
 /**
  * User: cah4a

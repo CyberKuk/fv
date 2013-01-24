@@ -1,8 +1,8 @@
 <?php
 
-namespace RoutingBundle\Application;
+namespace Bundle\fv\RoutingBundle\Application;
 
-use RoutingBundle\Application\Exception\ApplicationLoadException;
+use Bundle\fv\RoutingBundle\Application\Exception\ApplicationLoadException;
 use fv\Config\ConfigLoader;
 use fv\Collection\Collection;
 use fv\View\TemplateRegister;

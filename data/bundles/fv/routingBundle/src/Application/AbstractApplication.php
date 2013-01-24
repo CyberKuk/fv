@@ -5,18 +5,18 @@
  * Time: 18:30
  */
 
-namespace RoutingBundle\Application;
+namespace Bundle\fv\RoutingBundle\Application;
 
 use fv\Http\Request;
 use fv\Config\ConfigLoader;
 use fv\Collection\Collection;
-use RoutingBundle\Routing\Router;
-use RoutingBundle\Controller\ControllerFactory;
-use RoutingBundle\Layout\LayoutFactory;
+use Bundle\fv\RoutingBundle\Routing\Router;
+use Bundle\fv\RoutingBundle\Controller\ControllerFactory;
+use Bundle\fv\RoutingBundle\Layout\LayoutFactory;
 
 abstract class AbstractApplication {
 
-    /** @var \RoutingBundle\Routing\Router */
+    /** @var \Bundle\fv\RoutingBundle\Routing\Router */
     protected $router;
 
     private $path;
@@ -64,8 +64,8 @@ abstract class AbstractApplication {
     }
 
     /**
-     * @param \RoutingBundle\Routing\Router $router
-     * @return \RoutingBundle\Application\AbstractApplication
+     * @param \Bundle\fv\RoutingBundle\Routing\Router $router
+     * @return \Bundle\fv\RoutingBundle\Application\AbstractApplication
      */
     public function setRouter( Router $router ) {
         $this->router = $router;
@@ -73,7 +73,7 @@ abstract class AbstractApplication {
     }
 
     /**
-     * @return \RoutingBundle\Routing\Router
+     * @return \Bundle\fv\RoutingBundle\Routing\Router
      */
     public function getRouter() {
         return $this->router;
@@ -81,14 +81,14 @@ abstract class AbstractApplication {
 
 
     /**
-     * @return \RoutingBundle\Controller\ControllerFactory
+     * @return \Bundle\fv\RoutingBundle\Controller\ControllerFactory
      */
     public function getControllerFactory(){
         return new ControllerFactory( $this );
     }
 
     /**
-     * @return \RoutingBundle\Layout\LayoutFactory
+     * @return \Bundle\fv\RoutingBundle\Layout\LayoutFactory
      */
     public function getLayoutFactory(){
         return new LayoutFactory( $this );

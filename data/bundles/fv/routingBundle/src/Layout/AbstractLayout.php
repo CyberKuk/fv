@@ -5,10 +5,10 @@
  * Time: 12:16
  */
 
-namespace RoutingBundle\Layout;
+namespace Bundle\fv\RoutingBundle\Layout;
 
 use fv\Http\Response;
-use RoutingBundle\Application\AbstractApplication;
+use Bundle\fv\RoutingBundle\Application\AbstractApplication;
 
 abstract class AbstractLayout extends \fv\ViewModel\ViewModel {
 

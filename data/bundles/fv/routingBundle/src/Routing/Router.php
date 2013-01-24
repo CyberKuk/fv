@@ -1,11 +1,11 @@
 <?php
 
-namespace RoutingBundle\Routing;
+namespace Bundle\fv\RoutingBundle\Routing;
 
 use fv\Http\Request;
 use fv\Config\ConfigLoader;
-use RoutingBundle\Routing\Route\AbstractRoute;
-use RoutingBundle\Routing\Exception\RouterException;
+use Bundle\fv\RoutingBundle\Routing\Route\AbstractRoute;
+use Bundle\fv\RoutingBundle\Routing\Exception\RouterException;
 
 /**
  * User: cah4a

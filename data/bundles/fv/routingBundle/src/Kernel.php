@@ -5,21 +5,21 @@
  * Time: 18:47
  */
 
-namespace RoutingBundle;
+namespace Bundle\fv\RoutingBundle;
 
-use RoutingBundle\Routing\Router;
+use Bundle\fv\RoutingBundle\Routing\Router;
 
-use RoutingBundle\Application\ApplicationFactory;
+use Bundle\fv\RoutingBundle\Application\ApplicationFactory;
 use fv\Connection\ConnectionFactory;
 
 use fv\Http\Request;
 
 class Kernel {
 
-    /** @var \RoutingBundle\Routing\Router */
+    /** @var \Bundle\fv\RoutingBundle\Routing\Router */
     protected $router;
 
-    /** @var \RoutingBundle\Application\ApplicationFactory */
+    /** @var \Bundle\fv\RoutingBundle\Application\ApplicationFactory */
     protected $applicationFactory;
 
     /** @var \fv\Connection\ConnectionFactory */

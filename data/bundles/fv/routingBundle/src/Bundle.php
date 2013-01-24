@@ -1,6 +1,6 @@
 <?php
 
-namespace RoutingBundle;
+namespace Bundle\fv\RoutingBundle;
 
 use fv\Bundle\AbstractBundle;
 

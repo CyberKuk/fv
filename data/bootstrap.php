@@ -10,8 +10,8 @@ ClassLoader\Register::createLoader( null, 'classes' );
 ClassLoader\Register::createLoader( 'fv', 'libs/fv' );
 
 /* Bundles */
-fv\Bundle\BundleRegister::register("OrmBundle", "bundles/fv/ormBundle");
-fv\Bundle\BundleRegister::register("RoutingBundle");
+fv\Bundle\BundleRegister::register("Bundle\\fv\\RoutingBundle");
+fv\Bundle\BundleRegister::register("Bundle\\fv\\ModelBundle");
 
 /* Project config */
 \fv\Config\ConfigRegister::registerNamespace( "", "configs" );

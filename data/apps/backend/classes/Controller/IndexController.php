@@ -2,7 +2,7 @@
 
 namespace Application\Backend\Controller;
 
-use fv\Controller\AbstractController;
+use Bundle\fv\RoutingBundle\Controller\AbstractController;
 
 /**
  * User: cah4a

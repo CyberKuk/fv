@@ -5,17 +5,17 @@
  * Time: 12:04
  */
 
-namespace RoutingBundle\Layout;
+namespace Bundle\fv\RoutingBundle\Layout;
 
-use RoutingBundle\Application\AbstractApplication as Application;
+use Bundle\fv\RoutingBundle\Application\AbstractApplication as Application;
 use fv\Http\Request;
 
-use RoutingBundle\Layout\Exception\LayoutFactoryException;
+use Bundle\fv\RoutingBundle\Layout\Exception\LayoutFactoryException;
 
 class LayoutFactory {
 
     /**
-     * @var \RoutingBundle\Application\AbstractApplication
+     * @var \Bundle\fv\RoutingBundle\Application\AbstractApplication
      */
     private $application;
 
@@ -52,8 +52,8 @@ class LayoutFactory {
     }
 
     /**
-     * @param \RoutingBundle\Application\AbstractApplication $application
-     * @return \RoutingBundle\Layout\LayoutFactory
+     * @param \Bundle\fv\RoutingBundle\Application\AbstractApplication $application
+     * @return \Bundle\fv\RoutingBundle\Layout\LayoutFactory
      */
     private function setApplication( $application ) {
         $this->application = $application;
@@ -61,7 +61,7 @@ class LayoutFactory {
     }
 
     /**
-     * @return \RoutingBundle\Application\AbstractApplication
+     * @return \Bundle\fv\RoutingBundle\Application\AbstractApplication
      */
     private function getApplication() {
         return $this->application;

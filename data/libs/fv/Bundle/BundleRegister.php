@@ -11,11 +11,20 @@ class BundleRegister {
     public static function register( $namespace, $path = null ){
         static $bundles = array();
 
+        $namespace = trim( $namespace, "\\");
+
         if( isset( $bundles[$namespace] ) )
             throw new BundleRegisterException("Bundle {$namespace} already registered");
 
-        if( is_null($path) )
-            $path = "bundles/fv/" . lcfirst($namespace);
+        if( is_null($path) ){
+            $path = preg_replace( "/Bundle\\\/", "", $namespace);
+
+            $path = preg_replace_callback('/\\\([A-Z])/', function( $matches ){
+                return DIRECTORY_SEPARATOR . lcfirst( $matches[1] );
+            }, lcfirst( $path ));
+
+            $path = "bundles" . DIRECTORY_SEPARATOR . $path;
+        }
 
         ClassLoaderRegister::createLoader( $namespace, $path . DIRECTORY_SEPARATOR . "src" );
 

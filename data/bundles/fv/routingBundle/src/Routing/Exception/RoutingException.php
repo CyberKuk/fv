@@ -5,6 +5,6 @@
  * Time: 20:17
  */
 
-namespace RoutingBundle\Routing\Exception;
+namespace Bundle\fv\RoutingBundle\Routing\Exception;
 
 class RoutingException extends \Exception { }

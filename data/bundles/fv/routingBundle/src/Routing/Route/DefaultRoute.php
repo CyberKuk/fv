@@ -5,13 +5,13 @@
  * Time: 11:34
  */
 
-namespace RoutingBundle\Routing\Route;
+namespace Bundle\fv\RoutingBundle\Routing\Route;
 
 use fv\Http\Request;
 use fv\Collection\Collection;
-use RoutingBundle\Application\AbstractApplication;
+use Bundle\fv\RoutingBundle\Application\AbstractApplication;
 
-use RoutingBundle\Routing\Exception\RoutingException;
+use Bundle\fv\RoutingBundle\Routing\Exception\RoutingException;
 
 class DefaultRoute extends AbstractRoute {
 
@@ -33,10 +33,10 @@ class DefaultRoute extends AbstractRoute {
     /**
      * @param Request $request
      *
-     * @throws \RoutingBundle\Routing\Exception\RoutingException
+     * @throws \Bundle\fv\RoutingBundle\Routing\Exception\RoutingException
      * @return bool
      *
-     * @throw \RoutingBundle\Routing\Exception\RoutingException
+     * @throw \Bundle\fv\RoutingBundle\Routing\Exception\RoutingException
      */
     function handle( Request $request ) {
         $uri = rtrim($request->getUri(), "/");

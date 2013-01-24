@@ -2,7 +2,7 @@
 
 namespace Application\Frontend\Controller;
 
-use RoutingBundle\Controller\AbstractController;
+use Bundle\fv\RoutingBundle\Controller\AbstractController;
 
 /**
  * User: cah4a
@@ -16,6 +16,11 @@ class IndexController extends AbstractController {
     }
 
     function get( $name = "default world" ){
+
+        $ent = new \SomeEntity();
+
+        var_dump($ent);
+
         //$factory = new \Bundle\fv\Storage\StorageFactory;
         //$storage = $factory->get("memcache");
 
