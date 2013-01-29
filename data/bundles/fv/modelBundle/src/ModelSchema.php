@@ -15,22 +15,10 @@ class ModelSchema {
     /**
      * @param string $class class name
      */
-    function __construct( $class ) {
-        $this->setClass( $class );
-
-        $reflection = new ReflectionClass( $class );
-
-        $this->schema = $reflection->getSchema();
-        $this->schema->fields = array();
-
-        foreach( $reflection->getProperties() as $property ){
-            $schema = $property->getSchema();
-
-            if( $schema->field ){
-                $property->setAccessible(true);
-                $this->schema->fields->{$property->getName()} = new FieldSchema( $property, Field\AbstractField::build( $schema ) );
-            }
-        }
+    private function __construct( $class ) {
+        $this->setClass( $class )
+            ->createFields()
+            ->createIndexes();
     }
 
     /**
@@ -48,7 +36,7 @@ class ModelSchema {
      * @return ModelSchema
      */
     static function getSchema( $class ){
-        static $instances;
+        static $instances = array();
 
         if( ! isset( $instances[$class] ) )
             $instances[$class] = new ModelSchema( $class );
@@ -88,4 +76,81 @@ class ModelSchema {
         return $fields->keys();
     }
 
+    private function createFields() {
+        $reflection = new ReflectionClass( $this->class );
+
+        $this->schema = $reflection->getSchema();
+        $this->schema->fields = array();
+
+        foreach( $reflection->getProperties() as $property ){
+            $schema = $property->getSchema();
+
+            if( $schema->field ){
+                $property->setAccessible(true);
+                $this->schema->fields->{$property->getName()} = new FieldSchema( $property, Field\AbstractField::build( $schema ) );
+            }
+        }
+
+        return $this;
+    }
+
+    private function createIndexes() {
+        $indexes = array();
+
+        if( $this->schema->indexes ){
+            /** @var $config Collection */
+            foreach( $this->schema->indexes as $type => $config ){
+                $class = __NAMESPACE__ . "\\Index\\" . $type;
+
+                foreach( $config as $index ){
+                    foreach( $index as $definition ){
+                        $indexFields = array_unique( $definition->leafs() );
+                        foreach( $indexFields as $field ){
+                            if( ! $this->schema->fields->$field ){
+                                throw new \Bundle\fv\ModelBundle\Exception\ModelException("No field {$field} in {$this->getClass()} class to create index");
+                            }
+                        }
+                        $indexes[] = new $class($indexFields);
+                    }
+                }
+            }
+        }
+
+        $this->schema->indexes = $indexes;
+
+        return $this;
+    }
+
+
+
+    /**
+     * @param null|string $class
+     * @return Index\PrimaryIndex[]
+     */
+    public function getIndexes( $class = null ){
+        if( is_null($class) )
+            return $this->indexes;
+
+        if( ! $this->indexes )
+            return array();
+
+        if( ! is_object( $class ) ){
+            $class = (string)$class;
+
+            if( substr( $class, 0, 1 ) !== "\\" ){
+                $class = __NAMESPACE__ . "\\Index\\" . $class;
+            }
+        }
+
+        $result = $this->schema->indexes->filter( function( Collection $index ) use ( $class ){
+            if( !$index->isLeaf() )
+                return false;
+            return $index->get() instanceof $class;
+        } )->leafs();
+
+        foreach( $result as &$key ){
+            $key = $key->get();
+        }
+        return $result;
+    }
 }

@@ -17,9 +17,33 @@ class IndexController extends AbstractController {
 
     function get( $name = "default world" ){
 
-        $ent = new \SomeEntity();
+        /** @var $ents \SomeEntity[] */
+        $ents = \SomeEntity::select()->fetchAll();
 
-        var_dump($ent);
+        if( count($ents) == 2 ){
+            foreach( $ents as $ent ){
+                $ent->remove();
+            }
+            print "Removed all! <br/>";
+            $ents = \SomeEntity::select()->fetchAll();
+            print "total: " . count($ents) . " records";
+        } elseif( count($ents) == 1 ){
+            $ent = new \SomeEntity();
+            $ent->persist();
+            print "Persist one more 1 record <br/>";
+            $ents = \SomeEntity::select()->fetchAll();
+            print "total: " . count($ents) . " records";
+        } elseif( count($ents) == 0 ){
+            $ent = new \SomeEntity();
+            $ent->persist();
+            print "Persist 1 record <br/>";
+            $ents = \SomeEntity::select()->fetchAll();
+            print "total: " . count($ents) . " records";
+        }
+
+        die;
+
+
 
         //$factory = new \Bundle\fv\Storage\StorageFactory;
         //$storage = $factory->get("memcache");

@@ -36,7 +36,7 @@ final class Request {
     final static function buildFromGlobal(){
         $request = new static;
 
-        foreach( getallheaders() as $key => $value )
+        foreach( self::getallheaders() as $key => $value )
             $request->header->$key = $value;
 
         foreach( $_GET as $key => $value )
@@ -53,6 +53,21 @@ final class Request {
             ->setUri( preg_replace( '/\?.*$/U', '', $_SERVER['REQUEST_URI'] ) );
 
         return $request;
+    }
+
+    static function getallheaders() {
+        if( function_exists("getallheaders") )
+            return getallheaders();
+
+        $headers = array();
+
+        foreach ($_SERVER as $name => $value) {
+            if (substr($name, 0, 5) == 'HTTP_') {
+                $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+            }
+        }
+
+        return $headers;
     }
 
     function __get( $name ){

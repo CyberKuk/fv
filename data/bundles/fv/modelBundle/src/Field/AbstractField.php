@@ -6,6 +6,8 @@ use \fv\Collection\Collection;
 
 abstract class AbstractField {
 
+    private $nullable = true;
+    private $default = null;
     private $value;
     private $isChanged = false;
 
@@ -23,10 +25,7 @@ abstract class AbstractField {
 
         $field = new $class;
 
-        foreach( $schema as $key => $value ){
-            if( in_array( $key, array("field", "class", "var")) )
-                continue;
-
+        foreach( $schema->field->leafs() as $key => $value ){
             $method = "set" . ucfirst($key);
             $field->$method($value);
         }
@@ -73,4 +72,26 @@ abstract class AbstractField {
         return $this->isChanged;
     }
 
+
+    public function setNullable( $nullable ) {
+        $this->nullable = $nullable;
+        return $this;
+    }
+
+    public function isNullable() {
+        return $this->nullable;
+    }
+
+    public function setDefault( $default ) {
+        if( ! $this->isChanged() ){
+            $this->default = $default;
+            $this->set( $default );
+            $this->notChanged();
+        }
+        return $this;
+    }
+
+    public function getDefault() {
+        return $this->default;
+    }
 }

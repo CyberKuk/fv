@@ -9,13 +9,13 @@ use Bundle\fv\ModelBundle\ModelSchema;
 abstract class AbstractQuery {
 
     /** @var string Model Class Name */
-    private $ModelClassName;
+    private $modelClassName;
 
     /** @var AbstractConnection */
     private $connection;
 
     abstract public function fetch( $key );
-    abstract public function persist( AbstractModel $Model );
+    abstract public function persist( AbstractModel $model );
     abstract public function remove( AbstractModel $Model );
 
     /**
@@ -26,12 +26,12 @@ abstract class AbstractQuery {
     }
 
     /**
-     * @param string $ModelClassName
+     * @param string $modelClassName
      *
      * @return AbstractQuery
      */
-    public function setModelClassName( $ModelClassName ) {
-        $this->ModelClassName = (string)$ModelClassName;
+    public function setModelClassName( $modelClassName ) {
+        $this->modelClassName = (string)$modelClassName;
         return $this;
     }
 
@@ -39,7 +39,7 @@ abstract class AbstractQuery {
      * @return string Model Class Name
      */
     public function getModelClassName() {
-        return $this->ModelClassName;
+        return $this->modelClassName;
     }
 
     /**

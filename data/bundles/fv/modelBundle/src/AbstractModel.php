@@ -3,6 +3,7 @@
 namespace Bundle\fv\ModelBundle;
 
 use Bundle\fv\ModelBundle\Field\AbstractField;
+use Bundle\fv\ModelBundle\Query\QueryBuilder;
 use fv\Connection\ConnectionFactory;
 
 use Bundle\fv\ModelBundle\Exception\ModelException;
@@ -15,6 +16,9 @@ abstract class AbstractModel {
 
     /** @var \Bundle\fv\ModelBundle\Field\AbstractField[] */
     private $fields;
+
+    /** @var \Bundle\fv\ModelBundle\Index\AbstractIndex[] */
+    private $indexes;
 
     /**
      * Mix Model schema to new Instance
@@ -49,6 +53,10 @@ abstract class AbstractModel {
      * @return Query\Database\DatabaseQuery|Query\AbstractQuery
      */
     public static function select( $selectString = null ){
+        if( is_null($selectString) ){
+            return self::query();
+        }
+
         return self::query()->select( $selectString );
     }
 
@@ -63,7 +71,7 @@ abstract class AbstractModel {
             $connectionName = self::getDefaultConnectionName();
         }
 
-
+        return QueryBuilder::getQueryToConnection($connectionName)->setModelClassName(get_called_class());
     }
 
     /**
@@ -78,7 +86,11 @@ abstract class AbstractModel {
      * @return string
      */
     static public function getDefaultConnectionName(){
-        return self::getSchema()->connection;
+        if( ! self::getSchema()->connection ){
+            throw new ModelException("Default connection not set");
+        }
+
+        return self::getSchema()->connection->get();
     }
 
     public function persist( $connectionName = null ){
@@ -86,7 +98,7 @@ abstract class AbstractModel {
     }
 
     public function remove( $connectionName = null ){
-        return self::query( $connectionName )->remove( $this );
+        self::query( $connectionName )->remove( $this );
     }
 
     /**
@@ -136,11 +148,13 @@ abstract class AbstractModel {
         throw new FieldNotFoundException( "Trying to get field {$name} witch does not exist in class " . get_class($this) );
     }
 
-    /**
-     * @return Field\Primary[]
-     */
-    public function getPrimaryFields(){
-        return $this->getFields('Primary');
-    }
+    public function getPrimaryFields() {
+        $primaryIndex = self::getSchema()->getIndexes("PrimaryIndex");
 
+        if( isset( $primaryIndex[0] ) ){
+            return array_intersect_key( $this->getFields(), array_flip( $primaryIndex[0]->getFields() ) );
+        }
+
+        return array();
+    }
 }

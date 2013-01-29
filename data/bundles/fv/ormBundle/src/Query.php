@@ -101,7 +101,7 @@
         }
 
         /**
-         * @return \fv\Connection\Driver\PdoMysql
+         * @return \fv\Connection\Driver\PdoMysqlDriver
          */
         public static function getDriver(){
             static $driver;

@@ -8,44 +8,33 @@
 namespace fv\Connection;
 
 use fv\Config\ConfigLoader;
-
-use fv\Connection\Exception\ConnectionFactoryException;
+use fv\Config\ConfigurableBuilder;
 
 class ConnectionFactory {
 
-    static private $schema;
+    /** @var \fv\Config\ConfigurableBuilder */
+    static private $builder;
 
+    /**
+     * @param null $name
+     * @return AbstractConnection
+     */
     public function getConnection( $name = null ){
-        static $connections;
+        static $instances = array();
 
-        if( is_null($name) )
-            $name = 'default';
+        if( ! isset($instances[$name]) )
+            $instances[$name] = self::$builder->build($name);
 
-        if( isset( $applications[$name] ) )
-            return $applications[$name];
-
-        if( !isset(self::$schema[$name]) )
-            throw new ConnectionFactoryException("Unknown connection {$name}");
-
-        $schema = self::$schema[$name];
-        $connectionClass = $schema['class'];
-
-        if( substr( $connectionClass, 0, 1 ) != "\\" )
-            $connectionClass = __NAMESPACE__ . "\\" . $connectionClass;
-
-        if( !class_exists($connectionClass) )
-            throw new ConnectionFactoryException("Unknown class {$connectionClass}");
-
-        $connection = new $connectionClass( $schema );
-
-        if( ! $connection instanceof AbstractConnection )
-            throw new ConnectionFactoryException("Connection class {$connectionClass} must be instance of \\fv\\Connection\\AbstractConnection");
-
-        return $connections[$name] = $connection;
+        return $instances[$name];
     }
 
     public function loadFromConfigFile( $file ){
-        self::$schema = ConfigLoader::load( $file );
+        self::$builder =
+            ConfigurableBuilder::createFromFile( $file )
+                ->setDefaultNamespace(__NAMESPACE__)
+                ->setInstanceOf(__NAMESPACE__ . "\\AbstractConnection")
+                ->setPostfix("Connection");
+
         return $this;
     }
 }

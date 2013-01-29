@@ -9,7 +9,7 @@ namespace fv\Connection\Driver;
 
 use PDO;
 
-class PdoMysql extends \PDO {
+class PdoMysqlDriver extends \PDO {
 
     protected $hasActiveTransaction = false;
 

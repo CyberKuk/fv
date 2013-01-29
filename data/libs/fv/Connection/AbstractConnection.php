@@ -2,15 +2,13 @@
 
 namespace fv\Connection;
 
+use fv\Collection\Collection;
+
 abstract class AbstractConnection {
 
     private $driver;
     private $schema;
     private $isConnected;
-
-    final public function __construct( array $schema ){
-        $this->setSchema( $schema );
-    }
 
     /**
      * @return mixed driver
@@ -40,8 +38,15 @@ abstract class AbstractConnection {
         return $this;
     }
 
+    /**
+     * @return \fv\Collection\Collection
+     */
     public function getSchema() {
         return $this->schema;
+    }
+
+    public static function build( Collection $schema ){
+        return (new static)->setSchema( $schema );
     }
 
 }

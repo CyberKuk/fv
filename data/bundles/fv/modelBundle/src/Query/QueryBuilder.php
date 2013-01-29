@@ -9,14 +9,23 @@ use fv\Connection\ConnectionFactory;
 class QueryBuilder {
 
     static $reflects = array(
-        "fv\\Connection\\Database\\PdoMysql" => "Bundle\\fv\\ModelBundle\\Query\\Database\\MysqlQuery"
+        "fv\\Connection\\Database\\PdoMysqlConnection" => "Bundle\\fv\\ModelBundle\\Query\\Database\\MysqlQuery"
     );
 
+    /**
+     * @param $connection
+     * @return \Bundle\fv\ModelBundle\Query\Database\DatabaseQuery|AbstractQuery
+     * @throws \Bundle\fv\ModelBundle\Exception\QueryInstantiateException
+     */
     static function getQueryToConnection( $connection ){
         if( is_string($connection) ){
             $connectionFactory = new ConnectionFactory;
             $connection = $connectionFactory->getConnection( $connection );
         }
+
+        if( is_null($connection) )
+            throw new QueryInstantiateException("Connection could not be null");
+
 
         if( ! $connection instanceof AbstractConnection ){
             $class = get_class($connection);

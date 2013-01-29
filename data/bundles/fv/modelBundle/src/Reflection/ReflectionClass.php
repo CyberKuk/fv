@@ -24,6 +24,9 @@ class ReflectionClass extends \ReflectionClass {
         return $properties;
     }
 
+    /**
+     * @return \fv\Collection\Collection
+     */
     public function getSchema(){
         $docs = trim( $this->getDocComment() );
 
@@ -48,7 +51,24 @@ class ReflectionClass extends \ReflectionClass {
                             unset( $method['name'] );
                             if( ! $schema->methods )
                                 $schema->methods = array();
-                            $schema->methods->$methodName = $method;
+
+                            if( $schema->methods->$methodName )
+                                $schema->methods->$methodName = array();
+
+                            $col = $schema->methods->$methodName;
+                            $col[] = $method;
+                        }
+                        break;
+                    case 'primaryIndex':
+                    case 'uniqueIndex':
+                    case 'keyIndex':
+                        if( $data = $this->parseIndexDoc( $propertyValue ) ){
+                            if( ! $schema->indexes )
+                                $schema->indexes = array();
+                            if( !$schema->indexes->$propertyName )
+                                $schema->indexes->$propertyName = array();
+                            $prop = $schema->indexes->$propertyName;
+                            $prop[] = $data;
                         }
                         break;
                     default:
@@ -93,5 +113,13 @@ class ReflectionClass extends \ReflectionClass {
             "params" => $params,
             "return" => $return,
         );
+    }
+
+    private function parseIndexDoc($propertyValue) {
+        if( preg_match('/\((.*)\)/', $propertyValue, $match) > 0 ){
+            return array( "fields" => array_map( function( $data ){ return trim($data); }, explode( ",", $match[1] ) ));
+        }
+
+        return array("fields" => array());
     }
 }

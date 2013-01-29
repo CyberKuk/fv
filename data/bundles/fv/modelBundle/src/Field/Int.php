@@ -9,45 +9,33 @@ namespace Bundle\fv\ModelBundle\Field;
 
 class Int extends AbstractField {
 
-    private $nullable;
-
-    private $default;
-
     private $unsigned;
-
+    private $autoincrement;
     private $type;
+    private $length;
 
-    private $maxLength;
+    public function set($value) {
+        if( is_null($value) && $this->isNullable() )
+            return parent::set(null);
 
-    public function setDefault( $default ) {
-        if( ! $this->isChanged() ){
-            $this->default = $default;
-            $this->set( $default );
-            $this->notChanged();
-        }
+        return parent::set((int)$value);
+    }
+
+    public function setDefault($default) {
+        if( is_null($default) )
+            return parent::setDefault(null);
+
+        return parent::setDefault((int)$default);
+    }
+
+
+    public function setLength( $maxLength ) {
+        $this->length = $maxLength;
         return $this;
     }
 
-    public function getDefault() {
-        return $this->default;
-    }
-
-    public function setMaxLength( $maxLength ) {
-        $this->maxLength = $maxLength;
-        return $this;
-    }
-
-    public function getMaxLength() {
-        return $this->maxLength;
-    }
-
-    public function setNullable( $nullable ) {
-        $this->nullable = $nullable;
-        return $this;
-    }
-
-    public function getNullable() {
-        return $this->nullable;
+    public function getLength() {
+        return $this->length;
     }
 
     public function setType( $type ) {
@@ -66,6 +54,14 @@ class Int extends AbstractField {
 
     public function getUnsigned() {
         return $this->unsigned;
+    }
+
+    public function setAutoincrement($autoincrement) {
+        $this->autoincrement = $autoincrement;
+    }
+
+    public function getAutoincrement() {
+        return $this->autoincrement;
     }
 
 }

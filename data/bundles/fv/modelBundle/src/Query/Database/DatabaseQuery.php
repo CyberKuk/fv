@@ -20,7 +20,8 @@ abstract class DatabaseQuery extends AbstractQuery {
         \Bundle\fv\ModelBundle\Query\Mixin\Limit;
 
     final public function fetch( $key ) {
-        $primaryFields = $this->getSchema()->getFields( '\\fv\\Model\\Field\\Primary' );
+        $ent = $this->createModel(array());
+        $primaryFields = $ent->getPrimaryFields();
 
         if( count($primaryFields) == 0 )
             throw new \Bundle\fv\ModelBundle\Exception\QueryException("Can't fetch {$this->getModelClassName()} without any primary fields");
@@ -50,14 +51,14 @@ abstract class DatabaseQuery extends AbstractQuery {
             if( count($primaryFields) > 1 )
                 throw new \Bundle\fv\ModelBundle\Exception\QueryException("Key must be array, {$this->getModelClassName()} uses composite key");
 
-            $where[current($primaryFields)] = $key;
+            $where[key($primaryFields)] = $key;
         }
 
         return $this->where( $where )->fetchOne();
     }
 
-    final public function persist( Model $Model ) {
-        $primaryFields = $Model->getPrimaryFields();
+    final public function persist( Model $model ) {
+        $primaryFields = $model->getPrimaryFields();
 
         if( count($primaryFields) == 0 ){
             throw new QueryException( "Can't persist Model {$this->getModelClassName()} without any primary key used" );
@@ -78,8 +79,9 @@ abstract class DatabaseQuery extends AbstractQuery {
         $pk = $pkField->asMysql();
 
         if( empty( $pk ) ){
-            foreach( $Model->getFields() as $fieldKey => $field ){
-                $this->andSet( $fieldKey, $field->asMysql() );
+            foreach( $model->getFields() as $fieldKey => $field ){
+                if( $fieldKey != $pkKey )
+                    $this->andSet( $fieldKey, $field->asMysql() );
             }
 
             $newPkKey = $this->insert();
@@ -92,7 +94,7 @@ abstract class DatabaseQuery extends AbstractQuery {
 
             return true;
         } else {
-            foreach( $Model->getFields() as $fieldKey => $field ){
+            foreach( $model->getFields() as $fieldKey => $field ){
                 if( $fieldKey == $pkKey )
                     continue;
 
@@ -126,7 +128,7 @@ abstract class DatabaseQuery extends AbstractQuery {
         $result = $this->fetchOneAssoc();
 
         if( $result )
-            $result = $this->createModel( reset($result) );
+            $result = $this->createModel( $result );
 
         return $result;
     }
@@ -165,10 +167,10 @@ abstract class DatabaseQuery extends AbstractQuery {
     }
 
     /**
-     * @param $map
+     * @param array $map
      * @return Model
      */
-    private function createModel( $map ){
+    private function createModel( array $map ){
         $ModelName = $this->getModelClassName();
         /** @var $Model \Bundle\fv\ModelBundle\AbstractModel */
         $Model = new $ModelName;
@@ -188,6 +190,9 @@ abstract class DatabaseQuery extends AbstractQuery {
     }
 
     public function getTableName(){
-        return $this->getSchema()->table;
+        if( !$this->getSchema()->table )
+            return $this->getModelClassName();
+
+        return $this->getSchema()->table->get();
     }
 }

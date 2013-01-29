@@ -16,9 +16,9 @@ class ConfigurableBuilder {
 
     private function __construct(){}
 
-    public static function createFromFile( $file ){
+    public static function createFromFile( $file, $context = null ){
         $builder = new static;
-        $builder->setConfig( ConfigLoader::load($file) );
+        $builder->setConfig( ConfigLoader::load($file, $context) );
         return $builder;
     }
 
@@ -40,7 +40,7 @@ class ConfigurableBuilder {
         } else
             $className = $this->getDefaultClass();
 
-        if( !strstr('\\', $className ))
+        if( $className[0] !== '\\')
             $className = $this->getDefaultNamespace() . "\\" . $className;
 
         if( ! class_exists( $className ) )

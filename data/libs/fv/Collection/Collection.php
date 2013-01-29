@@ -43,6 +43,9 @@ class Collection implements \ArrayAccess, \Iterator, \Countable {
     }
 
     function __set( $name, $value ) {
+        if( is_null($name) )
+            $name = count($this->_params);
+
         $this->_params[$name] = new Collection( $value );
     }
 
@@ -210,7 +213,9 @@ class Collection implements \ArrayAccess, \Iterator, \Countable {
      * @return void
      */
     public function offsetSet( $offset, $value ) {
-        $this->_params[$offset] = $value;
+        if( is_null($offset) )
+            $offset = $this->count();
+        $this->_params[$offset] = new Collection($value);
     }
 
     /**

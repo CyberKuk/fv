@@ -6,6 +6,9 @@ use fv\Collection\Collection;
 
 class ReflectionProperty extends \ReflectionProperty {
 
+    /**
+     * @return \fv\Collection\Collection
+     */
     public function getSchema(){
         $docs = trim( $this->getDocComment() );
 
@@ -34,6 +37,11 @@ class ReflectionProperty extends \ReflectionProperty {
                             $propertySchema->var = $var;
                         }
                         break;
+                    case 'field':
+                        if( $var = $this->parseFieldDoc( $propertyValue ) ){
+                            $propertySchema->field = $var;
+                        }
+                        break;
                     default:
                         $propertySchema->$propertyName = $propertyValue;
                 }
@@ -52,6 +60,28 @@ class ReflectionProperty extends \ReflectionProperty {
         }
 
         return false;
+    }
+
+    private function parseFieldDoc( $propertyValue ) {
+        $result = array();
+        if( preg_match('/\((.*)\)/', $propertyValue, $match) > 0 ){
+            $settings = explode( ",", $match[1] );
+            foreach( $settings as $setting ){
+                if( preg_match('/(.*)=(.*)/', $setting, $match) ){
+                    $key = trim($match[1]);
+                    $value = trim($match[2]);
+                    if( strtolower( $value ) == "true" )
+                        $value = true;
+
+                    if( strtolower( $value ) == "false" )
+                        $value = false;
+
+                    $result[$key] = $value;
+                }
+            }
+        }
+
+        return $result;
     }
 
 }

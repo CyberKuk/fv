@@ -26,7 +26,7 @@ class MysqlQuery extends DatabaseQuery {
     }
 
     /**
-     * @return \fv\Connection\Driver\PdoMysql
+     * @return \fv\Connection\Driver\PdoMysqlDriver
      */
     private function getDriver(){
         return $this->getConnection()->getDriver();
@@ -38,7 +38,9 @@ class MysqlQuery extends DatabaseQuery {
      * @return \PDOStatement
      */
     private function prepareAndExecute( $sql ){
+        /** @var $sth \PDOStatement */
         $sth = $this->getDriver()->prepare( $sql );
+        $sth->setFetchMode( \PDO::FETCH_ASSOC );
         $sth->execute( $this->preparedParams() );
         return $sth;
     }
@@ -88,4 +90,10 @@ class MysqlQuery extends DatabaseQuery {
     private function preparedParams(){
         return array_merge( $this->getWhereParams(), $this->getHavingParams(), $this->getSetParams() );
     }
+
+    public function getTableName() {
+        return '`' . parent::getTableName() . '`';
+    }
+
+
 }
