@@ -12,7 +12,7 @@
     /**
      * @property RelationLoader $_relationLoader
      */
-    class Query{
+    class Query {
 
         const STATEMENT_SELECT = 1;
         const STATEMENT_INSERT = 2;

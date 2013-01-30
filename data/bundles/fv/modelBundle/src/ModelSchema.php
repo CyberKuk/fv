@@ -53,7 +53,7 @@ class ModelSchema {
         return $fields;
     }
 
-    public function setClass( $class ) {
+    private function setClass( $class ) {
         $this->class = $class;
         return $this;
     }
@@ -62,6 +62,10 @@ class ModelSchema {
         return $this->class;
     }
 
+    /**
+     * @param null $type
+     * @return string[]
+     */
     public function getFields( $type = null ){
         $fields = $this->schema->fields->map( function( FieldSchema $fieldSchema ){
             return $fieldSchema->getPrototype();
@@ -121,8 +125,6 @@ class ModelSchema {
         return $this;
     }
 
-
-
     /**
      * @param null|string $class
      * @return Index\PrimaryIndex[]
@@ -152,5 +154,15 @@ class ModelSchema {
             $key = $key->get();
         }
         return $result;
+    }
+
+    public function getPrimaryKeys(){
+        $primaryIndex = $this->getIndexes("PrimaryIndex");
+
+        if( isset( $primaryIndex[0] ) ){
+            return $primaryIndex[0]->getFields();
+        }
+
+        return array();
     }
 }

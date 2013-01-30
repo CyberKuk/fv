@@ -22,7 +22,7 @@ trait Where {
         } elseif( is_array($statement) ){
             $where = "";
             foreach( $statement as $key => $value ){
-                $where = ( empty($where) ? "" : " and " ) . "{$key} = :{$key}";
+                $where = ( empty($where) ? "" : " and " ) . "`{$key}` = :{$key}";
             }
             $this->where[] = $where;
             $this->whereParams += $statement;

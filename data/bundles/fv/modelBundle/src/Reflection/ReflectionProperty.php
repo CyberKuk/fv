@@ -38,9 +38,7 @@ class ReflectionProperty extends \ReflectionProperty {
                         }
                         break;
                     case 'field':
-                        if( $var = $this->parseFieldDoc( $propertyValue ) ){
-                            $propertySchema->field = $var;
-                        }
+                        $propertySchema->field = $this->parseFieldDoc( $propertyValue );
                         break;
                     default:
                         $propertySchema->$propertyName = $propertyValue;

@@ -17,8 +17,26 @@ class IndexController extends AbstractController {
 
     function get( $name = "default world" ){
 
+        //$ent = new \SomeEntity();
+        ////var_dump( $ent );
+        //$ent->foreign->set(rand(1,2));
+        //var_dump( $ent->foreign->get() );
+        //$ent->persist();
+
+        //foreach( \SomeEntity::select()->fetchAll() as $pk => $ent ){
+        //    var_dump($pk, $ent->foreign->get());
+        //}
+
+        /** @var $other \OtherEntity */
+        $other = \OtherEntity::fetch(1);
+
+        var_dump($other->somes->get());
+
+        die;
         /** @var $ents \SomeEntity[] */
         $ents = \SomeEntity::select()->fetchAll();
+
+        var_dump($ents);
 
         if( count($ents) == 2 ){
             foreach( $ents as $ent ){

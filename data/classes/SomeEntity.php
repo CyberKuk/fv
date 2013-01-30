@@ -25,6 +25,12 @@ class SomeEntity extends AbstractModel {
      */
     protected $counter;
 
+    /**
+     * @field ( modelName=OtherEntity )
+     * @var Bundle\fv\ModelBundle\Field\Relation\Foreign
+     */
+    public $foreign;
+
     public function setCounter( $counter ) {
         $this->counter->set( $counter );
         return $this;

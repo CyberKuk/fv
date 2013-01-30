@@ -63,7 +63,7 @@ class MysqlQuery extends DatabaseQuery {
         $params = "";
         $keys = "";
         foreach( $this->getSetKeys() as $key ){
-            $keys .= "{$key},";
+            $keys .= "`{$key}`,";
             $params .= ":{$key},";
         }
         $params = rtrim($params, ",");

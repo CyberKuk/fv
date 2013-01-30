@@ -3,13 +3,18 @@
 namespace Bundle\fv\ModelBundle\Field;
 
 use \fv\Collection\Collection;
+use Bundle\fv\ModelBundle\AbstractModel;
 
 abstract class AbstractField {
 
     private $nullable = true;
     private $default = null;
-    private $value;
     private $isChanged = false;
+
+    /** @var AbstractModel */
+    private $owner;
+
+    protected $value;
 
     public static function build( $schema ){
         if( is_array($schema) )
@@ -93,5 +98,22 @@ abstract class AbstractField {
 
     public function getDefault() {
         return $this->default;
+    }
+
+    /**
+     * @return \Bundle\fv\ModelBundle\AbstractModel
+     */
+    protected function getOwner() {
+        return $this->owner;
+    }
+
+    private function setOwner( AbstractModel $class ) {
+        $this->owner = $class;
+        return $this;
+    }
+
+    public function cloneFor( AbstractModel $class ) {
+        $field = clone $this;
+        return $field->setOwner($class);
     }
 }

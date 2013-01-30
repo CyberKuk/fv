@@ -32,7 +32,7 @@ abstract class AbstractModel {
      *
      * @return ModelSchema
      */
-    final public static function getSchema(){
+    private static function getSchema(){
         return ModelSchema::getSchema( get_called_class() );
     }
 
@@ -148,13 +148,10 @@ abstract class AbstractModel {
         throw new FieldNotFoundException( "Trying to get field {$name} witch does not exist in class " . get_class($this) );
     }
 
+    /**
+     * @return Field\AbstractField[]
+     */
     public function getPrimaryFields() {
-        $primaryIndex = self::getSchema()->getIndexes("PrimaryIndex");
-
-        if( isset( $primaryIndex[0] ) ){
-            return array_intersect_key( $this->getFields(), array_flip( $primaryIndex[0]->getFields() ) );
-        }
-
-        return array();
+        return array_intersect_key( $this->getFields(), array_flip( self::getSchema()->getPrimaryKeys() ) );
     }
 }

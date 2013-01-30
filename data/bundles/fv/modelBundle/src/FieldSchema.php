@@ -19,7 +19,7 @@ class FieldSchema {
     }
 
     public function mixInto( AbstractModel $class ){
-        $field = clone $this->getPrototype();
+        $field = $this->getPrototype()->cloneFor( $class );
         $this->getProperty()->setValue( $class, $field );
         return $field;
     }
