@@ -9,9 +9,9 @@ interface Configurable {
      * And I understand that abstract static methods - not the brightest idea,
      * but this is the only way to ensure that the class containing factory method
      *
-     * @param \fv\Collection $config
+     * @param \fv\Collection\Collection $config
      * @return mixed
      */
-    static function build( \fv\Collection $config );
+    static function build( \fv\Collection\Collection $config );
 
 }

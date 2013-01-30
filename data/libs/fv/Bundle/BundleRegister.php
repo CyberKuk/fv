@@ -48,7 +48,7 @@ class BundleRegister {
             TemplateRegister::registerNamespace( $namespace, $path . DIRECTORY_SEPARATOR . "views" );
 
         if( is_dir($path . DIRECTORY_SEPARATOR . "configs") )
-            TemplateRegister::registerNamespace( $namespace, $path . DIRECTORY_SEPARATOR . "configs" );
+            \fv\Config\ConfigRegister::registerNamespace( $namespace, $path . DIRECTORY_SEPARATOR . "configs" );
 
         $bundles[$namespace] = $bundle;
     }

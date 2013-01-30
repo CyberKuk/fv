@@ -2,18 +2,7 @@
 
 namespace Application\Backend\Controller;
 
-use Bundle\fv\RoutingBundle\Controller\AbstractController;
+use Bundle\fv\MetroUIBundle\Controller\AbstractController;
 
-/**
- * User: cah4a
- * Date: 10.09.12
- * Time: 18:42
- */
 class IndexController extends AbstractController {
-
-    function get(){
-        return array(
-        );
-    }
-
 }
