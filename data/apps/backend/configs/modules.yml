@@ -1,0 +1,20 @@
+User:
+    class: \Application\Backend\Module\UserModule
+    entity: Bundle\fv\SiteEntityBundle\Entity\User
+    name: Пользователи
+    view:
+        menu:
+            type: double
+            color: blue
+        edit:
+            type: triple
+
+UserGroup:
+    name: Группы пользователей
+    entity: Bundle\fv\SiteEntityBundle\Entity\UserGroup
+    view:
+        menu:
+            type: double
+            color: blue
+        edit:
+            type: triple

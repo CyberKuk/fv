@@ -1,5 +1,4 @@
 abstract:
-
   iRecord:
     fields:
       ctime: { listable: true, type: datetime_ctime, editable: false, name: Дата создания}

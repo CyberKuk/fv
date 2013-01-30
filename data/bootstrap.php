@@ -12,6 +12,8 @@ ClassLoader\Register::createLoader( 'fv', 'libs/fv' );
 /* Bundles */
 fv\Bundle\BundleRegister::register("Bundle\\fv\\RoutingBundle");
 fv\Bundle\BundleRegister::register("Bundle\\fv\\ModelBundle");
+fv\Bundle\BundleRegister::register("Bundle\\fv\\SiteEntityBundle");
+fv\Bundle\BundleRegister::register("Bundle\\fv\\MetroUIBundle");
 
 /* Project config */
 \fv\Config\ConfigRegister::registerNamespace( "", "configs" );

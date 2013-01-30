@@ -82,9 +82,10 @@ class DefaultRoute extends AbstractRoute {
         $statement = preg_quote( $this->getUrl(), $delimiter );
         $statement = str_replace( array( "\\{\\$", "\\}" ), array('{$', '}'), $statement );
 
-        $function = function( $matches ) use ( &$params ) {
+        $self = $this;
+        $function = function( $matches ) use ( &$params, &$self ) {
             $paramName = $matches[1];
-            return "(" . ($this->getParam($paramName) ?: '[^/]+') . ")";
+            return "(" . ($self->getParam($paramName) ?: '[^/]+') . ")";
         };
         $statement = preg_replace_callback( '|\{\$([\w_]+)\}|', $function, $statement );
 
