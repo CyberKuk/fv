@@ -2,6 +2,8 @@
 
 namespace Bundle\fv\ModelBundle\Query\Database;
 
+use Bundle\fv\ModelBundle\Exception\QueryException;
+
 class MysqlQuery extends DatabaseQuery {
 
     public function insert() {
@@ -10,12 +12,27 @@ class MysqlQuery extends DatabaseQuery {
     }
 
     public function delete() {
-        $this->prepareAndExecute( "DELETE FROM {$this->getTableName()} {$this->getWhereClause()} {$this->getLimitClause()}" );
-        return true;
+        $sth = $this->prepareAndExecute( "DELETE FROM {$this->getTableName()} {$this->getWhereClause()} {$this->getLimitClause()}" );
+        return $sth->rowCount();
     }
 
     public function update() {
-        // @TODO: Implement update() method.
+        if( ! $this->getWhere() )
+            throw new QueryException("Update clause expects defined 'where'");
+
+        if( ! $this->getSetKeys() )
+            throw new QueryException("Update clause expects defined 'set'");
+
+        $sth = $this->prepareAndExecute( "UPDATE {$this->getTableName()} {$this->getSetClause()} {$this->getWhereClause()}" );
+        return $sth->rowCount();
+    }
+
+    public function updateAll() {
+        if( ! $this->getSetKeys() )
+            throw new QueryException("Update clause expects defined 'set'");
+
+        $sth = $this->prepareAndExecute( "UPDATE {$this->getTableName()} {$this->getSetClause()} {$this->getWhereClause()}" );
+        return $sth->rowCount();
     }
 
     protected function extract() {
@@ -72,6 +89,15 @@ class MysqlQuery extends DatabaseQuery {
         return "({$keys}) VALUES ($params)";
     }
 
+    private function getSetClause() {
+        $result = "";
+        foreach( $this->getSetKeys() as $key ){
+            $result .= "`{$key}`=:{$key},";
+        }
+        $result = "SET " . rtrim($result, ",");
+        return $result;
+    }
+
     private function getLimitClause(){
         if( ! $this->getLimitCount() && ! $this->getLimitOffset() )
             return "";
@@ -94,6 +120,5 @@ class MysqlQuery extends DatabaseQuery {
     public function getTableName() {
         return '`' . parent::getTableName() . '`';
     }
-
 
 }

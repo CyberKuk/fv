@@ -19,7 +19,7 @@ class PrefixRoute extends AbstractRoute {
     protected $applicationName;
     protected $prefix;
 
-    function __construct( Collection $params = null ) {
+    public function __construct( Collection $params = null ) {
         $this
             ->setApplicationName( $params->application->get() )
             ->setPrefix( $params->prefix->get() );

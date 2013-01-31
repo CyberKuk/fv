@@ -23,7 +23,7 @@ abstract class AbstractApplication {
     private $namespace;
     private $loaded = false;
 
-    function __construct( Collection $config ) {
+    public function __construct( Collection $config ) {
         $this->router = new Router;
         $this->path = rtrim( $config->path->get(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
         $this->namespace = rtrim( $config->namespace->get(), "\\") . "\\";
@@ -42,7 +42,7 @@ abstract class AbstractApplication {
      * @param \fv\Http\Request $request
      * @return \fv\Http\Response
      */
-    final function handle( Request $request ){
+    final public function handle( Request $request ){
         if( ! $this->loaded )
             $this->load();
 

@@ -17,7 +17,7 @@ use Bundle\fv\RoutingBundle\Application\AbstractApplication;
  */
 abstract class AbstractRoute {
 
-    abstract function __construct( Collection $params = null );
+    abstract public function __construct( Collection $params = null );
 
 
     /**

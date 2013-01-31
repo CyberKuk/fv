@@ -19,7 +19,7 @@ class DefaultRoute extends AbstractRoute {
     protected $params = array();
     protected $url;
 
-    function __construct( Collection $params = null ) {
+    public function __construct( Collection $params = null ) {
         if( $params->controller )
             $this->setController( $params->controller->get() );
 

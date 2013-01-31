@@ -65,4 +65,12 @@ abstract class AbstractQuery {
         return ModelSchema::getSchema( $this->getModelClassName() );
     }
 
+
+    /**
+     * @param array $map
+     * @return AbstractModel
+     */
+    protected function createModel( array $map ){
+        return \Bundle\fv\ModelBundle\Query\ModelsPool::create($this->getModelClassName(), $map);
+    }
 }

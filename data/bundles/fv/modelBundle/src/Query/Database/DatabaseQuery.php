@@ -3,6 +3,7 @@
 namespace Bundle\fv\ModelBundle\Query\Database;
 
 use Bundle\fv\ModelBundle\Query\AbstractQuery;
+use Bundle\fv\ModelBundle\Field\Int as FieldInt;
 use Bundle\fv\ModelBundle\AbstractModel as Model;
 use Bundle\fv\ModelBundle\Field\AbstractField as Field;
 
@@ -20,38 +21,37 @@ abstract class DatabaseQuery extends AbstractQuery {
         \Bundle\fv\ModelBundle\Query\Mixin\Limit;
 
     final public function fetch( $key ) {
-        $ent = $this->createModel(array());
-        $primaryFields = $ent->getPrimaryFields();
+        $primaryFieldKeys = $this->getSchema()->getPrimaryKeys();
 
-        if( count($primaryFields) == 0 )
+        if( count($primaryFieldKeys) == 0 )
             throw new \Bundle\fv\ModelBundle\Exception\QueryException("Can't fetch {$this->getModelClassName()} without any primary fields");
 
         $where = array();
 
         if( is_array( $key ) ){
-            if( count($primaryFields) == 1 && count($key) != 1 )
+            if( count($primaryFieldKeys) == 1 && count($key) != 1 )
                 throw new \Bundle\fv\ModelBundle\Exception\QueryException("Key must be value or array with one value, {$this->getModelClassName()} not use composite key");
 
-            if( count($primaryFields) != count($key) )
-                throw new \Bundle\fv\ModelBundle\Exception\QueryException("Key must must include exact " . count($primaryFields) . " elements for {$this->getModelClassName()} composite key" );
+            if( count($primaryFieldKeys) != count($key) )
+                throw new \Bundle\fv\ModelBundle\Exception\QueryException("Key must must include exact " . count($primaryFieldKeys) . " elements for {$this->getModelClassName()} composite key" );
 
-            foreach( $primaryFields as $fieldKey => $field ){
+            foreach( $primaryFieldKeys as $fieldKey ){
                 if( isset( $key[$fieldKey] ) ){
                     $where[$fieldKey] = $key[$fieldKey];
-                    unset( $primaryFields[$fieldKey] );
+                    unset( $primaryFieldKeys[$fieldKey] );
                     unset( $key[$fieldKey] );
                 }
             }
 
-            foreach( $primaryFields as $fieldKey => $field ){
+            foreach( $primaryFieldKeys as $fieldKey => $field ){
                 $where[$fieldKey] = array_shift( $key );
             }
 
         } else {
-            if( count($primaryFields) > 1 )
+            if( count($primaryFieldKeys) > 1 )
                 throw new \Bundle\fv\ModelBundle\Exception\QueryException("Key must be array, {$this->getModelClassName()} uses composite key");
 
-            $where[key($primaryFields)] = $key;
+            $where[key($primaryFieldKeys)] = $key;
         }
 
         return $this->where( $where )->fetchOne();
@@ -69,43 +69,62 @@ abstract class DatabaseQuery extends AbstractQuery {
                 if( ! $field->asMysql() )
                     throw new QueryException( "Can't persist Model {$this->getModelClassName()} with empty primary key {$key} while composite key used" );
             }
-
-            // @todo: Adding functionality for support persisting composite keys
-            throw new QueryException( "Can't persist Model {$this->getModelClassName()}. Not implemented!" );
         }
 
-        $pkKey = key($primaryFields);
-        $pkField = reset($primaryFields);
-        $pk = $pkField->asMysql();
+        if( count($primaryFields) == 1 ){
+            $pkField = reset($primaryFields);
 
-        if( empty( $pk ) ){
-            foreach( $model->getFields() as $fieldKey => $field ){
-                if( $fieldKey != $pkKey )
-                    $this->andSet( $fieldKey, $field->asMysql() );
+            if( ! $pkField->get() ){
+                if( ! $pkField instanceof FieldInt ){
+                    $pkKey = key($primaryFields);
+                    throw new QueryException( "Can't persist Model {$this->getModelClassName()} with empty primary key {$pkKey} not autoincrement int field" );
+                }
+
+                if( ! $pkField->isAutoincrement() ){
+                    $pkKey = key($primaryFields);
+                    throw new QueryException( "Can't persist Model {$this->getModelClassName()} with empty primary key {$pkKey} not autoincrement int field" );
+                }
+
+                return $this->autoincrementPersist( $model, $pkField );
             }
+        }
 
-            $newPkKey = $this->insert();
+        return $this->directPersist($model, $primaryFields);
+    }
 
-            if( empty( $newPkKey ) )
-                return false;
-
-            $pkField->set( $newPkKey );
-            $pkField->setIsChanged( false );
-
-            return true;
-        } else {
-            foreach( $model->getFields() as $fieldKey => $field ){
-                if( $fieldKey == $pkKey )
-                    continue;
-
-                if( ! $field->isChanged() )
-                    continue;
-
+    private function autoincrementPersist( Model $model, FieldInt $pkField ) {
+        foreach( $model->getFields() as $fieldKey => $field ){
+            if( $field != $pkField ){
+                $where[$fieldKey] = $field->asMysql();
+            } else {
                 $this->andSet( $fieldKey, $field->asMysql() );
             }
-
-            return $this->where( array( $pkKey => $pk ) )->update();
         }
+
+        $newPkKey = $this->insert();
+
+        if( empty( $newPkKey ) )
+            throw new QueryException("Couldn't obtain autoincrement primary key value");
+
+        $pkField->set( $newPkKey );
+        $pkField->setIsChanged( false );
+
+        return true;
+    }
+
+    private function directPersist( Model $model, array $primaryFields ) {
+        $where = array();
+        foreach ($model->getFields() as $fieldKey => $field) {
+            if (in_array($fieldKey, $primaryFields)) {
+                $where[$fieldKey] = $field->asMysql();
+            } else {
+                if (!$field->isChanged()) continue;
+
+                $this->andSet($fieldKey, $field->asMysql());
+            }
+        }
+
+        return $this->where($where)->update();
     }
 
     final public function remove( Model $Model ) {
@@ -119,6 +138,7 @@ abstract class DatabaseQuery extends AbstractQuery {
     abstract public function insert();
     abstract public function delete();
     abstract public function update();
+    abstract public function updateAll();
     abstract protected function extract();
 
     /**
@@ -164,29 +184,6 @@ abstract class DatabaseQuery extends AbstractQuery {
             return reset($result);
         else
             return null;
-    }
-
-    /**
-     * @param array $map
-     * @return Model
-     */
-    private function createModel( array $map ){
-        $ModelName = $this->getModelClassName();
-        /** @var $Model \Bundle\fv\ModelBundle\AbstractModel */
-        $Model = new $ModelName;
-
-        foreach( $Model->getFields() as $key => $field ){
-            if( isset( $map[$key] ) ){
-                $field->fromMysql($map[$key]);
-                unset( $map[$key] );
-            }
-        }
-
-        foreach( $map as $key => $value ){
-            // @todo: save heap fields to Model
-        }
-
-        return $Model;
     }
 
     public function getTableName(){

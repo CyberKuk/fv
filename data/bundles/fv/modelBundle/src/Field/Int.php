@@ -60,7 +60,7 @@ class Int extends AbstractField {
         $this->autoincrement = $autoincrement;
     }
 
-    public function getAutoincrement() {
+    public function isAutoincrement() {
         return $this->autoincrement;
     }
 

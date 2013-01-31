@@ -12,15 +12,11 @@ use Bundle\fv\RoutingBundle\Application\AbstractApplication;
 use Bundle\fv\RoutingBundle\Controller\AbstractController;
 use Bundle\fv\RoutingBundle\Controller\ControllerFactory;
 use Bundle\fv\RoutingBundle\Routing\Exception\RoutingException;
-
-use fv\Viewlet;
 use fv\Collection\Collection;
 
 class UriBasedControllerRoute extends AbstractRoute {
 
-    function __construct( Collection $params = null ) {
-
-    }
+    public function __construct( Collection $params = null ) {}
 
     public function handle( Request $request ){
         $application = null;
@@ -31,25 +27,16 @@ class UriBasedControllerRoute extends AbstractRoute {
         if( ! $application instanceof AbstractApplication )
             throw new RoutingException( "No application to show controller. What I have to do with this route?" );
 
-        $controllerFactory = new ControllerFactory( $application );
+        $controllerFactory = $application->getControllerFactory();
 
         $controllerName = str_replace( '/', "\\", trim($request->getUri(), "/") );
         $controller = null;
 
-        if( !empty($controllerName) ){
-            if( $controllerFactory->controllerExist( $controllerName ) ){
-                $controller = $controllerFactory->createController( $controllerName );
-            } else {
-                $controllerName .= "\\Index";
-                if( $controllerFactory->controllerExist( $controllerName ) ){
-                    $controller = $controllerFactory->createController( $controllerName );
-                }
-            }
-        } elseif( $controllerFactory->controllerExist( "Index" ) ){
-            $controller = $controllerFactory->createController( "Index" );
-        }
+        if( empty($controllerName) )
+            $controllerName = "Index";
 
-        if( $controller instanceof AbstractController ){
+        if( $controllerFactory->controllerExist( $controllerName ) ){
+            $controller = $controllerFactory->createController( $controllerName );
             $controller
                 ->setRequest( $request )
                 ->execute();
