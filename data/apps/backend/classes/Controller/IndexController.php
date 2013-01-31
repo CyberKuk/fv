@@ -2,7 +2,7 @@
 
 namespace Application\Backend\Controller;
 
-use Bundle\fv\MetroUIBundle\Controller\AbstractController;
+use Bundle\fv\MetroUIBundle\Controller\IndexController as ParentController;
 
-class IndexController extends AbstractController {
+class IndexController extends ParentController {
 }
