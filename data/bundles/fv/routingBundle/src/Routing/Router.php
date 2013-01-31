@@ -3,6 +3,7 @@
 namespace Bundle\fv\RoutingBundle\Routing;
 
 use fv\Http\Request;
+use fv\Config\ConfigurableBuilder;
 use fv\Config\ConfigLoader;
 use Bundle\fv\RoutingBundle\Routing\Route\AbstractRoute;
 use Bundle\fv\RoutingBundle\Routing\Exception\RouterException;
@@ -77,8 +78,8 @@ class Router {
         $this->addRoutes( $builder->buildAll() );
     }
 
-    function loadFromConfigFile( $file ){
-        $builder = \fv\Config\ConfigurableBuilder::createFromFile( $file );
+    function loadFromConfigFile( $file, $context = null ){
+        $builder = ConfigurableBuilder::createFromFile( $file, $context );
 
         $builder
             ->setDefaultNamespace(__NAMESPACE__ . "\\Route")

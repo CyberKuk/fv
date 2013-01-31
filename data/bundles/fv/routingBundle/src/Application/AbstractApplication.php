@@ -10,21 +10,22 @@ namespace Bundle\fv\RoutingBundle\Application;
 use fv\Http\Request;
 use fv\Config\ConfigLoader;
 use fv\Collection\Collection;
+
 use Bundle\fv\RoutingBundle\Routing\Router;
+use Bundle\fv\RoutingBundle\Application\Filter\RouterFilter;
+use Bundle\fv\RoutingBundle\Application\Filter\FilterChain;
 use Bundle\fv\RoutingBundle\Controller\ControllerFactory;
 use Bundle\fv\RoutingBundle\Layout\LayoutFactory;
 
 abstract class AbstractApplication {
 
-    /** @var \Bundle\fv\RoutingBundle\Routing\Router */
-    protected $router;
-
+    private $filterChain;
     private $path;
     private $namespace;
     private $loaded = false;
 
     public function __construct( Collection $config ) {
-        $this->router = new Router;
+        $this->filterChain = new FilterChain();
         $this->path = rtrim( $config->path->get(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
         $this->namespace = rtrim( $config->namespace->get(), "\\") . "\\";
     }
@@ -34,7 +35,10 @@ abstract class AbstractApplication {
     }
 
     public function load(){
-        $this->router->loadFromCollection( ConfigLoader::load( 'routes', $this, false ) );
+        $router = new Router();
+        $router->loadFromCollection( ConfigLoader::load( 'routes', $this, false ) );
+        $this->getFilterChain()->addFilter( new RouterFilter( $router ) );
+
         $this->loaded = true;
     }
 
@@ -48,7 +52,11 @@ abstract class AbstractApplication {
 
         $request->internal->application = $this;
 
-        return $this->getRouter()->handle( $request );
+        return $this->getFilterChain()->setRequest( $request )->execute();
+    }
+
+    final public function getFilterChain() {
+        return $this->filterChain;
     }
 
     public function getNamespace(){
@@ -62,23 +70,6 @@ abstract class AbstractApplication {
     public function getLayoutNamespace(){
         return $this->getNamespace() . "Layout\\";
     }
-
-    /**
-     * @param \Bundle\fv\RoutingBundle\Routing\Router $router
-     * @return \Bundle\fv\RoutingBundle\Application\AbstractApplication
-     */
-    public function setRouter( Router $router ) {
-        $this->router = $router;
-        return $this;
-    }
-
-    /**
-     * @return \Bundle\fv\RoutingBundle\Routing\Router
-     */
-    public function getRouter() {
-        return $this->router;
-    }
-
 
     /**
      * @return \Bundle\fv\RoutingBundle\Controller\ControllerFactory
