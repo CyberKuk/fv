@@ -1,0 +1,7 @@
+frontend:
+  namespace: Application\Frontend
+  path: apps/frontend
+
+backend:
+  namespace: Application\Backend
+  path: apps/backend
