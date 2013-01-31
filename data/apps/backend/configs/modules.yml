@@ -2,7 +2,8 @@ User:
     class: \Application\Backend\Module\UserModule
     entity: Bundle\fv\SiteEntityBundle\Entity\User
     name: Пользователи
-    view:
+    group: Администрирование
+    views:
         menu:
             type: double
             color: blue
@@ -12,9 +13,20 @@ User:
 UserGroup:
     name: Группы пользователей
     entity: Bundle\fv\SiteEntityBundle\Entity\UserGroup
-    view:
+    group: Администрирование
+    views:
+        menu:
+            color: green
+        edit:
+            type: triple
+
+SomeUser:
+    entity: Bundle\fv\SiteEntityBundle\Entity\User
+    name: Маленькие пенисы
+    group: Вторая группа
+    views:
         menu:
             type: double
-            color: blue
+            color: red
         edit:
             type: triple
