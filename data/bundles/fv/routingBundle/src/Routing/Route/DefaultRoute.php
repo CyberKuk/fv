@@ -41,14 +41,15 @@ class DefaultRoute extends AbstractRoute {
     function handle( Request $request ) {
         $uri = rtrim($request->getUri(), "/");
 
-        $this->getPregParams();
-
         if( preg_match( $this->getPregStatement(), $uri, $matches ) > 0 ){
             array_shift( $matches );
             $values = array_combine( $this->getPregParams(), $matches );
 
             if( $this->getController() ){
-                $application = $request->internal->application;
+                if( ! $request->internal->application )
+                    throw new RoutingException( "No application to show controller. What I have to do with this route?" );
+
+                $application = $request->internal->application->get();
 
                 if( ! $application instanceof AbstractApplication )
                     throw new RoutingException( "No application to show controller. What I have to do with this route?" );
