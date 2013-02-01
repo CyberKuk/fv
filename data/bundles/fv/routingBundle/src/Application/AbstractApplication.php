@@ -63,26 +63,18 @@ abstract class AbstractApplication {
         return $this->namespace;
     }
 
-    public function getControllerNamespace(){
-        return $this->getNamespace() . "Controller\\";
-    }
-
-    public function getLayoutNamespace(){
-        return $this->getNamespace() . "Layout\\";
-    }
-
     /**
      * @return \Bundle\fv\RoutingBundle\Controller\ControllerFactory
      */
     public function getControllerFactory(){
-        return new ControllerFactory( $this );
+        return new ControllerFactory( $this->getNamespace() . "Controller\\" );
     }
 
     /**
      * @return \Bundle\fv\RoutingBundle\Layout\LayoutFactory
      */
     public function getLayoutFactory(){
-        return new LayoutFactory( $this );
+        return new LayoutFactory( $this->getNamespace() . "Layout\\" );
     }
 
     /**

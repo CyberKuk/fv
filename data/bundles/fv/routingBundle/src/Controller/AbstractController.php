@@ -82,6 +82,9 @@ abstract class AbstractController extends \fv\ViewModel\ViewModel {
         return $this->response;
     }
 
+    /**
+     * @return null|\Bundle\fv\RoutingBundle\Application\AbstractApplication
+     */
     public function getApplication(){
         if( $app = $this->getRequest()->internal->application )
             return $app->get();

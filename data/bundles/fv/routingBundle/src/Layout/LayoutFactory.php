@@ -15,28 +15,26 @@ use Bundle\fv\RoutingBundle\Layout\Exception\LayoutFactoryException;
 class LayoutFactory {
 
     /**
-     * @var \Bundle\fv\RoutingBundle\Application\AbstractApplication
+     * @var string
      */
-    private $application;
+    private $namespace;
 
-    function __construct( Application $application ) {
-        $this->setApplication( $application );
+    function __construct( $namespace ) {
+        $this->setNamespace( $namespace );
     }
 
     function createLayout( Request $request ){
-        $namespace = $this->getApplication()->getLayoutNamespace();
-
         $layout = null;
 
         if( $request->isXmlHttp() ){
-            $class = $namespace . "AjaxLayout";
+            $class = $this->getNamespace() . "AjaxLayout";
 
             if( class_exists( $class ) )
                 $layout = new $class;
         }
 
         if( empty($layout) ){
-            $class = $namespace . "DefaultLayout";
+            $class = $this->getNamespace() . "DefaultLayout";
 
             if( class_exists($class) )
                 $layout = new $class;
@@ -52,19 +50,18 @@ class LayoutFactory {
     }
 
     /**
-     * @param \Bundle\fv\RoutingBundle\Application\AbstractApplication $application
-     * @return \Bundle\fv\RoutingBundle\Layout\LayoutFactory
+     * @param string $namespace
      */
-    private function setApplication( $application ) {
-        $this->application = $application;
+    public function setNamespace($namespace) {
+        $this->namespace = $namespace;
         return $this;
     }
 
     /**
-     * @return \Bundle\fv\RoutingBundle\Application\AbstractApplication
+     * @return string
      */
-    private function getApplication() {
-        return $this->application;
+    public function getNamespace() {
+        return $this->namespace;
     }
 
 }

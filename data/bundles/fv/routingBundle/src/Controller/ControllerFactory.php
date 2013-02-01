@@ -7,16 +7,15 @@
 
 namespace Bundle\fv\RoutingBundle\Controller;
 
-use Bundle\fv\RoutingBundle\Application\AbstractApplication as Application;
 use Bundle\fv\RoutingBundle\Controller\Exception\ControllerFactoryException;
 
 class ControllerFactory {
 
-    /** @var Application */
-    private $application;
+    /** @var string */
+    private $namespace;
 
-    public function __construct( Application $application ){
-        $this->setApplication( $application );
+    public function __construct( $namespace ){
+        $this->setNamespace( $namespace );
     }
 
     /**
@@ -46,25 +45,23 @@ class ControllerFactory {
     }
 
     private function getControllerClassName( $name ){
-        $namespace = $this->getApplication()->getControllerNamespace();
-        $class = $namespace . ucfirst($name) . "Controller";
+        $class = $this->getNamespace() . ucfirst($name) . "Controller";
         return $class;
     }
 
     /**
-     * @param \Bundle\fv\RoutingBundle\Application\AbstractApplication $application
-     * @return \Bundle\fv\RoutingBundle\Controller\ControllerFactory
+     * @param string $namespace
      */
-    private function setApplication( $application ) {
-        $this->application = $application;
+    public function setNamespace($namespace) {
+        $this->namespace = $namespace;
         return $this;
     }
 
     /**
-     * @return \Bundle\fv\RoutingBundle\Application\AbstractApplication
+     * @return string
      */
-    private function getApplication() {
-        return $this->application;
+    public function getNamespace() {
+        return $this->namespace;
     }
 
 }
