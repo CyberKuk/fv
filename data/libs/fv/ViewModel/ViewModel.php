@@ -3,58 +3,52 @@
 namespace fv\ViewModel;
 
 use fv\View\AbstractView;
+use fv\ViewModel\Exception\ViewModelException;
 
 class ViewModel {
 
-    private $content;
-    private $params = array();
+    use Viewlet;
 
-    public function __toString(){
-        return $this->render();
-    }
+    /** @var ViewModel|null */
+    private $owner;
 
-    public function render(){
-        return $this->prerender()->content;
-    }
-
-    public function prerender(){
-        if( isset( $this->content ) )
-            return $this;
-
-        $this->assignParam( 'this', $this );
-
-        try{
-            $this->content = $this->getView()
-                ->assignParams( $this->params )
-                ->render();
-        } catch( \Exception $e ){
-            $this->content = $e->getMessage();
-        }
-
-        return $this;
-    }
-
-    protected function assignParams( array $params ){
-        foreach( $params as $name => $value )
-            $this->assignParam( $name, $value );
-
-        return $this;
-    }
-
-    protected function assignParam( $name, $value ){
-        if( isset($this->params[$name]) )
-            throw new \Exception( "Variable {$name} already assigned!" );
-
-        $this->params[$name] = $value;
-
+    /**
+     * @param ViewModel $owner
+     * @return ViewModel
+     */
+    public function setOwner( ViewModel $owner) {
+        $this->owner = $owner;
         return $this;
     }
 
     /**
-     * @return AbstractView
+     * @return ViewModel|null
      */
-    protected function getView(){
-        return \fv\View\ViewBuilder::build( $this );
+    public function getOwner() {
+        return $this->owner;
+    }
+
+    private $eventListeners = array();
+
+    protected function addEventListener( $eventType, Callable $function ){
+        $this->eventListeners[$eventType] = $function;
+        return $this;
+    }
+
+    protected function removeEventListener( $eventType ){
+        unset( $this->eventListeners[$eventType] );
+        return $this;
+    }
+
+    protected function triggerEvent( EventInterface $event ){
+        if( isset( $this->eventListeners[$event->getType()] ) ){
+            $callable = $this->eventListeners[$event->getType()];
+            $callable( $event );
+        } elseif( $this->getOwner() ) {
+            call_user_func( array( $this->getOwner(), "triggerEvent" ), $event );
+        }
+
+        throw new ViewModelException("No listeners found for {$event->getType()} event type");
     }
 
 }
