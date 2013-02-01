@@ -82,5 +82,12 @@ abstract class AbstractController extends \fv\ViewModel\ViewModel {
         return $this->response;
     }
 
+    public function getApplication(){
+        if( $app = $this->getRequest()->internal->application )
+            return $app->get();
+
+        return null;
+    }
+
     public function getTemplateName(){}
 }
