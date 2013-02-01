@@ -3,6 +3,7 @@
 namespace Bundle\fv\RoutingBundle;
 
 use Bundle\fv\RoutingBundle\Routing\Router;
+use Bundle\fv\RoutingBundle\Routing\Link;
 use fv\Connection\ConnectionFactory;
 use fv\Http\Request;
 
@@ -13,6 +14,7 @@ class Kernel {
 
     function __construct() {
         $this->setRouter( Router::buildFromConfigFile('routes') );
+        Link::setKernel( $this );
     }
 
     public function handle(){

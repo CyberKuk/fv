@@ -8,24 +8,26 @@
 namespace Bundle\fv\RoutingBundle\Layout;
 
 use fv\Http\Response;
-use Bundle\fv\RoutingBundle\Application\AbstractApplication;
+use fv\ViewModel\ViewModel;
 
-abstract class AbstractLayout extends \fv\ViewModel\ViewModel {
+abstract class AbstractLayout extends ViewModel {
 
     /** @var \fv\Http\Response */
     private $response;
 
-    private $body;
-
     abstract function execute();
 
-    public function setBody( $body ) {
-        $this->body = $body;
+    protected function getLandingPlaces() {
+        return array("body");
+    }
+
+    public function setBody( ViewModel $body ) {
+        $this->land( "body", $body );
         return $this;
     }
 
     public function getBody() {
-        return $this->body;
+        return $this->getLandedOn( "body" );
     }
 
     /**

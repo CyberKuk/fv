@@ -9,15 +9,15 @@ trait Viewlet {
     private $content;
     private $params = array();
 
-    public function __toString(){
+    final public function __toString(){
         return $this->render();
     }
 
-    public function render(){
+    final public function render(){
         return $this->prerender()->content;
     }
 
-    public function prerender(){
+    final public function prerender(){
         if( isset( $this->content ) )
             return $this;
 
@@ -34,14 +34,14 @@ trait Viewlet {
         return $this;
     }
 
-    protected function assignParams( array $params ){
+    final protected function assignParams( array $params ){
         foreach( $params as $name => $value )
             $this->assignParam( $name, $value );
 
         return $this;
     }
 
-    protected function assignParam( $name, $value ){
+    final protected function assignParam( $name, $value ){
         if( isset($this->params[$name]) )
             throw new \Exception( "Variable {$name} already assigned!" );
 

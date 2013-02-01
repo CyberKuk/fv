@@ -2,7 +2,6 @@
 
 namespace fv\ViewModel;
 
-use fv\View\AbstractView;
 use fv\ViewModel\Exception\ViewModelException;
 
 class ViewModel {
@@ -12,11 +11,17 @@ class ViewModel {
     /** @var ViewModel|null */
     private $owner;
 
+    /** @var callable[] */
+    private $eventListeners = array();
+
+    /** @var ViewModel[] */
+    private $places = array();
+
     /**
      * @param ViewModel $owner
      * @return ViewModel
      */
-    public function setOwner( ViewModel $owner) {
+    private function setOwner( ViewModel $owner) {
         $this->owner = $owner;
         return $this;
     }
@@ -24,23 +29,69 @@ class ViewModel {
     /**
      * @return ViewModel|null
      */
-    public function getOwner() {
+    final public function getOwner() {
         return $this->owner;
     }
 
-    private $eventListeners = array();
+    /**
+     * @param string $place
+     * @return ViewModel|null
+     * @throws Exception\ViewModelException
+     */
+    final public function getLandedOn( $place ){
+        if( ! $this->isLandingPlaceExist($place) ){
+            throw new ViewModelException("Landing place {$place} not exist");
+        }
 
-    protected function addEventListener( $eventType, Callable $function ){
+        if( ! isset( $this->places[$place] ) )
+            return null;
+
+        return $this->places[$place];
+    }
+
+    /**
+     * @param string $place
+     * @param ViewModel $paratrooper
+     * @return ViewModel
+     * @throws Exception\ViewModelException
+     */
+    final public function land( $place, ViewModel $paratrooper ){
+        if( ! $this->isLandingPlaceExist($place) ){
+            throw new ViewModelException("Landing place {$place} not exist");
+        }
+
+        $paratrooper->setOwner( $this );
+        $this->places[$place] = $paratrooper;
+
+        return $this;
+    }
+
+    /**
+     * @param string $place
+     * @return bool
+     */
+    final public function isLandingPlaceExist( $place ){
+        return in_array( $place, $this->getLandingPlaces() );
+    }
+
+    /**s
+     * @return string[]
+     */
+    protected function getLandingPlaces(){
+        return array();
+    }
+
+    final protected function addEventListener( $eventType, Callable $function ){
         $this->eventListeners[$eventType] = $function;
         return $this;
     }
 
-    protected function removeEventListener( $eventType ){
+    final protected function removeEventListener( $eventType ){
         unset( $this->eventListeners[$eventType] );
         return $this;
     }
 
-    protected function triggerEvent( EventInterface $event ){
+    final protected function triggerEvent( EventInterface $event ){
         if( isset( $this->eventListeners[$event->getType()] ) ){
             $callable = $this->eventListeners[$event->getType()];
             $callable( $event );

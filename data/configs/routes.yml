@@ -1,6 +1,6 @@
 back:
   class: Prefix
-  prefix: /backend
+  prefix: /admin
   application: backend
 
 default:
