@@ -28,6 +28,8 @@ abstract class AbstractRoute {
      */
     abstract public function handle( Request $request );
 
+    abstract public function createLink( array $params = null );
+
     /**
      * @param $config
      *

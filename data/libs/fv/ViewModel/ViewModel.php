@@ -56,24 +56,5 @@ class ViewModel {
     protected function getView(){
         return \fv\View\ViewBuilder::build( $this );
     }
-/*
-    protected function getTemplatePath(){
-        $templateClass = $this->getTemplateClass();
-
-        $loader = new ApplicationFactory;
-        $schema = $loader->getApplicationSchemaByNamespace( $templateClass );
-
-        $dir = rtrim( $schema['path'], "/" ) . "/" . "views";
-
-        $path = str_replace( $schema['namespace'], "",  $templateClass);
-        $path = preg_replace_callback( "/(\\\|^)(\w)/", function( $match ){ return DIRECTORY_SEPARATOR . strtolower($match[2]); }, $path );
-        $path = preg_replace_callback( "/([A-Z])/", function( $match ){ return "-" . strtolower($match[1]); }, $path );
-
-        return $dir . $path;
-    }
-
-    protected function getTemplateClass(){
-        return get_class($this);
-    }*/
 
 }

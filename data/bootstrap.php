@@ -4,7 +4,7 @@ chdir('data');
 require_once 'libs/classLoader/_init_.php';
 
 /* Direct classes */
-ClassLoader\Register::createLoader( null, 'classes' );
+ClassLoader\Register::createLoader( null, 'src' );
 
 /* Libraries */
 ClassLoader\Register::createLoader( 'fv', 'libs/fv' );
@@ -16,7 +16,7 @@ fv\Bundle\BundleRegister::register("Bundle\\fv\\SiteEntityBundle");
 fv\Bundle\BundleRegister::register("Bundle\\fv\\MetroUIBundle");
 
 /* Project config */
-\fv\Config\ConfigRegister::registerNamespace( "", "configs" );
+fv\Config\ConfigRegister::registerNamespace( "", "configs" );
 
 /* Twig */
 require_once 'libs/Twig/Autoloader.php';

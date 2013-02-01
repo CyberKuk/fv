@@ -1,4 +1,8 @@
 {
+    "test": {
+        "url": "/hello/{$name}",
+        "controller": "index"
+    },
     "default": {
         "class": "UriBasedController"
     }

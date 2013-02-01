@@ -8,11 +8,10 @@
 namespace Bundle\fv\RoutingBundle\Routing\Route;
 
 use fv\Http\Request;
-use Bundle\fv\RoutingBundle\Application\AbstractApplication;
-use Bundle\fv\RoutingBundle\Controller\AbstractController;
-use Bundle\fv\RoutingBundle\Controller\ControllerFactory;
-use Bundle\fv\RoutingBundle\Routing\Exception\RoutingException;
 use fv\Collection\Collection;
+
+use Bundle\fv\RoutingBundle\Application\AbstractApplication;
+use Bundle\fv\RoutingBundle\Routing\Exception\RoutingException;
 
 class UriBasedControllerRoute extends AbstractRoute {
 
@@ -52,6 +51,10 @@ class UriBasedControllerRoute extends AbstractRoute {
         return false;
     }
 
-
+    public function createLink(array $params = null) {
+        if( count($params) != 1 ){
+            throw new \Bundle\fv\RoutingBundle\Routing\Exception\CreateLinkException("Create link must be ");
+        }
+    }
 
 }

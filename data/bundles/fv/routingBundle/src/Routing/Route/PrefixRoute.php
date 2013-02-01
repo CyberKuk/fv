@@ -10,7 +10,7 @@ namespace Bundle\fv\RoutingBundle\Routing\Route;
 use fv\Http\Request;
 use fv\Collection\Collection;
 use fv\Http\Response;
-use Bundle\fv\RoutingBundle\Application\ApplicationFactory;
+use Bundle\fv\RoutingBundle\Application\ApplicationBuilder;
 
 use Bundle\fv\RoutingBundle\Routing\Exception\RoutingException;
 
@@ -45,8 +45,8 @@ class PrefixRoute extends AbstractRoute {
                 $request->internal->prefix = $this->getPrefix();
 
             if( $this->getApplicationName() ){
-                $applicationFactory = new ApplicationFactory;
-                $application = $applicationFactory->getApplication( $this->getApplicationName() );
+                $applicationFactory = new ApplicationBuilder;
+                $application = $applicationFactory->build( $this->getApplicationName() );
                 return $application->handle( $request );
             }
 
@@ -73,5 +73,10 @@ class PrefixRoute extends AbstractRoute {
     final public function getApplicationName() {
         return $this->applicationName;
     }
+
+    public function createLink( array $params = null ) {
+        return $this->getPrefix();
+    }
+
 
 }

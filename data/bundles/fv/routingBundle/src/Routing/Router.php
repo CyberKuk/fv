@@ -53,6 +53,17 @@ class Router {
         return $this->routes;
     }
 
+    /**
+     * @param $key
+     * @return null|Route\AbstractRoute
+     */
+    final public function getRoute( $key ) {
+        if( !isset($this->routes[$key]) )
+            return null;
+
+        return $this->routes[$key];
+    }
+
     public function handle( Request $request ){
         foreach( $this->getRoutes() as $route ){
             $response = $route->handle( $request );
@@ -66,8 +77,8 @@ class Router {
         throw new Exception\RouteNotFoundException("No route to handle request");
     }
 
-    function loadFromCollection( $config ){
-        $builder = \fv\Config\ConfigurableBuilder::createFromCollection( $config );
+    public static function buildFromCollection( $config ){
+        $builder = ConfigurableBuilder::createFromCollection( $config );
 
         $builder
             ->setDefaultNamespace(__NAMESPACE__ . "\\Route")
@@ -75,10 +86,12 @@ class Router {
             ->setInstanceOf( __NAMESPACE__ . "\\Route\\AbstractRoute" )
             ->setPostfix("Route");
 
-        $this->addRoutes( $builder->buildAll() );
+        $router = new static;
+        $router->addRoutes( $builder->buildAll() );
+        return $router;
     }
 
-    function loadFromConfigFile( $file, $context = null ){
+    public static function buildFromConfigFile( $file, $context = null ){
         $builder = ConfigurableBuilder::createFromFile( $file, $context );
 
         $builder
@@ -87,7 +100,9 @@ class Router {
             ->setInstanceOf( __NAMESPACE__ . "\\Route\\AbstractRoute" )
             ->setPostfix("Route");
 
-        $this->addRoutes( $builder->buildAll() );
+        $router = new static;
+        $router->addRoutes( $builder->buildAll() );
+        return $router;
     }
 
 }

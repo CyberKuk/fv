@@ -1,0 +1,8 @@
+memory:
+    class: SharedMemory
+    fallback: memcache
+
+memcache: ~
+
+cache:
+    class: Memcache

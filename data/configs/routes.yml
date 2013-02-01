@@ -1,0 +1,9 @@
+back:
+  class: Prefix
+  prefix: /backend
+  application: backend
+
+default:
+  class: Prefix
+  prefix: /
+  application: frontend

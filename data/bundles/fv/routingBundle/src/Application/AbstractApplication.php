@@ -23,6 +23,7 @@ abstract class AbstractApplication {
     private $path;
     private $namespace;
     private $loaded = false;
+    private $router;
 
     public function __construct( Collection $config ) {
         $this->filterChain = new FilterChain();
@@ -35,11 +36,14 @@ abstract class AbstractApplication {
     }
 
     public function load(){
-        $router = new Router();
-        $router->loadFromCollection( ConfigLoader::load( 'routes', $this, false ) );
-        $this->getFilterChain()->addFilter( new RouterFilter( $router ) );
+        if( ! $this->loaded ){
+            $this->router = Router::buildFromCollection( ConfigLoader::load( 'routes', $this, false ) );
+            $this->getFilterChain()->addFilter( new RouterFilter( $this->router ) );
 
-        $this->loaded = true;
+            $this->loaded = true;
+        }
+
+        return $this;
     }
 
     /**
@@ -47,12 +51,8 @@ abstract class AbstractApplication {
      * @return \fv\Http\Response
      */
     final public function handle( Request $request ){
-        if( ! $this->loaded )
-            $this->load();
-
         $request->internal->application = $this;
-
-        return $this->getFilterChain()->setRequest( $request )->execute();
+        return $this->load()->getFilterChain()->setRequest( $request )->execute();
     }
 
     final public function getFilterChain() {
@@ -83,6 +83,13 @@ abstract class AbstractApplication {
      */
     public function getLayoutFactory(){
         return new LayoutFactory( $this );
+    }
+
+    /**
+     * @return Router
+     */
+    public function getRouter() {
+        return $this->load()->router;
     }
 
 }

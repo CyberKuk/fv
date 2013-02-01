@@ -8,6 +8,7 @@
 namespace Bundle\fv\RoutingBundle\Routing\Route;
 
 use fv\Http\Request;
+use Bundle\fv\RoutingBundle\Routing\Exception\CreateLinkException;
 use fv\Collection\Collection;
 use Bundle\fv\RoutingBundle\Application\AbstractApplication;
 
@@ -23,8 +24,8 @@ class DefaultRoute extends AbstractRoute {
         if( $params->controller )
             $this->setController( $params->controller->get() );
 
-        if( $params->prefix )
-            $this->setParams( $params->prefix->get() );
+        if( $params->params )
+            $this->setParams( $params->params->get() );
 
         if( $params->url )
             $this->setUrl( $params->url->get() );
@@ -45,32 +46,31 @@ class DefaultRoute extends AbstractRoute {
             array_shift( $matches );
             $values = array_combine( $this->getPregParams(), $matches );
 
-            if( $this->getController() ){
-                if( ! $request->internal->application )
-                    throw new RoutingException( "No application to show controller. What I have to do with this route?" );
+            if(  ! $this->getController() )
+                throw new RoutingException( "No controller parameter provide. What I have to do with this route?" );
 
-                $application = $request->internal->application->get();
+            if( ! $request->internal->application )
+                throw new RoutingException( "No application to show controller. What I have to do with this route?" );
 
-                if( ! $application instanceof AbstractApplication )
-                    throw new RoutingException( "No application to show controller. What I have to do with this route?" );
+            $application = $request->internal->application->get();
 
-                $controller = $application
-                    ->getControllerFactory()
-                    ->createController( $this->getController() );
+            if( ! $application instanceof AbstractApplication )
+                throw new RoutingException( "No application to show controller. What I have to do with this route?" );
 
-                $controller->setRequest($request);
+            $controller = $application
+                ->getControllerFactory()
+                ->createController( $this->getController() );
 
-                call_user_func_array( array( $controller, 'execute' ), $values );
+            $controller->setRequest($request);
 
-                $layout = $application->getLayoutFactory()->createLayout( $request );
-                $layout
-                    ->setResponse( $controller->getResponse() )
-                    ->execute();
+            call_user_func_array( array( $controller, 'execute' ), $values );
 
-                return $layout->getResponse();
-            }
+            $layout = $application->getLayoutFactory()->createLayout( $request );
+            $layout
+                ->setResponse( $controller->getResponse() )
+                ->execute();
 
-            throw new RoutingException( "No controller parameter provide. What I have to do with this route?" );
+            return $layout->getResponse();
         }
 
         return false;
@@ -139,4 +139,28 @@ class DefaultRoute extends AbstractRoute {
     final public function getUrl() {
         return $this->url;
     }
+
+    public function createLink( array $params = null ) {
+        $url = $this->getUrl();
+        $keys = $this->getPregParams();
+
+        if( empty($keys) ){
+            return $url;
+        }
+
+        if( !is_array($params) ){
+            throw new CreateLinkException("Params not set for create link");
+        }
+
+        foreach( $keys as $key ){
+            if( !isset($params[$key]) )
+                throw new CreateLinkException("Param {$key} not set for create link");
+
+            $url = preg_replace( '/' . preg_quote( "{\${$key}}", '/' ) . '/', $params[$key], $url );
+        }
+
+        return $url;
+    }
+
+
 }

@@ -14,9 +14,10 @@ use classLoader\Register as ClassLoaderRegister;
  * Date: 08.10.12
  * Time: 14:30
  */
-final class ApplicationFactory {
+final class ApplicationBuilder {
 
-    protected static $schema = array();
+    private static $loaded = false;
+    private static $configName = 'applications';
 
     /**
      * @param $name
@@ -24,21 +25,23 @@ final class ApplicationFactory {
      * @return AbstractApplication
      * @throws ApplicationLoadException
      */
-    public function getApplication( $name ){
+    public function build( $name ){
         static $applications;
 
         if( isset( $applications[$name] ) )
             return $applications[$name];
 
-        if( ! self::$schema->$name )
+        $schema = self::getSchema();
+
+        if( ! $schema->$name )
             throw new ApplicationLoadException("Unknown application {$name}");
 
         /** @var $schema Collection */
-        $schema = self::$schema->$name;
+        $schema = $schema->$name;
         $namespace = $schema->namespace->get();
         $path = rtrim( $schema->path->get(), DIRECTORY_SEPARATOR ) . DIRECTORY_SEPARATOR;
 
-        $classesPath = $path . "classes";
+        $classesPath = $path . "src";
         $viewsPath = $path . "views";
         $configsPath = $path . "configs";
 
@@ -62,18 +65,14 @@ final class ApplicationFactory {
         return $applications[$name] = $application;
     }
 
-    public function getApplicationSchemaByNamespace( $namespace ){
-        foreach( self::$schema as $appSchema ){
-            $statement = "|^" . preg_quote($appSchema['namespace'], "|") . "|";
-            if( preg_match( $statement, $namespace ) > 0 )
-                return $appSchema;
+    private static function getSchema() {
+        static $config;
+
+        if( !self::$loaded ){
+            self::$loaded = true;
+            $config = ConfigLoader::load( self::$configName );
         }
 
-        return null;
-    }
-
-    public function loadFromConfigFile( $file ){
-        self::$schema = ConfigLoader::load( $file );
-        return $this;
+        return $config;
     }
 }
