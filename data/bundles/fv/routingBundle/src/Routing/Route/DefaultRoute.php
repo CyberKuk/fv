@@ -63,14 +63,7 @@ class DefaultRoute extends AbstractRoute {
 
             $controller->setRequest($request);
 
-            call_user_func_array( array( $controller, 'execute' ), $values );
-
-            $layout = $application->getLayoutFactory()->createLayout( $request );
-            $layout
-                ->setResponse( $controller->getResponse() )
-                ->execute();
-
-            return $layout->getResponse();
+            return call_user_func_array( array( $controller, 'execute' ), $values );
         }
 
         return false;

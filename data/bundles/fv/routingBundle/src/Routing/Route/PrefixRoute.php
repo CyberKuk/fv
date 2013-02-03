@@ -11,7 +11,6 @@ use fv\Http\Request;
 use fv\Collection\Collection;
 use fv\Http\Response;
 use Bundle\fv\RoutingBundle\Application\ApplicationBuilder;
-
 use Bundle\fv\RoutingBundle\Routing\Exception\RoutingException;
 
 class PrefixRoute extends AbstractRoute {
@@ -39,14 +38,10 @@ class PrefixRoute extends AbstractRoute {
             $newUri = preg_replace( $statement, '', $request->getUri() );
             $newUri = '/' . ltrim($newUri, '/');
             $request->setUri( $newUri );
-            if( $request->internal->prefix )
-                $request->internal->prefix = $request->internal->prefix->get() . $this->getPrefix();
-            else
-                $request->internal->prefix = $this->getPrefix();
 
             if( $this->getApplicationName() ){
-                $applicationFactory = new ApplicationBuilder;
-                $application = $applicationFactory->build( $this->getApplicationName() );
+                $appsBuilder = new ApplicationBuilder;
+                $application = $appsBuilder->build( $this->getApplicationName() );
                 return $application->handle( $request );
             }
 
