@@ -7,7 +7,6 @@ use Bundle\fv\ModelBundle\AbstractModel;
  * @connection default
  *
  * @primaryIndex ( id )
- * @keyIndex ( id )
  */
 class OtherEntity extends AbstractModel {
 

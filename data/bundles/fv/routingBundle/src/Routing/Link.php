@@ -45,7 +45,7 @@ class Link {
 
         $appRoute = $app->getRouter()->getRoute( $appRoute );
         if( ! $appRoute ){
-            throw new CreateLinkException("Can't find route {$appRoute} in " . get_class($app));
+            throw new CreateLinkException("Can't find route '{$appRoute}' in " . get_class($app));
         }
 
         return rtrim( $prefix, "/" ) . "/" . ltrim( $appRoute->createLink( $params ), "/");
