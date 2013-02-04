@@ -1,0 +1,3 @@
+modules:
+    url: /module/{$name}
+    controller: edit

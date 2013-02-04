@@ -42,9 +42,8 @@ abstract class AbstractApplication {
     }
 
     protected function reload(){
-        $this->router = Router::buildFromCollection( ConfigLoader::load( 'routes', $this, false ) );
+        $this->router = Router::buildFromCollection( ConfigLoader::load( 'routes', $this ) );
         $this->getFilterChain()->appendFilter( new RouterFilter( $this->router ) );
-
         $this->getFilterChain()->prependFilter( new LayoutFilter( $this->getLayoutFactory() ) );
 }
 
@@ -86,7 +85,7 @@ abstract class AbstractApplication {
         return $this->namespace;
     }
 
-    final  public function getPath(){
+    final public function getPath(){
         return $this->path;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 namespace Bundle\fv\MetroUIBundle\Layout;
-class MetroLayout extends {
 
+use Bundle\fv\RoutingBundle\Layout\AbstractLayout;
+
+abstract class MetroLayout extends AbstractLayout{
 }

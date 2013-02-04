@@ -7,9 +7,9 @@
 
 namespace Application\Backend\Layout;
 
-use Bundle\fv\RoutingBundle\Layout\AbstractLayout;
+use Bundle\fv\MetroUIBundle\Layout\MetroLayout;
 
-class DefaultLayout extends AbstractLayout {
+class DefaultLayout extends MetroLayout {
 
     private $metaTitle = "Site Title";
 
