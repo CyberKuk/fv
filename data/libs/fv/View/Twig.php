@@ -8,6 +8,7 @@
 
 namespace fv\View;
 
+
 class Twig extends AbstractView {
 
     private function getTwig(){
@@ -22,7 +23,10 @@ class Twig extends AbstractView {
             }
 
             $loader = new \Twig_Loader_Filesystem('.');
+//            $twig = new \fv\View\Twig\Environment( $loader, $config );
             $twig = new \Twig_Environment( $loader, $config );
+
+            //$twig->overrideTokenParser( new \fv\View\Twig\TokenParser\Extend );
         }
 
         return $twig;

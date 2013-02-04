@@ -1,0 +1,7 @@
+<div class="tile bg-color-{{ this.getViews().menu.color.get() }} {% if this.getViews().menu.type.get() %} {{ this.getViews().menu.type.get() }}{% endif %}">
+    <a href="{{ this.getEditUrl() }}">
+        <div class="tile-content">
+            <div class="bottom-left padding10">{{ this.name }}</div>
+        </div>
+    </a>
+</div>

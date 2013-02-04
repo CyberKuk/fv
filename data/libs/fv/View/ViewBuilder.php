@@ -11,7 +11,8 @@ class ViewBuilder {
     );
     static $postfixes = array(
         "Layout",
-        "Controller"
+        "Controller",
+        "Component"
     );
 
     static function build( $class ){
@@ -30,7 +31,7 @@ class ViewBuilder {
 
             if( ! empty($paths) ){
                 foreach( $paths as $namespace => $path ){
-                    $tailNamespace = preg_replace( "/^" . preg_quote( $namespace , "/") . "/", "", $className );
+                    $tailNamespace = preg_replace( "/^" . preg_quote( $namespace , "/") . "/", "", $currentClassName );
 
                     foreach( self::$postfixes as $postfix ){
                         $tailNamespace = preg_replace( "/" . preg_quote($postfix, "/") . "$/", "", $tailNamespace, 1, $count );

@@ -1,0 +1,45 @@
+<div class="page secondary">
+    <div class="page-header">
+        <div class="page-header-content">
+            <div>
+                <h1>Welcome!</h1>
+            </div>
+
+            <div class='place-right padding10' style="height: 50px; margin-top: 35px; margin-right: 25px;">
+                {{ this.getLandedOn( 'LoggedUserPanel' )|raw }}
+            </div>
+        </div>
+    </div>
+
+    <div class="page-region menu-wrapper">
+        <div class="page-region-content main-menu">
+            {{ this.getLandedOn( 'DashBoard' )|raw }}
+        </div>
+    </div>
+</div>
+
+<div class="app-bar fg-color-white padding20" id="whats-new" style="display: none;">
+    <p>Что нового?</p>
+    <div class="place-right bg-color-darken">
+        <button class="shortcut">
+            <span class="icon">
+                <i class="icon-user-3"></i>
+            </span>
+            <span class="label">
+                Пользователи
+            </span>
+
+            <span class="badge">+10</span>
+        </button>
+        <button class="shortcut">
+            <span class="icon">
+                <i class="icon-comments"></i>
+            </span>
+            <span class="label">
+                Комментарии
+            </span>
+
+            <span class="badge">+117</span>
+        </button>
+    </div>
+</div>

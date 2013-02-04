@@ -11,6 +11,68 @@ class RootModule extends AbstractModule implements Configurable{
      * @var AbstractModel
      */
     private $entity;
+    private $group;
+    private $name;
+    private $views;
+    private $systemName;
+
+    public function setSystemName( $systemName ){
+        $this->systemName = $systemName;
+        return $this;
+    }
+
+    public function getSystemName(){
+        return $this->systemName;
+    }
+
+    /**
+     * @param \fv\Collection\Collection $view
+     */
+    public function setViews( \fv\Collection\Collection $views ){
+        $this->views = $views;
+        return $this;
+    }
+
+    /**
+     * @return \fv\Collection\Collection
+     */
+    public function getViews(){
+        return $this->views;
+    }
+
+    /**
+     * @param $name
+     * @return RootModule
+     */
+    public function setName( $name ){
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(){
+        return $this->name;
+    }
+
+    /**
+     * @param string $group
+     * @return RootModule
+     */
+    public function setGroup( $group ){
+        $this->group = $group;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGroup(){
+        return $this->group;
+    }
 
     /**
      * @param Bundle\fv\ModelBundle\AbstractModel $entity
@@ -18,6 +80,7 @@ class RootModule extends AbstractModule implements Configurable{
      */
     public function setEntity( AbstractModel $entity ){
         $this->entity = $entity;
+
         return $this;
     }
 
@@ -34,7 +97,17 @@ class RootModule extends AbstractModule implements Configurable{
         }
         $entity = new $entityClassName;
 
-        $self->setEntity( $entity );
+        $self
+            ->setEntity( $entity )
+            ->setGroup( $config->group->get() )
+            ->setName( $config->name->get() )
+            ->setViews( $config->views )
+            ->setSystemName( $config->systemName->get() );
+
         return $self;
+    }
+
+    public function getEditUrl(){
+        return $this->getSystemName();
     }
 }
