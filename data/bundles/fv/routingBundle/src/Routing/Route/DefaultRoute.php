@@ -63,7 +63,9 @@ class DefaultRoute extends AbstractRoute {
 
             $controller->setRequest($request);
 
-            return call_user_func_array( array( $controller, 'execute' ), $values );
+            call_user_func_array( array( $controller, 'execute' ), $values );
+
+            return $controller->getResponse();
         }
 
         return false;
