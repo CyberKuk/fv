@@ -20,11 +20,7 @@ abstract class AbstractController extends \fv\ViewModel\ViewModel {
     /** @var Response */
     private $response;
 
-    final function __construct(){
-        $response = new Response();
-        $response->setBody( $this );
-        $this->setResponse( $response );
-    }
+    public function __construct(){}
 
     /**
      * Calls the class method corresponding HTTP request method.
@@ -67,18 +63,13 @@ abstract class AbstractController extends \fv\ViewModel\ViewModel {
     }
 
     /**
-     * @param Response $response
-     * @return \Bundle\fv\RoutingBundle\Controller\AbstractController
-     */
-    public function setResponse( Response $response ) {
-        $this->response = $response;
-        return $this;
-    }
-
-    /**
      * @return Response
      */
-    public function getResponse() {
+    final public function getResponse() {
+        if( empty($this->response) ){
+            $this->response = new Response();
+            $this->response->setBody( $this );
+        }
         return $this->response;
     }
 

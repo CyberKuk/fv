@@ -7,9 +7,7 @@
 
 namespace Bundle\fv\RoutingBundle\Layout;
 
-use Bundle\fv\RoutingBundle\Application\AbstractApplication as Application;
 use fv\Http\Request;
-
 use Bundle\fv\RoutingBundle\Layout\Exception\LayoutFactoryException;
 
 class LayoutFactory {
@@ -52,7 +50,7 @@ class LayoutFactory {
     /**
      * @param string $namespace
      */
-    public function setNamespace($namespace) {
+    final public function setNamespace($namespace) {
         $this->namespace = $namespace;
         return $this;
     }
@@ -60,7 +58,7 @@ class LayoutFactory {
     /**
      * @return string
      */
-    public function getNamespace() {
+    final public function getNamespace() {
         return $this->namespace;
     }
 

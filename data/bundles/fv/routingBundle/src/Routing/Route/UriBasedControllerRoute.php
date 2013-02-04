@@ -40,12 +40,7 @@ class UriBasedControllerRoute extends AbstractRoute {
                 ->setRequest( $request )
                 ->execute();
 
-            $layout = $application->getLayoutFactory()->createLayout( $request );
-            $layout
-                ->setResponse( $controller->getResponse() )
-                ->execute();
-
-            return $layout->getResponse();
+            return $controller->getResponse();
         }
 
         return false;

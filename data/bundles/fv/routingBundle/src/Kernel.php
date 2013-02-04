@@ -12,21 +12,61 @@ class Kernel {
     /** @var \Bundle\fv\RoutingBundle\Routing\Router */
     protected $router;
 
-    function __construct() {
+    /** @var Request */
+    private $request;
+
+    /**
+     * @param null|\fv\Http\Request $request
+     */
+    public function __construct( Request $request = null ) {
         $this->setRouter( Router::buildFromConfigFile('routes') );
+
         Link::setKernel( $this );
+
+        if( is_null($request) )
+            $request = Request::buildFromGlobal();
+
+        $this->setRequest( $request );
     }
 
+    /**
+     * @return bool|\fv\Http\Response
+     */
     public function handle(){
-        return $this->getRouter()->handle( Request::buildFromGlobal() );
+        return $this->getRouter()->handle( $this->getRequest() );
     }
 
+    /**
+     * @param Routing\Router $router
+     * @return Kernel
+     */
     final protected function setRouter( Router $router ) {
         $this->router = $router;
         return $this;
     }
 
-    public function getRouter() {
+    /**
+     * @return Routing\Router
+     */
+    final public function getRouter() {
         return $this->router;
     }
+
+    /**
+     * @param $request
+     * @return Kernel
+     */
+    final protected function setRequest($request) {
+        $this->request = $request;
+        return $this;
+    }
+
+    /**
+     * @return \fv\Http\Request
+     */
+    final public function getRequest() {
+        return $this->request;
+    }
+
+
 }

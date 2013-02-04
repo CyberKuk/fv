@@ -17,6 +17,8 @@ abstract class AbstractLayout extends ViewModel {
 
     abstract function execute();
 
+    public function __construct(){}
+
     protected function getLandingPlaces() {
         return array("body");
     }

@@ -34,7 +34,7 @@ class ControllerFactory {
         $controller = new $class;
 
         if( ! $controller instanceof AbstractController )
-            throw new ControllerFactoryException("Controller {$class} must be instance of \\fv\\Controller\\AbstractController");
+            throw new ControllerFactoryException("Controller {$class} must be instance of " . __NAMESPACE__ . "\\AbstractController");
 
         return $controller;
     }
@@ -44,7 +44,7 @@ class ControllerFactory {
         return class_exists($class);
     }
 
-    private function getControllerClassName( $name ){
+    protected function getControllerClassName( $name ){
         $class = $this->getNamespace() . ucfirst($name) . "Controller";
         return $class;
     }
@@ -52,7 +52,7 @@ class ControllerFactory {
     /**
      * @param string $namespace
      */
-    public function setNamespace($namespace) {
+    final public function setNamespace($namespace) {
         $this->namespace = $namespace;
         return $this;
     }
@@ -60,7 +60,7 @@ class ControllerFactory {
     /**
      * @return string
      */
-    public function getNamespace() {
+    final public function getNamespace() {
         return $this->namespace;
     }
 

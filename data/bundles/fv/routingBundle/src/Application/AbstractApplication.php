@@ -8,6 +8,7 @@
 namespace Bundle\fv\RoutingBundle\Application;
 
 use fv\Http\Request;
+use Bundle\fv\RoutingBundle\Application\Filter\LayoutFilter;
 use fv\Config\ConfigLoader;
 use fv\Collection\Collection;
 
@@ -31,20 +32,21 @@ abstract class AbstractApplication {
         $this->namespace = rtrim( $config->namespace->get(), "\\") . "\\";
     }
 
-    public function getPath(){
-        return $this->path;
-    }
-
-    public function load(){
+    final public function load(){
         if( ! $this->loaded ){
-            $this->router = Router::buildFromCollection( ConfigLoader::load( 'routes', $this, false ) );
-            $this->getFilterChain()->addFilter( new RouterFilter( $this->router ) );
-
             $this->loaded = true;
+            $this->reload();
         }
 
         return $this;
     }
+
+    protected function reload(){
+        $this->router = Router::buildFromCollection( ConfigLoader::load( 'routes', $this, false ) );
+        $this->getFilterChain()->appendFilter( new RouterFilter( $this->router ) );
+
+        $this->getFilterChain()->prependFilter( new LayoutFilter( $this->getLayoutFactory() ) );
+}
 
     /**
      * @param \fv\Http\Request $request
@@ -53,14 +55,6 @@ abstract class AbstractApplication {
     final public function handle( Request $request ){
         $request->internal->application = $this;
         return $this->load()->getFilterChain()->setRequest( $request )->execute();
-    }
-
-    final public function getFilterChain() {
-        return $this->filterChain;
-    }
-
-    public function getNamespace(){
-        return $this->namespace;
     }
 
     /**
@@ -80,8 +74,19 @@ abstract class AbstractApplication {
     /**
      * @return Router
      */
-    public function getRouter() {
+    final public function getRouter() {
         return $this->load()->router;
     }
 
+    final public function getFilterChain() {
+        return $this->filterChain;
+    }
+
+    final public function getNamespace(){
+        return $this->namespace;
+    }
+
+    final  public function getPath(){
+        return $this->path;
+    }
 }

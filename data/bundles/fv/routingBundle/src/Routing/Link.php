@@ -4,8 +4,6 @@ namespace Bundle\fv\RoutingBundle\Routing;
 
 use Bundle\fv\RoutingBundle\Application\ApplicationBuilder;
 use Bundle\fv\RoutingBundle\Routing\Route\PrefixRoute;
-use Bundle\fv\RoutingBundle\Routing\Route\AbstractRoute;
-use Bundle\fv\RoutingBundle\Application\AbstractApplication;
 use Bundle\fv\RoutingBundle\Routing\Exception\CreateLinkException;
 use Bundle\fv\RoutingBundle\Application\Exception\ApplicationLoadException;
 

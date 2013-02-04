@@ -7,13 +7,18 @@ use fv\Http\Request;
 final class FilterChain {
 
     /** @var AbstractFilter[] */
-    private $filters;
+    private $filters = array();
 
     /** @var Request */
     private $request;
 
-    public function addFilter( AbstractFilter $filter ) {
-        $this->filters[] = $filter;
+    public function prependFilter( AbstractFilter $filter ) {
+        array_unshift($this->filters, $filter);
+        return $this;
+    }
+
+    public function appendFilter( AbstractFilter $filter ) {
+        array_push($this->filters, $filter);
         return $this;
     }
 
