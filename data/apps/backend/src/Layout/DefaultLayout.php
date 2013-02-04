@@ -1,9 +1,4 @@
 <?php
-/**
- * User: cah4a
- * Date: 22.10.12
- * Time: 13:37
- */
 
 namespace Application\Backend\Layout;
 
@@ -15,7 +10,7 @@ class DefaultLayout extends MetroLayout {
 
     function execute() {
         if( $this->getResponse()->internal->metaTitle ){
-            $this->setMetaTitle($this->getResponse()->internal->metaTitle . " " . $this->getMetaTitle());
+            $this->setMetaTitle($this->getResponse()->internal->metaTitle->get() . " " . $this->getMetaTitle());
         }
     }
 

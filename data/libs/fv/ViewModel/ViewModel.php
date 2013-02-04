@@ -74,7 +74,7 @@ class ViewModel {
         return in_array( $place, $this->getLandingPlaces() );
     }
 
-    /**s
+    /**
      * @return string[]
      */
     protected function getLandingPlaces(){
