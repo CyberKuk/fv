@@ -58,7 +58,7 @@ class ConfigLoader {
         $currentContext = $context;
 
         while( $currentContext ){
-            $path = ConfigRegister::getPath( $context );
+            $path = ConfigRegister::getPath( $currentContext );
 
             if( $path ){
                 $file = self::findFile( $path . $name );
