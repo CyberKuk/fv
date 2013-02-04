@@ -108,6 +108,7 @@ class RootModule extends AbstractModule implements Configurable{
     }
 
     public function getEditUrl(){
-      return \Bundle\fv\RoutingBundle\Routing\Link::to( "backend:test", [$this->getName()] );
+      return \Bundle\fv\RoutingBundle\Routing\Link::to( "backend:modules",
+                                                        ["name" => $this->getSystemName()] );
     }
 }

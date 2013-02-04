@@ -1,3 +1,6 @@
 modules:
-    url: /module/{$name}
-    controller: edit
+    url: /module/{$name}/
+    controller: Module
+
+default:
+    class: UriBasedController
