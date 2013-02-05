@@ -9,7 +9,7 @@ class ConfigLoader {
 
     private static $extensionPriority = array("yml", "json", "php");
 
-    public static function loadFile( $file ){
+    private static function loadFile( $file ){
         $file = self::findFile($file);
 
         if( $file === false ) {

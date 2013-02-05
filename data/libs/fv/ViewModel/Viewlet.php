@@ -17,10 +17,15 @@ trait Viewlet {
         return $this->prerender()->content;
     }
 
+    protected function prepareRender(){
+
+    }
+
     final public function prerender(){
         if( isset( $this->content ) )
             return $this;
 
+        $this->prepareRender();
         $this->assignParam( 'this', $this );
 
         try{

@@ -41,7 +41,7 @@ class LayoutFactory {
         }
 
         if( ! $layout instanceof AbstractLayout ){
-            throw new LayoutFactoryException("Layout " . get_class($layout) . " must be instance of \\fv\\Layout\\AbstractLayout");
+            throw new LayoutFactoryException("Layout " . get_class($layout) . " must be instance of " . __NAMESPACE__ . "\\AbstractLayout");
         }
 
         return $layout;
