@@ -6,7 +6,9 @@ use fv\ViewModel\Exception\ViewModelException;
 
 class ViewModel {
 
-    use Viewlet;
+    use Viewlet {
+        Viewlet::prerender as viewletPrerender;
+    }
 
     /** @var ViewModel|null */
     private $owner;
@@ -101,5 +103,14 @@ class ViewModel {
 
         throw new ViewModelException("No listeners found for {$event->getType()} event type");
     }
+
+    final public function prerender() {
+        foreach( $this->places as $viewModel ){
+            $viewModel->prerender();
+        }
+
+        return $this->viewletPrerender();
+    }
+
 
 }
