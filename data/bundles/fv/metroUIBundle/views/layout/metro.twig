@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ this.getMetaTitle() }}</title>
+
+        {% for sheet in this.getCss() %}
+            <link href="{{ sheet }}" rel="stylesheet">
+        {% endfor %}
+
+        {% for script in this.getJs() %}
+            <script type="text/javascript" src="{{ script }}"></script>
+        {% endfor %}
+
+    </head>
+
+    <body>
+        {{ this.getBody()|raw }}
+
+        {{ this.getLandedOn( "AppBar" )|raw }}
+    </body>
+</html>

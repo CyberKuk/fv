@@ -3,7 +3,7 @@ namespace Bundle\fv\MetroUIBundle\Component;
 
 use \Bundle\fv\RoutingBundle\Application\AbstractApplication;
 
-class DashBoardComponent extends \fv\ViewModel\ViewModel {
+class DashBoard extends \fv\ViewModel\ViewModel {
 
     /**
      * @var AbstractApplication

@@ -1,1 +1,14 @@
-edit
+<div class="page with-sidebar" style="height: 100%">
+    <div class="page-sidebar" style="margin: 0px;">
+        {{ this.getLandedOn( 'ModulesList' )|raw }}
+    </div>
+
+    <div class="page-region module">
+        <div class="page snapped">
+            {{ this.getLandedOn( 'EntityList' )|raw }}
+        </div>
+        <div class="page fill">
+            {{ this.getLandedOn( 'EntityEdit' )|raw }}
+        </div>
+    </div>
+</div>

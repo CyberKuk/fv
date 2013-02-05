@@ -1,0 +1,29 @@
+html, body {height: 100%}
+
+.page-sidebar {overflow: hidden; position: relative;}
+    .page-sidebar .searcher {border-bottom: 4px solid #fff; padding: 0px 10px;}
+
+    .page-sidebar h4 {padding-left: 10px; }
+    .page-sidebar li.active{ background: #2e92cf; color: #fff; }
+        .page-sidebar li.active > a {color: #fff;}
+
+    .page-sidebar .groups {position: absolute; bottom: 0; width: 100%;}
+        .page-sidebar .groups > div {border-top: 4px solid #fff; padding: 5px inherit; overflow: hidden;}
+        .page-sidebar .groups > div:hover {background: #ddd;}
+        .page-sidebar .groups > div:last-child {border-bottom: 4px solid #fff}
+
+.module {height: 100%; }
+    .module .snapped {height: 100%; overflow-y: auto; background: #eee;}
+        .module .snapped > div {font-size: 14px; padding: 5px 20px; overflow: hidden; position: relative;}
+        .module .snapped > div:nth-child(even) { background: #e6e6e6; }
+        .module .snapped > div:hover { margin-bottom: 0px; background: #2e92cf;}
+            .module .snapped > div > .title {}
+            .module .snapped > div > .description {color: #666;}
+            .module .snapped > div > .right-bottom {position: absolute; bottom: 0; right: 5px; font-size: 10px;}
+        .module .snapped > div.active {background: #2b5797; color: #fff;}
+            .module .snapped > div > .description {color: #aaa;}
+
+    .module .fill {height: 100%; overflow-y: auto; background: #eee;}
+        .module .fill .operations { width: 100%; padding: 10px; font-size: 28px; overflow: hidden;}
+            .module .fill .operations i { float: right; margin-left: 20px;}
+

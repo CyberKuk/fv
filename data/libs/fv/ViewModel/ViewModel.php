@@ -96,9 +96,9 @@ class ViewModel {
     final protected function triggerEvent( EventInterface $event ){
         if( isset( $this->eventListeners[$event->getType()] ) ){
             $callable = $this->eventListeners[$event->getType()];
-            $callable( $event );
+            return $callable( $event );
         } elseif( $this->getOwner() ) {
-            call_user_func( array( $this->getOwner(), "triggerEvent" ), $event );
+            return $this->getOwner()->triggerEvent( $event );
         }
 
         throw new ViewModelException("No listeners found for {$event->getType()} event type");

@@ -12,4 +12,8 @@ class AddCssEvent implements \fv\ViewModel\EventInterface{
     public function getType(){
         return "ADD_CSS";
     }
+
+    public function getPathToSheet(){
+        return $this->pathToStyleSheet;
+    }
 }

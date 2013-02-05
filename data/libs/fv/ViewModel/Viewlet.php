@@ -10,7 +10,12 @@ trait Viewlet {
     private $params = array();
 
     final public function __toString(){
-        return $this->render();
+        try{
+            return $this->render();
+        }
+        catch( \Exception $e ){
+            return $e->getMessage();
+        }
     }
 
     final public function render(){

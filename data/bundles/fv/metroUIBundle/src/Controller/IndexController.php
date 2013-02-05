@@ -3,11 +3,14 @@ namespace Bundle\fv\MetroUIBundle\Controller;
 
 use Bundle\fv\MetroUIBundle\Component;
 use Bundle\fv\RoutingBundle\Controller\AbstractController;
+use Bundle\fv\RoutingBundle\Event;
 
 class IndexController extends AbstractController{
     function get(){
-        $this->land( "LoggedUserPanel", new Component\LoggedUserPanelComponent() );
-        $this->land( "DashBoard", new Component\DashBoardComponent( $this->getApplication() ) );
+        $this
+            ->land( "LoggedUserPanel", new Component\LoggedUserPanel() )
+            ->land( "DashBoard", new Component\DashBoard( $this->getApplication() ) );
+
     }
 
     protected function getLandingPlaces(){
@@ -15,5 +18,18 @@ class IndexController extends AbstractController{
             "LoggedUserPanel",
             "DashBoard"
         ];
+    }
+
+    protected function prepareRender(){
+        return $this->triggerEvents();
+    }
+
+    protected function triggerEvents(){
+        $this->triggerEvent( new Event\AddJsEvent( "/javascript/menu-builder.js" ) );
+
+
+        $this->triggerEvent( new Event\AddCssEvent( "/css/backend.css" ) );
+
+        return $this;
     }
 }
