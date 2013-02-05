@@ -111,4 +111,11 @@ class RootModule extends AbstractModule implements Configurable{
       return \Bundle\fv\RoutingBundle\Routing\Link::to( "backend:modules",
                                                         ["name" => $this->getSystemName()] );
     }
+
+    /**
+     * @return \Bundle\fv\ModelBundle\AbstractModel
+     */
+    public function getEntity(){
+        return new $this->entity;
+    }
 }

@@ -10,7 +10,6 @@ class IndexController extends AbstractController{
         $this
             ->land( "LoggedUserPanel", new Component\LoggedUserPanel() )
             ->land( "DashBoard", new Component\DashBoard( $this->getApplication() ) );
-
     }
 
     protected function getLandingPlaces(){
@@ -26,10 +25,7 @@ class IndexController extends AbstractController{
 
     protected function triggerEvents(){
         $this->triggerEvent( new Event\AddJsEvent( "/javascript/menu-builder.js" ) );
-
-
         $this->triggerEvent( new Event\AddCssEvent( "/css/backend.css" ) );
-
         return $this;
     }
 }
