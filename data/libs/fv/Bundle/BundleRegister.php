@@ -8,12 +8,12 @@ use fv\Bundle\Exception\BundleRegisterException;
 
 class BundleRegister {
 
-    public static function register( $namespace, $path = null ){
-        static $bundles = array();
+    public static $bundles = [];
 
+    public static function register( $namespace, $path = null ){
         $namespace = trim( $namespace, "\\");
 
-        if( isset( $bundles[$namespace] ) )
+        if( isset( self::$bundles[$namespace] ) )
             throw new BundleRegisterException("Bundle {$namespace} already registered");
 
         if( is_null($path) ){
@@ -40,7 +40,7 @@ class BundleRegister {
         $bundle = new $bundleClassName();
 
         foreach( $bundle->getDependencies() as $dependentNamespace ){
-            if( !isset($bundles[$dependentNamespace]) )
+            if( !isset(self::$bundles[$dependentNamespace]) )
                 throw new BundleRegisterException("Bundle {$namespace} depend on {$dependentNamespace}, which not include");
         }
 
@@ -50,7 +50,7 @@ class BundleRegister {
         if( is_dir($path . DIRECTORY_SEPARATOR . "configs") )
             \fv\Config\ConfigRegister::registerNamespace( $namespace, $path . DIRECTORY_SEPARATOR . "configs" );
 
-        $bundles[$namespace] = $bundle;
+        self::$bundles[$namespace] = $bundle;
     }
 
 }

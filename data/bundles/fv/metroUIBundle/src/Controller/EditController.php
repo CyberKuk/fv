@@ -12,10 +12,9 @@ class EditController extends AbstractController{
     private $module;
 
     function get( $moduleName ){
-        $this->getModule( $moduleName );
-
         $this
-            ->land( "ModulesList", new Component\ModulesList() )
+            ->extractModule( $moduleName )
+            ->land( "ModulesList", new Component\ModulesList( $this->getApplication(), $moduleName ) )
             ->land( "EntityList", new Component\EntityList( $this->module ) )
             ->land( "EntityEdit", new Component\EntityEdit() );
     }
@@ -46,7 +45,7 @@ class EditController extends AbstractController{
         return $this;
     }
 
-    private function getModule( $moduleName ){
+    private function extractModule( $moduleName ){
         /**
          * @var $modules \Bundle\fv\MetroUIBundle\Module\RootModule[]
          */

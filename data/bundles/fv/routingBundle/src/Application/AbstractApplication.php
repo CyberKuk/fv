@@ -26,6 +26,8 @@ abstract class AbstractApplication {
     private $loaded = false;
     private $router;
 
+    private $namespacesTree;
+
     public function __construct( Collection $config ) {
         $this->filterChain = new FilterChain();
         $this->path = rtrim( $config->path->get(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
@@ -87,5 +89,20 @@ abstract class AbstractApplication {
 
     final public function getPath(){
         return $this->path;
+    }
+
+    final public function getNamespacesTree(){
+        if( !$this->namespacesTree ){
+            foreach( array_values( class_parents( $this ) ) as $node ){
+                foreach( array_keys( \fv\Bundle\BundleRegister::$bundles ) as $bundleNamespace ){
+                    if( preg_match( "/" . addslashes( $bundleNamespace ) . "/" , $node ) ){
+                        $this->namespacesTree[] = $bundleNamespace. "\\";
+                    }
+                }
+            }
+            array_unshift( $this->namespacesTree, $this->getNamespace() );
+        }
+
+        return $this->namespacesTree;
     }
 }

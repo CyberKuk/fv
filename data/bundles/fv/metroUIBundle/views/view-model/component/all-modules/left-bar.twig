@@ -1,0 +1,5 @@
+<ul class="accordion" data-role="accordion">
+    {% for group in this.controller.moduleGroups %}
+        {{ group|raw }}
+    {% endfor %}
+</ul>

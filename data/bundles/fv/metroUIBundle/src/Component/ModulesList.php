@@ -1,21 +1,34 @@
 <?php
 namespace Bundle\fv\MetroUIBundle\Component;
 
-use Bundle\fv\MetroUIBundle\Component\ModulesList as ModulesListScope;
+use \Bundle\fv\MetroUIBundle\Component\ModulesList as ModulesListScope;
+use \Bundle\fv\RoutingBundle\Application\AbstractApplication;
+use \Bundle\fv\RoutingBundle\Event;
 use \fv\ViewModel\ViewModel;
 
 class ModulesList extends ViewModel{
-    function __construct(){
-        $this
-            ->land( "SearchBar", new ModulesListScope\SearchBar() )
-            ->land( "ModulesSwitcher", new ModulesListScope\ModulesSwitcher() );
+    function __construct( AbstractApplication $contextApplication, $moduleName ){
+        $this->land( "SearchBar", new ModulesListScope\SearchBar() )
+             ->assignModules( $contextApplication, $moduleName );
     }
-
 
     protected function getLandingPlaces(){
         return [
             "SearchBar",
-            "ModulesSwitcher"
+            "Modules"
         ];
     }
+
+    protected function prepareRender(){
+        $this->triggerEvent( new Event\AddJsEvent( "/javascript/metro/accordion.js" ) );
+        return $this;
+    }
+
+    private function assignModules( AbstractApplication $contextApplication, $moduleName ){
+        $modules = new AllModules( $contextApplication, $moduleName, "LeftBar" );
+        $this->assignParam( "modules", $modules );
+        return $this;
+    }
+
+
 }

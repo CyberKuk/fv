@@ -1,0 +1,10 @@
+<li {% if this.controller.isActive %}class="active"{% endif %}>
+    <a href="#">{{ this.controller.systemName }}</a>
+    <div>
+        <ul class="sub-menu">
+            {% for module in this.controller.modulesList %}
+                {{ module|raw }}
+            {% endfor %}
+        </ul>
+    </div>
+</li>

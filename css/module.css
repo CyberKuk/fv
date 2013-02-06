@@ -4,8 +4,10 @@ html, body {height: 100%}
     .page-sidebar .searcher {border-bottom: 4px solid #fff; padding: 0px 10px;}
 
     .page-sidebar h4 {padding-left: 10px; }
-    .page-sidebar li.active{ background: #2e92cf; color: #fff; }
+    .page-sidebar li li.active{ background: #2e92cf; color: #fff; }
         .page-sidebar li.active > a {color: #fff;}
+
+    .page-sidebar li>div{ padding: 0 !important; }
 
     .page-sidebar .groups {position: absolute; bottom: 0; width: 100%;}
         .page-sidebar .groups > div {border-top: 4px solid #fff; padding: 5px inherit; overflow: hidden;}

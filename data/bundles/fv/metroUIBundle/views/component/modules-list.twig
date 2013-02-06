@@ -2,13 +2,4 @@
     {{ this.getLandedOn( "SearchBar" )|raw }}
 </div>
 
-<h4>Система</h4>
-<ul class="sub-menu">
-    <li><a href="">Группы пользователей</a></li>
-    <li class="active"><a href="">Пользователи</a></li>
-    <li><a href="">Статистика</a></li>
-    <li><a href="">Языки</a></li>
-    <li><a href="">Домены</a></li>
-</ul>
-
-{{ this.getLandedOn( "ModulesSwitcher" )|raw }}
+{{ modules|raw }}

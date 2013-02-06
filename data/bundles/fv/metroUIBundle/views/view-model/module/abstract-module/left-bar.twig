@@ -1,0 +1,5 @@
+<li {% if this.controller.isActive %}class="active"{% endif %}>
+    <a href="{{ this.controller.getEditUrl() }}">
+        {{ this.controller.name }}
+    </a>
+</li>

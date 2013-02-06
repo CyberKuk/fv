@@ -1,9 +1,1 @@
-{% for group in modules %}
-    <div class="tiles-group">
-        <div>
-            {% for module in group %}
-                {{ module.render()|raw }}
-            {% endfor %}
-        </div>
-    </div>
-{% endfor %}
+{{ modules|raw }}
