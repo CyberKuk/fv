@@ -31,9 +31,7 @@ trait Statable{
         return $this->context;
     }
 
-    public function getStates(){
-        return [ ];
-    }
+    abstract public function getStates();
 
     final function getViewModel(){
         if( !$this->getState() ){
