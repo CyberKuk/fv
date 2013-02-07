@@ -8,35 +8,40 @@ if( ! class_exists('\\Memcache') ){
     throw new \fv\Storage\Exception\StorageInstantiateException("Class \\Memcache is undefined. Is PHP_MEMCACHE extension enabled?");
 }
 
-class Memcache extends \Memcache implements Storage {
+/** @noinspection PhpDocSignatureInspection */
+class Memcache implements Storage {
 
     private $host;
     private $port;
     private $timeout;
-
-    private $init = false;
+    private $connection;
 
     private function __construct( $host = 'localhost', $port = '11211', $timeout = null ) {
         $this->host = $host;
         $this->port = $port;
         $this->timeout = $timeout;
-    }
-
-    private function init(){
-        if( ! $this->init ){
-            $this->init = true;
-            $this->connect($this->host, $this->port, $this->timeout );
-        }
-
-        return $this;
+        $this->connection = new \Memcache();
+        $this->connection->connect($this->host, $this->port, $this->timeout );
     }
 
     final public function get( $key ) {
-        $this->init();
+        return $this->connection->get($key);
     }
 
-    final public function set( $key, $value) {
-        $this->init();
+    /**
+     * @param string $key
+     * @param mixed $value
+     * @param int $timeout
+     * @return bool
+     */
+    final public function set( $key, $value ) {
+        $timeout = func_get_arg(2);
+        return $this->connection->set($key, $value, null, $timeout);
+    }
+
+    final public function delete( $key ) {
+        /** @noinspection PhpVoidFunctionResultUsedInspection */
+        return $this->connection->delete($key);
     }
 
     public static function build( Collection $config) {
@@ -48,6 +53,4 @@ class Memcache extends \Memcache implements Storage {
 
         return $instance;
     }
-
-
 }

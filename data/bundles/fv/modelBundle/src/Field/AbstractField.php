@@ -55,7 +55,9 @@ abstract class AbstractField {
     }
 
     public function fromMysql( $value ){
-        return $this->set( $value );
+        $this->set( $value );
+        $this->notChanged();
+        return $this;
     }
 
     public function setIsChanged( $isChanged ) {

@@ -16,7 +16,7 @@ abstract class AbstractQuery {
 
     abstract public function fetch( $key );
     abstract public function persist( AbstractModel $model );
-    abstract public function remove( AbstractModel $Model );
+    abstract public function remove( AbstractModel $model );
 
     /**
      * @param \fv\Connection\AbstractConnection $connection

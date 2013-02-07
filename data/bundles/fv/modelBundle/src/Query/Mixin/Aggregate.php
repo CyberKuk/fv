@@ -75,6 +75,7 @@ trait Aggregate {
     /**
      * Used for finally reaggregate simple array of entities to use specified keys
      * @param AbstractModel[] $entities
+     * @return array|\Bundle\fv\ModelBundle\AbstractModel[]
      */
     final protected function reaggregate( $entities ){
         if( empty( $entities ) ){
@@ -84,9 +85,9 @@ trait Aggregate {
         $keys = $this->getAggregateBy();
 
         if( $this->isAggregateByPrimary() ){
-            /** @var $Model AbstractModel */
-            $Model = reset($entities);
-            $primareFields = $Model->getPrimaryFields();
+            /** @var $model AbstractModel */
+            $model = reset($entities);
+            $primareFields = $model->getPrimaryFields();
 
             foreach( $primareFields as $key => $field ){
                 if( !in_array( $key, $keys ) )
@@ -98,11 +99,11 @@ trait Aggregate {
             return $entities;
 
         $result = array();
-        foreach( $entities as $Model ){
+        foreach( $entities as $model ){
             $res = & $result;
 
             foreach( $keys as $key ){
-                $field = $Model->getField($key);
+                $field = $model->getField($key);
                 $value = $field->get();
 
                 if( !isset($res[$value]) )
@@ -113,9 +114,9 @@ trait Aggregate {
 
             // If we aggregate by primary key we don't need additional array dimension
             if( $this->isAggregateByPrimary() ){
-                $res = $Model;
+                $res = $model;
             } else {
-                $res[] = $Model;
+                $res[] = $model;
             }
         }
 

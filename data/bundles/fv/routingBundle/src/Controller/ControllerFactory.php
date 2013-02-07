@@ -51,6 +51,7 @@ class ControllerFactory {
 
     /**
      * @param string $namespace
+     * @return \Bundle\fv\RoutingBundle\Controller\ControllerFactory
      */
     final public function setNamespace($namespace) {
         $this->namespace = $namespace;

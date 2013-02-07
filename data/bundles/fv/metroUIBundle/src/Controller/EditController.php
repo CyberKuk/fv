@@ -7,7 +7,7 @@ use Bundle\fv\MetroUIBundle\Component;
 
 class EditController extends AbstractController{
     /**
-     * @var \Bundle\fv\MetroUIBundle\Module\AbstractModule
+     * @var \Bundle\fv\MetroUIBundle\Module\RootModule
      */
     private $module;
 

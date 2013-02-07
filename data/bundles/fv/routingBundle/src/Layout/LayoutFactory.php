@@ -49,6 +49,7 @@ class LayoutFactory {
 
     /**
      * @param string $namespace
+     * @return \Bundle\fv\RoutingBundle\Layout\LayoutFactory
      */
     final public function setNamespace($namespace) {
         $this->namespace = $namespace;

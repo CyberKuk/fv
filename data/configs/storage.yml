@@ -2,7 +2,10 @@ memory:
     class: SharedMemory
     fallback: memcache
 
-memcache: ~
+memcache:
+    host: localhost
+    port: 11211
+    timeout: 3600
 
 cache:
     class: Memcache

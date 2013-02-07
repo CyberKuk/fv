@@ -4,12 +4,14 @@ namespace fv\ViewModel;
 
 use fv\ViewModel\Exception\ViewModelException;
 
+/** @noinspection PhpUndefinedClassInspection */
 class ViewModelCollection extends ViewModel implements \Iterator {
 
     private $viewModels;
 
     /**
      * @param ViewModel[] $viewModels
+     * @throws Exception\ViewModelException
      */
     function __construct( array $viewModels ){
         $this->viewModels = $viewModels;

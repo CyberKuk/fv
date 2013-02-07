@@ -83,6 +83,7 @@ class ConfigurableBuilder {
     }
 
     /**
+     * @param \fv\Collection\Collection $config
      * @return Collection
      */
     private function setConfig( Collection $config ) {

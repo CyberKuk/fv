@@ -32,7 +32,7 @@ class Response {
     const HTTP_RESPONSE_STATUS_BAD_GATEWAY = 502;
     const HTTP_RESPONSE_STATUS_SERVICE_UNAVAILABLE = 503;
 
-    private $status = 200;
+    private $status = self::HTTP_RESPONSE_STATUS_OK;
 
     private $body;
 

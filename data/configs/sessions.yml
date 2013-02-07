@@ -1,0 +1,9 @@
+default:
+  type: storage # can be default|storage|db
+  connectionName: memcache # used only for the storage|db session type
+  #gc_divisor: 1 # you can use ane parameters from session.* php variables
+
+#another:
+#  type: default #  default|storage|db
+#  connectionName: default #
+#  name: AnotherSess

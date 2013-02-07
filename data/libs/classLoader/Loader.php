@@ -131,6 +131,7 @@ class Loader
             $path = ($this->_includePath !== null ? $this->_includePath . DIRECTORY_SEPARATOR : '');
 
             if( file_exists( $path . $fileName) )
+                /** @noinspection PhpIncludeInspection */
                 require $path . $fileName;
         }
     }

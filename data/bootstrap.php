@@ -14,9 +14,15 @@ fv\Bundle\BundleRegister::register("Bundle\\fv\\RoutingBundle");
 fv\Bundle\BundleRegister::register("Bundle\\fv\\ModelBundle");
 fv\Bundle\BundleRegister::register("Bundle\\fv\\SiteEntityBundle");
 fv\Bundle\BundleRegister::register("Bundle\\fv\\MetroUIBundle");
+fv\Bundle\BundleRegister::register("Bundle\\fv\\SessionBundle");
 
 /* Project config */
 fv\Config\ConfigRegister::registerNamespace( "", "configs" );
+
+
+/* DB configs */
+$connectionFactory = new \fv\Connection\ConnectionFactory();
+$connectionFactory->loadFromConfigFile( 'connections' );
 
 /* Twig */
 require_once 'libs/Twig/Autoloader.php';

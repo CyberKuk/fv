@@ -51,7 +51,7 @@ abstract class DatabaseQuery extends AbstractQuery {
             if( count($primaryFieldKeys) > 1 )
                 throw new \Bundle\fv\ModelBundle\Exception\QueryException("Key must be array, {$this->getModelClassName()} uses composite key");
 
-            $where[key($primaryFieldKeys)] = $key;
+            $where[reset($primaryFieldKeys)] = $key;
         }
 
         return $this->where( $where )->fetchOne();
@@ -114,23 +114,33 @@ abstract class DatabaseQuery extends AbstractQuery {
 
     private function directPersist( Model $model, array $primaryFields ) {
         $where = array();
+        $insert = false;
+
         foreach ($model->getFields() as $fieldKey => $field) {
-            if (in_array($fieldKey, $primaryFields)) {
-                $where[$fieldKey] = $field->asMysql();
+            if (array_key_exists($fieldKey, $primaryFields)) {
+                if ($field->isChanged()) {
+                    $insert = true;
+                    $this->andSet($fieldKey, $field->asMysql());
+                } else {
+                    $where[$fieldKey] = $field->asMysql();
+
+                }
             } else {
                 if (!$field->isChanged()) continue;
 
                 $this->andSet($fieldKey, $field->asMysql());
             }
         }
-
-        return $this->where($where)->update();
+        if ($insert)
+            return $this->where($where)->insert();
+        else
+            return $this->where($where)->update();
     }
 
-    final public function remove( Model $Model ) {
+    final public function remove( Model $model ) {
         $where = array_map( function( Field $field ){
             return $field->asMysql();
-        }, $Model->getPrimaryFields());
+        }, $model->getPrimaryFields());
 
         $this->where( $where )->delete();
     }
@@ -187,8 +197,10 @@ abstract class DatabaseQuery extends AbstractQuery {
     }
 
     public function getTableName(){
-        if( !$this->getSchema()->table )
-            return $this->getModelClassName();
+        if( !$this->getSchema()->table ) {
+            $namespaceArray = explode('\\', $this->getModelClassName());
+            return end($namespaceArray);
+        }
 
         return $this->getSchema()->table->get();
     }

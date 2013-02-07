@@ -21,6 +21,7 @@ class Router {
     /**
      * @param $key
      * @param AbstractRoute $route
+     * @throws Exception\RouterException
      * @return $this
      */
     final public function addRoute( $key, AbstractRoute $route ){

@@ -18,7 +18,7 @@ trait Where {
         if( is_string($statement) ){
             list( $statement, $params ) = $this->createNamedParams( $statement, $params, ":w".count($this->where)."_" );
             $this->where[] = $statement;
-            $this->whereParams[] = $params;
+            $this->whereParams += $params;
         } elseif( is_array($statement) ){
             $where = "";
             foreach( $statement as $key => $value ){

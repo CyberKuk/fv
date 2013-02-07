@@ -71,4 +71,31 @@ class SharedMemory implements Storage {
 
         return true;
     }
+
+    public function delete($key)
+    {
+        $memoryHandler = shmop_open( $this->key, $this->flags, $this->mode, $this->size );
+        $data = shmop_read( $memoryHandler, 0, $this->size );
+        $arr = @unserialize( $data );
+
+        if( !is_array( $arr ) || !array_key_exists($key, $arr) ){
+            shmop_close( $memoryHandler );
+            return false;
+        }
+
+        unset($arr[$key]);
+
+        $data = serialize($arr);
+
+        // NOT mb_strlen cuz byte read/write !
+        if( strlen($data) > $this->size )
+            throw new StorageException("Shared memory oversized!");
+
+        shmop_write( $memoryHandler, $data, 0 );
+        shmop_close( $memoryHandler );
+
+        return true;
+    }
+
+
 }

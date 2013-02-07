@@ -10,6 +10,10 @@ interface Storage {
 
     public function set( $key, $value );
 
+    public function delete( $key );
+
+    /** PhpStorm inspection bug
+     * @noinspection PhpAbstractStaticMethodInspection */
     public static function build( Collection $config );
 
 }

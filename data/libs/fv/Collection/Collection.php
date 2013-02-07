@@ -4,6 +4,7 @@ namespace fv\Collection;
 
 use fv\Collection\Exception\CollectionException;
 
+/** @noinspection PhpUndefinedClassInspection */
 class Collection implements \ArrayAccess, \Iterator, \Countable {
 
     private $_params = array();
@@ -261,5 +262,14 @@ class Collection implements \ArrayAccess, \Iterator, \Countable {
 
     public function isLeaf(){
         return $this->_value !== null;
+    }
+
+    public function delete($key) {
+        if (!empty($this->_params[$key])) {
+            unset($this->_params[$key]);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

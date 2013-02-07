@@ -62,4 +62,37 @@ class File implements Storage {
         fclose( $handler );
         return true;
     }
+
+    public function delete($key)
+    {
+        $handler = fopen( $this->filename, "r+" );
+
+        // @todo: может дожаться unlock'a вместо того чтоботы бросать EXCEPTION?
+        if( flock( $handler, LOCK_EX ) ){
+            $contents = fread( $handler, filesize( $this->filename ) );
+            $values = unserialize( $contents );
+
+            if( !is_array( $values ) || !array_key_exists($key, $values) ) {
+                flock( $handler, LOCK_UN );
+                fclose( $handler );
+                return false;
+            }
+
+            ftruncate( $handler, 0 );
+
+            unset($values[$key]);
+
+            fseek( $handler, 0 );
+            fwrite( $handler, serialize( $values ) );
+            flock( $handler, LOCK_UN );
+        } else {
+            fclose( $handler );
+            throw new StorageException( "Cannot lock file" );
+        }
+
+        fclose( $handler );
+        return true;
+    }
+
+
 }

@@ -83,6 +83,7 @@ abstract class AbstractModel {
     }
 
     /**
+     * @throws Exception\ModelException
      * @return string
      */
     static public function getDefaultConnectionName(){

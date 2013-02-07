@@ -19,6 +19,12 @@ class Blackhole implements Storage {
         return null;
     }
 
+    public function delete($key)
+    {
+        return null;
+    }
+
+
     function set( $key, $value ){
         return true;
     }

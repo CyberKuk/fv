@@ -17,7 +17,7 @@ class StorageFactory {
     /** @return Collection */
     public function getConfig(){
         if( empty(self::$schema) ){
-            self::$schema = ConfigLoader::load( 'configs/storage' );
+            self::$schema = ConfigLoader::load( 'storage' );
         }
 
         return self::$schema;
